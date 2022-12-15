@@ -1,7 +1,7 @@
-import { NonFoundController } from "./controllers/nonFoundController.js";
-import { MainController } from "./controllers/mainController.js";
-import { CartController } from "./controllers/cartController.js";
-import { ProductController } from "./controllers/productController.js";
+import { NonFoundController } from "./../controller/404";
+import { MainController } from "./../controller/home";
+import { CartController } from "./../controller/cart";
+import { ProductController } from "./../controller/product";
 import { Controller } from "./controllers/controllerType.js"
 //пути и нейминг потом подкорретируем)
 
