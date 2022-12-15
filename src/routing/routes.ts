@@ -1,42 +1,28 @@
+import { NonFoundController } from "./controllers/nonFoundController.js";
+import { MainController } from "./controllers/mainController.js";
+import { CartController } from "./controllers/cartController.js";
+import { ProductController } from "./controllers/productController.js";
+import { Controller } from "./controllers/controllerType.js"
+//пути и нейминг потом подкорретируем)
+
 export type Route = {
   path: string,
-  template: string,
-  title: string,
-  description: string,
+  controller: Controller,
 }
 
 export const routes: Route[] = [
   {
     path: "/404",
-    template: "/templates/404.html",
-    title: "404",
-    description: "Page not found",
+    controller: NonFoundController,
   },
   {
     path: "/",
-    template: "/templates/ind.html",
-    title: "Main",
-    description: "Main Page",
-    /*component: HomeComponent,
-  надо не надо???????
-  это куски кода их по идее надо импортировать из файлов компонетнов, которые надо будет создать
-  например есть какая-то функция которая возвращает строку ` ... `, а внутри строки готовый кусок кода текстом
-  например
-  return `
-      <div class="calss1">
-        <p>часть содержимого какой-то страницы </p>
-      </div>`;
-  либо можно использовать templates
-  какой способ лучше?
-*/},
-  { path: "/page1",
-    template: "/templates/page1.html",
-    title: "Page 1",
-    description: "Page 1",
+    controller: MainController,
   },
-  { path: "/page2",
-    template: "/templates/page2.html",
-    title: "Page 2",
-    description: "Page 2",
+  { path: "/cart",
+    controller: CartController,
+  },
+  { path: "/product",
+    controller: ProductController,
   },
 ]
