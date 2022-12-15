@@ -1,0 +1,34 @@
+{
+    "name": "online-store-team",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "preview": "vite preview",
+        "lint": "eslint ./src"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/killthecreator/online-store-team.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/killthecreator/online-store-team/issues"
+    },
+    "homepage": "https://github.com/killthecreator/online-store-team#readme",
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^5.46.1",
+        "@typescript-eslint/parser": "^5.46.1",
+        "eslint": "^8.29.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-import": "^2.26.0",
+        "eslint-plugin-prettier": "^4.2.1",
+        "prettier": "^2.8.1",
+        "sass": "^1.56.2",
+        "typescript": "^4.9.4",
+        "vite": "^4.0.1"
+    }
+}
