@@ -12,11 +12,13 @@ export class GlobalView {
     //TODO implement search
     appDiv.innerHTML = `
       <header class="header">
-        <div class="logo-wrapper>
-          <div class="logo-wrapper__image">
-            <img src="#"/>
-          </div>
-          <h1 class="logo-wrapper__text">Cadence</h1>
+        <div class="logo-wrapper">
+          <a href="/home">
+            <div class="logo-wrapper__image">
+              <img src="#"/>
+            </div>
+            <h1 class="logo-wrapper__text">Cadence</h1>
+          </a>
         </div>
         <div class="search-wrapper>
           <div class="search-wrapper__image">
@@ -29,7 +31,9 @@ export class GlobalView {
             Cart total: ${Model.cartState} $
           </div>
           <div class="cart-wrapper__image">
-            <img src="#"/>
+            <a href="/cart">
+              <img src="#"/>
+            </a>
           </div>
         </div>
       </header>
