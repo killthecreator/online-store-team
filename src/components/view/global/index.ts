@@ -1,3 +1,5 @@
+import './global.css';
+
 import { Model } from './../../model';
 
 export class GlobalView {

@@ -1,3 +1,5 @@
+import './404.css';
+
 export class NonExistingView {
   constructor () {
 

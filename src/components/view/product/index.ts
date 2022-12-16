@@ -1,3 +1,5 @@
+import './product.css';
+
 export class ProductView {
   constructor () {
 

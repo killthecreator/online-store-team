@@ -1,3 +1,5 @@
+import './cart.css';
+
 export class CartView {
   constructor () {
 

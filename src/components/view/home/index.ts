@@ -1,3 +1,5 @@
+import './home.css';
+
 export class HomeView {
   constructor () {
 
