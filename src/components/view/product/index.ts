@@ -1,7 +1,7 @@
 import './product.scss';
 import { GlobalView } from '../index';
 import { Data } from './../../model/data';
-import { HomeController } from './../../controller/home';
+import { ProductController } from './../../controller/product';
 
 export class ProductView extends GlobalView {
   constructor () {
@@ -31,7 +31,7 @@ export class ProductView extends GlobalView {
               <h1 class="product__description-name">${product.name}</h1>
               <p class="product__description-category">${product.category}</p>
             </div>
-            <div class="product__description-brand" style="background-image: url(${HomeController.brandLogo(product.brand)});"></div>
+            <div class="product__description-brand" style="background-image: url(${ProductController.brandLogo(product.brand)});"></div>
           </div>
           <div class="product__description-text">${product.description}</div>
           <div class="product__description-info">
