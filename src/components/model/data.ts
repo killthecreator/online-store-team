@@ -1,4 +1,4 @@
-export interface Data {
+export interface Product {
   name: string;
   brand: Brand;
   category: Category;
@@ -34,7 +34,7 @@ export type Brand =
 
 export type Category = "guitars" | "basses" | "drums" | "keyboards" | "microphones";
 
-export const data: Data[] = [
+export const products: Product[] = [
   {
     name: "Fender Player Stratocaster",
     brand: "Fender",

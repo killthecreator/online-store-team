@@ -1,5 +1,5 @@
 import './home.css';
-import { Data, Category, Brand } from '../../model/data';
+import { Product, Category, Brand } from '../../model/data';
 import { Model } from './../../model';
 import { HomeController } from './../../controller/home';
 import { GlobalView } from '../index';
@@ -20,7 +20,7 @@ export class HomeView extends GlobalView {
     super();
   }
 
- /* public drawFrame = (dataObj: Data[]) => {
+ /* public drawFrame = (dataObj: Product[]) => {
     const mainDiv = document.querySelector(".main");
     if (mainDiv === null) throw new Error("There is no #app element in the body");
     mainDiv.append(this.drawFilters(dataObj.data.categories));
@@ -86,10 +86,10 @@ export class HomeView extends GlobalView {
     `;
   }
 
-  public drawCards = (cards: Data[]) => {
+  public drawCards = (cards: Product[]) => {
     return `
       <section class="cards-wrapper">
-        ${cards.reduce((res: string, card: Data) => res + `
+        ${cards.reduce((res: string, card: Product) => res + `
           <div class="card-wrapper">
 
             <div class="photo-zone" style="background-image: url(${card.photos[0]});">

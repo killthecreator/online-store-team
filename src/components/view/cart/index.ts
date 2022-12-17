@@ -1,6 +1,6 @@
 import './cart.css';
 import { CartController } from './../../controller/cart';
-import { Data } from '../../model/data';
+import { Product } from '../../model/data';
 import { GlobalView } from '../index';
 
 // TODO CartController.productsInCart() returns how many products in cart now
@@ -12,7 +12,7 @@ export class CartView extends GlobalView {
     super();
   }
 
-  public drawCart = (products: Data[]) => {
+  public drawCart = (products: Product[]) => {
     const mainDiv = document.querySelector(".main");
     if (mainDiv === null) throw new Error("There is no #main element in the body");
     mainDiv.innerHTML = `
@@ -38,7 +38,7 @@ export class CartView extends GlobalView {
           </div>
         </div>
         <div class="products__list">
-          ${products.reduce((res: string, product: Data, i: number) => res + `
+          ${products.reduce((res: string, product: Product, i: number) => res + `
             <div class="product ${i}">
               <div class="product__number">${i}</div>
               <div class="product__picture" style="background-image: url(${product.photos[0]});"></div>

@@ -1,14 +1,16 @@
 import './product.css';
 import { GlobalView } from '../index';
-import { Data } from './../../model/data';
+import { Product } from './../../model/data';
 import { ProductController } from './../../controller/product';
+
+//TODO ProductController.brandLogo(product.brand)
 
 export class ProductView extends GlobalView {
   constructor () {
     super();
   }
 
-  public drawProduct = (product: Data) => {
+  public drawProduct = (product: Product) => {
     const mainDiv = document.querySelector(".main");
     if (mainDiv === null) throw new Error("There is no #main element in the body");
     mainDiv.innerHTML = `

@@ -1,7 +1,9 @@
 import './global.css';
 import GithubLogo from './../../../assets/logos/github.png';
 import RsschoolLogo from './../../../assets/logos/rs_school_js.svg';
-import { Model } from '../model/index';
+import { Controller } from './../controller';
+
+//TODO Controller.getCartState() сумма цен товаров в корзине
 
 export class GlobalView {
   constructor () {
@@ -36,7 +38,7 @@ export class GlobalView {
     </div>
     <div class="cart-wrapper>
       <div class="cart-wrapper__state">
-        Cart total: ${Model.cartState} $
+        Cart total: ${Controller.getCartState()} $
       </div>
       <div class="cart-wrapper__image">
         <a href="/cart">
