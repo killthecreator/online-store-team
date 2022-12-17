@@ -1,4 +1,4 @@
-import { Category, Brand, data, Data } from "./../../../data.js";
+import { Category, Brand, data, Data } from "./data.js";
 
 export class Model {
   constructor () {
