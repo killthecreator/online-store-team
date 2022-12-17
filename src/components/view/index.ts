@@ -8,7 +8,7 @@ export class GlobalView {
 
   }
 
-  public draw =  (): void => {
+  public draw = (): void => {
     this.drawHeader();
     this.drawMain();
     this.drawFooter();

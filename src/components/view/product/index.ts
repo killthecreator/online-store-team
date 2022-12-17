@@ -1,4 +1,4 @@
-import './product.scss';
+import './product.css';
 import { GlobalView } from '../index';
 import { Data } from './../../model/data';
 import { ProductController } from './../../controller/product';

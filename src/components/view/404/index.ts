@@ -1,8 +1,9 @@
 import './404.css';
+import { GlobalView } from '../index';
 
-export class NonExistingView {
+export class NonExistingView extends GlobalView {
   constructor () {
-
+    super();
   }
 
   public draw = () => {

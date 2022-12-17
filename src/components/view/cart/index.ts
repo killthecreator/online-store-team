@@ -1,14 +1,15 @@
 import './cart.css';
 import { CartController } from './../../controller/cart';
 import { Data } from '../../model/data';
+import { GlobalView } from '../index';
 
 // TODO CartController.productsInCart() returns how many products in cart now
 // TODO CartController.productsTotal() return price of all the products in cart
 // TODO CartController.howManyInCart(product.name) returns how many is this product in cart
 
-export class CartView {
+export class CartView extends GlobalView {
   constructor () {
-
+    super();
   }
 
   public drawCart = (products: Data[]) => {
