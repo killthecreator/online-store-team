@@ -20,33 +20,38 @@ export class HomeView extends GlobalView {
     super();
   }
 
-  public draw = () => {
+ /* public drawFrame = (dataObj: Data[]) => {
     const mainDiv = document.querySelector(".main");
     if (mainDiv === null) throw new Error("There is no #app element in the body");
-    mainDiv.append(this.drawFilters());
+    mainDiv.append(this.drawFilters(dataObj.data.categories));
     mainDiv.append(this.drawRanges());
     mainDiv.append(this.drawButtons());
     mainDiv.append(this.drawCards(Model.data));
-  }
 
-  private drawFilters = () => {
+    const search = document.querySelector(".search-wrapper") as HTMLDivElement;
+    search.style.display = "initial";
+
+    ЭТО БУДЕТ В КОНТРОЛЛЕРЕ, ИЗ КОНТРОЛЛЕРА БУДУТ ПЕРЕДАВАТЬСЯ НУЖНЫЕ ПАРАМЕТРЫ ИЗ МОДЕЛИ
+  }*/
+
+  public drawFilters = (categories: Category [], brands: Brand[]) => {
     return `
       <section class="filters">
         <form class="category-form">
-          ${Model.categories.reduce(
-            (res: string, category: Category) => res + `<label for="${category}" class="category-form__label"><input id="${category}" class="category-form__checkbox" type="checkbox"/>${category}</label>`, ''
+          ${categories.reduce(
+            (res: string, category: Category) => res + `<label class="category-form__label"><input class="category-form__checkbox" type="checkbox"/>${category}</label>`, ''
           )}
         </form>
         <form class="brand-form">
-          ${Model.brands.reduce(
-            (res: string, brand: Brand) => res + `<label for="${brand}" class="brand-form__label"><input id="${brand}" class="brand-form__checkbox" type="checkbox"/>${brand}</label>`, ''
+          ${brands.reduce(
+            (res: string, brand: Brand) => res + `<label class="brand-form__label"><input class="brand-form__checkbox" type="checkbox"/>${brand}</label>`, ''
           )}
         </form>
       </section>
     `;
   }
 
-  private drawRanges = () => {
+  public drawRanges = () => {
     return `
       <section class="ranges">
         <div class="price-range">
@@ -59,7 +64,7 @@ export class HomeView extends GlobalView {
     `;
   }
 
-  private drawButtons = () => {
+  public drawButtons = () => {
     return `
       <section class="buttons">
         <button class="reset-filters button"></button>
@@ -81,7 +86,7 @@ export class HomeView extends GlobalView {
     `;
   }
 
-  drawCards = (cards: Data[]) => {
+  public drawCards = (cards: Data[]) => {
     return `
       <section class="cards-wrapper">
         ${cards.reduce((res: string, card: Data) => res + `

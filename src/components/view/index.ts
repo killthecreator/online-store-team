@@ -28,7 +28,7 @@ export class GlobalView {
         <h1 class="logo-wrapper__text">Cadence</h1>
       </a>
     </div>
-    <div class="search-wrapper>
+    <div class="search-wrapper">
       <div class="search-wrapper__image">
         <img src="#"/>
       </div>
