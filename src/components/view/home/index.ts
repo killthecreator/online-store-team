@@ -10,6 +10,8 @@ import { HomeController } from './../../controller/home';
 //         findMaxStock() -- максимальное количество товаров на складе
 //         sortOptions()  -- обработка селекта селекта sort options
 //         found()        -- сколько товаров в данный момент отбражается на странице
+//         addToCart()    -- добавляет товар в корзину
+//         brandLogo(brandName) получает название бренда и возвращает ссылку на его лого
 
 export class HomeView {
   constructor () {
@@ -136,24 +138,45 @@ export class HomeView {
       const cardWrapper = document.createElement('div');
       cardWrapper.classList.add("card-wrapper");
       const photoZone = document.createElement('div');
-      photoZone.classList.add("card-wrapper__photo-zone");
+      photoZone.classList.add("photo-zone");
       photoZone.style.backgroundImage = `url(${card.photos[0]})`;
       photoZone.innerHTML=`
-      <div class="card-wrapper__store">
+      <div class="photo-zone__store">
         Store: ${card.amount}
       </div>
-      <div class="card-wrapper__buttons">
-        <div class="">
-         <button ></button>
+      <div class="photo-zone__buttons">
+        <div class="photo-zone__product">
+         <button class="photo-zone__product-button" onclick="document.location='/product'"></button>
         </div>
-        <div class="">
-//  ТУТ НЕМНОГО НЕДОДЕЛАНА СТРАНИЦА - В ПРОЦЕССЕ,
+        <div class="photo-zone__add-to-cart">
+          <button class="photo-zone__add-to-cart-button" onclick="HomeController.addToCart"></button>
         </div>
       </div>
       `;
 
       const nameZone = document.createElement('div');
-      nameZone.classList.add("card-wrapper__name-zone");
+      nameZone.classList.add("name-zone");
+      const brand = document.createElement('div');
+      brand.classList.add("name-zone__brand");
+      brand.style.backgroundImage = `url(${HomeController.brandLogo(card.brand)})`;
+      nameZone.append(brand);
+      const titles = document.createElement('div');
+      brand.classList.add("name-zone__titles");
+      titles.innerHTML = `
+        <h4 class="name-zone__name">${card.name}</h4>
+        <p class="name-zone__category">${card.category}</p>
+      `;
+      nameZone.append(titles);
+      const price = document.createElement('div');
+      price.classList.add("name-zone__price");
+      price.innerHTML = `${card.price}$`;
+      nameZone.append(price);
+
+      cardWrapper.append(photoZone);
+      cardWrapper.append(nameZone);
+
+      cardsArr.push(cardWrapper);
+      cardsWrapper.append(cardWrapper);
     });
   }
 
