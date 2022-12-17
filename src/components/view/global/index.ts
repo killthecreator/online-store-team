@@ -1,5 +1,6 @@
 import './global.css';
-
+import GithubLogo from './../../../assets/logos/github.png';
+import RsschoolLogo from './../../../assets/logos/rs_school_js.svg';
 import { Model } from './../../model';
 
 export class GlobalView {
@@ -47,12 +48,12 @@ export class GlobalView {
         <div class="github">
           <div class="github__1">
             <a href="https://github.com/killthecreator">
-              <img src="./../../assets/logos/github.png"/>
+              <img src="${GithubLogo}" alt="Github logo"/>
             </a>
           </div>
           <div class="github__2">
             <a href="https://github.com/HelgaAthame">
-              <img src="./../../assets/logos/github.png"/>
+              <img src="${GithubLogo}" alt="Github logo"/>
             </a>
             </div>
         </div>
@@ -61,7 +62,7 @@ export class GlobalView {
         </div>
         <div class="rs-school">
           <a href="https://rs.school/js/">
-            <img src="./../../assets/logos/rs_school_js.svg"/>
+            <img src="${ RsschoolLogo }" alt="RS School JS Front-end course"/>
           </a>
         </div>
       </footer>

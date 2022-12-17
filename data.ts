@@ -8,7 +8,7 @@ export interface Data {
   photos: string[];
 }
 
-type Brand =
+export type Brand =
   | "Novation"
   | "Moog"
   | "Korg"
@@ -31,7 +31,8 @@ type Brand =
   | "Rode"
   | "Sennheiser"
   | "Neumann";
-type Category = "guitars" | "basses" | "drums" | "keyboards" | "microphones";
+
+export type Category = "guitars" | "basses" | "drums" | "keyboards" | "microphones";
 
 export const data: Data[] = [
   {
