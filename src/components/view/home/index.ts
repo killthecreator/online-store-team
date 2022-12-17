@@ -21,11 +21,15 @@ export class HomeView {
   public draw = () => {
     const filters = this.drawFilters();
     const ranges = this.drawRanges();
+    const buttons = this.drawButtons();
+    const cards = this.drawCards(Model.data);
 
     const mainDiv = document.querySelector(".main");
     if (mainDiv === null) throw new Error("There is no #app element in the body");
     mainDiv.append(filters);
     mainDiv.append(ranges);
+    mainDiv.append(buttons);
+    mainDiv.append(cards);
   }
 
   private drawFilters = () => {
@@ -128,6 +132,8 @@ export class HomeView {
     buttons.append(sortOptions);
     buttons.append(found);
     buttons.append(viewChange);
+
+    return buttons;
   }
 
   drawCards = (crads: Data[]) => {
@@ -178,6 +184,8 @@ export class HomeView {
       cardsArr.push(cardWrapper);
       cardsWrapper.append(cardWrapper);
     });
+
+    return cardsWrapper;
   }
 
 }
