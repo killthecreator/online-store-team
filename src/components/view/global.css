@@ -1,1 +1,11 @@
-/*# sourceMappingURL=global.css.map */
+body {
+  font: Montserrat;
+  background-color: blue;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Montserrat"), url("./../../assets/fonts/Montserrat-Italic-VariableFont_wght.ttf") format("ttf");
+}/*# sourceMappingURL=global.css.map */
