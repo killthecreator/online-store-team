@@ -1,14 +1,12 @@
 import { route } from './routing/routing.js';
 
-document.addEventListener('click', (e) => {
-    const targetElement = e.target as HTMLAnchorElement;
-    if (!targetElement.matches('a.routing')) {
-        //links should contain class "routing" to be processed
-        return;
-    }
+const ancors: NodeList = document.querySelectorAll("a.routing");
+ancors.forEach(ancor => ancor
+  .addEventListener("click", (e) => {
     e.preventDefault();
     route(e);
-});
+  })
+);
 
 import { App, Model } from './components/app/app.js';
 import { GlobalView } from './components/view/';

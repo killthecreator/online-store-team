@@ -4,7 +4,6 @@ import { CartController } from "./../components/controller/cart";
 import { ProductController } from "./../components/controller/product";
 import { Controller } from "./../components/controller/";
 //пути и нейминг потом подкорретируем)
-
 export type Route = {
   path: string,
   controller: Controller,
@@ -19,10 +18,12 @@ export const routes: Route[] = [
     path: "/",
     controller: HomeController,
   },
-  { path: "/cart",
+  {
+    path: "/cart",
     controller: CartController,
   },
-  { path: "/product",
+  {
+    path: "/product",
     controller: ProductController,
   },
 ]
