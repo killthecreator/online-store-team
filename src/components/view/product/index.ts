@@ -20,7 +20,7 @@ export class ProductView extends GlobalView {
 
       <section class="product">
         <div class="product__photos">
-          <div class="product__main-photo" style="background-image: url(${product.photos[0]});"></div>
+          <div class="product__main-photo" style="background-image: url(${product.photos[0] || '../../../assets/default-product-image.jpg'};"></div>
           <div class="product__additional-photos">
             ${product.photos.reduce((res, cur) => res + `
               <div class="product__additional-photo" style="background-image: url(${cur});"></div>
