@@ -36,7 +36,7 @@ export class GlobalView {
       </div>
       <input class="search-wrapper__input"/>
     </div>
-    <div class="cart-wrapper>
+    <div class="cart-wrapper">
       <div class="cart-wrapper__state">
         Cart total: ${Controller.getCartState()}$
       </div>
@@ -62,12 +62,12 @@ export class GlobalView {
     <div class="github">
     <div class="github__1">
       <a href="https://github.com/killthecreator">
-        <img src="${GithubLogo}" alt="Github logo"/>
+        <img class="github__img" src="${GithubLogo}" alt="Github logo"/>
       </a>
     </div>
     <div class="github__2">
       <a href="https://github.com/HelgaAthame">
-        <img src="${GithubLogo}" alt="Github logo"/>
+        <img class="github__img" src="${GithubLogo}" alt="Github logo"/>
       </a>
       </div>
   </div>
@@ -76,7 +76,7 @@ export class GlobalView {
   </div>
   <div class="rs-school">
     <a href="https://rs.school/js/">
-      <img src="${ RsschoolLogo }" alt="RS School JS Front-end course"/>
+      <img class="rs-school__img" src="${ RsschoolLogo }" alt="RS School JS Front-end course"/>
     </a>
   </div>`;
     document.body.append(footer);

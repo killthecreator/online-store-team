@@ -1,6 +1,75 @@
 * {
   font-family: "Montserrat-Medium";
 }
+*:active, *:hover, *:focus {
+  outline: 0;
+  outline-offset: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  background-color: #fff;
+}
+body .header {
+  display: flex;
+  justify-content: space-between;
+  padding: 2vw 1vw;
+}
+body .header .logo-wrapper a {
+  text-decoration: none;
+  color: black;
+  display: flex;
+  flex-wrap: nowrap;
+}
+body .header .logo-wrapper a .logo-wrapper__text {
+  margin: 0 1vw;
+}
+body .header .search-wrapper {
+  display: flex;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+  background-color: #eee;
+  align-items: center;
+}
+body .header .search-wrapper .search-wrapper__image {
+  margin: 0 1rem;
+}
+body .header .search-wrapper .search-wrapper__input {
+  flex-grow: 1;
+  background-color: transparent;
+  border: none;
+}
+body .header .cart-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+body .header .cart-wrapper .cart-wrapper__state {
+  font-size: 1.2 rem;
+  margin: 0 1vw;
+}
+body .footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 2vw 1vw;
+}
+body .footer .github {
+  display: flex;
+  justify-content: space-between;
+}
+body .footer .github .github__img {
+  width: 3vw;
+  margin: 0 1vw;
+}
+body .footer .year {
+  font-size: 1.2 rem;
+}
+body .footer .rs-school .rs-school__img {
+  width: 5vw;
+}
 
 @font-face {
   font-family: "Montserrat-Medium";
