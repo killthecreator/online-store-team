@@ -22,9 +22,9 @@ export class ProductView extends GlobalView {
         <div class="product__photos">
           <div class="product__main-photo" style="background-image: url(${product.photos[0]});"></div>
           <div class="product__additional-photos">
-            <div class="product__additional-photo" style="background-image: url(${product.photos[0]});"></div>
-            <div class="product__additional-photo" style="background-image: url(${product.photos[1]});"></div>
-            <div class="product__additional-photo" style="background-image: url(${product.photos[2]});"></div>
+            ${product.photos.reduce((res, cur) => res + `
+              <div class="product__additional-photo" style="background-image: url(${cur});"></div>
+            `, '')}
           </div>
         </div>
         <div class="product__description">
