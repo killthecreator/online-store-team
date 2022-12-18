@@ -1,6 +1,3 @@
-import './style.css';
-document.getElementById('app')!.innerHTML = 'Hello world';
-import './style.scss';
 import { route } from './routing/routing.js';
 
 document.addEventListener('click', (e) => {
@@ -14,9 +11,10 @@ document.addEventListener('click', (e) => {
 });
 
 import { App, Model } from './components/app/app.js';
-import { GlobalView } from './components/view/global';
+import { GlobalView } from './components/view/';
 
 const app = new App('/', new Model(), new GlobalView());
 
 app.view.drawHeader();
+app.view.drawMain();
 app.view.drawFooter();
