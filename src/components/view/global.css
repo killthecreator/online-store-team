@@ -1,11 +1,14 @@
-body {
-  font: Montserrat;
-  background-color: blue;
+* {
+  font-family: "Montserrat-Medium";
 }
 
 @font-face {
-  font-family: "Montserrat";
+  font-family: "Montserrat-Medium";
   font-style: normal;
-  font-weight: 400;
-  src: local("Montserrat"), url("./../../assets/fonts/Montserrat-Italic-VariableFont_wght.ttf") format("ttf");
+  src: url("./../../assets/fonts/Montserrat/Montserrat-Medium.woff") format("woff");
+}
+@font-face {
+  font-family: "Montserrat-Black";
+  font-style: normal;
+  src: url("./../../assets/fonts/Montserrat/Montserrat-Black.woff") format("woff");
 }/*# sourceMappingURL=global.css.map */
