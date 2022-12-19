@@ -1,13 +1,49 @@
-import { Category, Brand, products, Product } from "./data.js";
+import { Category, Brand, products, Product } from './data.js';
 
 export class Model {
-  constructor () {
+    categories: Category[];
+    brands: Brand[];
+    products: Product[];
+    activeCategories: Category[];
+    activeBrands: Brand[];
+    cartState: number;
+    pricesRange: [number, number];
+    stockRange: [0, number];
 
-  }
-
-  public static cartState: number = 0;
-  categories: Category[] = ["guitars", "basses", "drums", "keyboards", "microphones"];
-  brands:  Brand[] = ["Novation", "Moog", "Korg", "Roland", "Yamaha", "DW", "Tama", "Ludwig", "Pearl", "Mapex", "Schecter", "Jackson", "Fender", "Gibson", "Ibanez", "B.C.Rich", "Epiphone", "AKG", "Shure", "Rode", "Sennheiser", "Neumann"];
-  products: Product[] = products;
-
+    constructor() {
+        this.categories = ['guitars', 'basses', 'drums', 'keyboards', 'microphones'];
+        this.brands = [
+            'Novation',
+            'Moog',
+            'Korg',
+            'Roland',
+            'Yamaha',
+            'DW',
+            'Tama',
+            'Ludwig',
+            'Pearl',
+            'Mapex',
+            'Schecter',
+            'Jackson',
+            'Fender',
+            'Gibson',
+            'Ibanez',
+            'B.C.Rich',
+            'Epiphone',
+            'AKG',
+            'Shure',
+            'Rode',
+            'Sennheiser',
+            'Neumann',
+        ];
+        this.products = products;
+        this.activeCategories = this.categories;
+        this.activeBrands = this.brands;
+        this.cartState = 0;
+        this.pricesRange = [
+            Math.max(...this.products.map((item) => item.price)),
+            Math.min(...this.products.map((item) => item.price)),
+        ];
+        this.stockRange = [0, Math.max(...this.products.map((item) => item.amount))];
+    }
 }

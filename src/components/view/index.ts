@@ -2,6 +2,7 @@ import './global.css';
 import GithubLogo from './../../assets/logos/github.png';
 import RsschoolLogo from './../../assets/logos/rs_school_js.svg';
 import { Controller } from './../controller';
+import { Brand, Category } from '../model/data';
 
 //TODO Controller.getCartState() сумма цен товаров в корзине
 
@@ -10,9 +11,8 @@ export class GlobalView {
 
   }
 
-  public draw = (): void => {
+  public drawMain = (categories: Category[], brands: Brand[]): void => {
     this.drawHeader();
-    this.drawMain();
     this.drawFooter();
   }
 
@@ -38,7 +38,7 @@ export class GlobalView {
     </div>
     <div class="cart-wrapper">
       <div class="cart-wrapper__state">
-        Cart total: ${Controller.getCartState()}$
+        Cart total: 0${/*Controller.getCartState()*/0}$
       </div>
       <div class="cart-wrapper__image">
         <a href="/cart">
@@ -49,11 +49,11 @@ export class GlobalView {
     document.body.append(header);
 };
 
-  public drawMain = (): void => {
+  /*public drawMain = (): void => {
     const main = document.createElement('main');
     main.classList.add("main");
     document.body.append(main);
-  }
+  }*/
 
   public drawFooter = (): void => {
     const footer = document.createElement('footer');

@@ -20,19 +20,15 @@ export class HomeView extends GlobalView {
     super();
   }
 
- /* public drawFrame = (dataObj: Product[]) => {
-    const mainDiv = document.querySelector(".main");
-    if (mainDiv === null) throw new Error("There is no #app element in the body");
-    mainDiv.append(this.drawFilters(dataObj.data.categories));
-    mainDiv.append(this.drawRanges());
-    mainDiv.append(this.drawButtons());
-    mainDiv.append(this.drawCards(Model.data));
-
-    const search = document.querySelector(".search-wrapper") as HTMLDivElement;
-    search.style.display = "initial";
-
-    ЭТО БУДЕТ В КОНТРОЛЛЕРЕ, ИЗ КОНТРОЛЛЕРА БУДУТ ПЕРЕДАВАТЬСЯ НУЖНЫЕ ПАРАМЕТРЫ ИЗ МОДЕЛИ
-  }*/
+  public drawMain = (categories: Category[], brands: Brand[]): void => {
+    const main = document.createElement('main');
+    main.classList.add('main');
+    main.innerHTML = this.drawFilters(
+        categories,
+        brands
+    ) /*+ this.drawRanges() /*+ this.drawButtons() /*+ this.drawCards()*/;
+    document.body.append(main);
+};
 
   public drawFilters = (categories: Category [], brands: Brand[]) => {
     return `

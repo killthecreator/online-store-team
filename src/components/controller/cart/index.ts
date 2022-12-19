@@ -7,6 +7,6 @@ export class CartController extends Controller {
   }
 
   setupPage(): void {
-    console.log(404);
+    console.log('cart');
 }
 }
