@@ -1,0 +1,97 @@
+* {
+  font-family: "Montserrat-Medium";
+  &:active, &:hover, &:focus {
+    outline: 0;
+    outline-offset: 0;
+}
+}
+
+$basic-font-size: 1.2 rem;
+
+$basic-padding: 2vw 1vw;
+
+@mixin flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+body {
+  @include flex-col;
+  margin: 0 auto;
+  background-color: #fff;
+  .header {
+    @include flex-space-between;
+    padding: $basic-padding;
+    .logo-wrapper {
+      a {
+        text-decoration: none;
+        color: black;
+        display: flex;
+        flex-wrap: nowrap;
+        .logo-wrapper__text {
+          margin: 0 1vw;
+        }
+      }
+    }
+    .search-wrapper {
+      display: flex;
+      border-radius: 5px;
+      @include flex-space-between;
+      flex-grow: 1;
+      background-color: #eee;
+      align-items: center;
+      .search-wrapper__image {
+        margin: 0 1rem;
+      }
+      .search-wrapper__input {
+        flex-grow: 1;
+        background-color: transparent;
+        border: none;
+      }
+    }
+    .cart-wrapper {
+      @include flex-space-between;
+      .cart-wrapper__state {
+        font-size: $basic-font-size;
+        margin: 0 1vw;
+      }
+    }
+  }
+
+  .footer {
+    @include flex-space-between;
+    padding: $basic-padding;
+    .github {
+      @include flex-space-between;
+      .github__img {
+        width: 3vw;
+        margin: 0 1vw;
+      }
+    }
+    .year {
+      font-size: $basic-font-size;
+    }
+    .rs-school {
+      .rs-school__img {
+        width: 5vw;
+      }
+    }
+  }
+}
+
+@font-face {
+  font-family: "Montserrat-Medium";
+  font-style: normal;
+  src: url("./../../assets/fonts/Montserrat/Montserrat-Medium.woff") format("woff"),
+}
+
+@font-face {
+  font-family: "Montserrat-Black";
+  font-style: normal;
+  src: url("./../../assets/fonts/Montserrat/Montserrat-Black.woff") format("woff"),
+}
