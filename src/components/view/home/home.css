@@ -1,1 +1,24 @@
-/*# sourceMappingURL=home.css.map */
+.filters {
+  padding: 0 1vw;
+  display: flex;
+  justify-content: space-between;
+}
+.filters .category-form, .filters .brand-form {
+  display: flex;
+  flex-direction: column;
+  padding: 0 1vw;
+  display: flex;
+}
+.filters .category-form .category-form__title, .filters .category-form .brand-form__title, .filters .brand-form .category-form__title, .filters .brand-form .brand-form__title {
+  font-size: 1.2rem;
+  font-variant: bold;
+  margin: 0 0 1vw 0;
+}
+.filters .category-form .category-form__content, .filters .category-form .brand-form__content, .filters .brand-form .category-form__content, .filters .brand-form .brand-form__content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+.filters .category-form .category-form__content .category-form__item, .filters .category-form .category-form__content .brand-form__item, .filters .category-form .brand-form__content .category-form__item, .filters .category-form .brand-form__content .brand-form__item, .filters .brand-form .category-form__content .category-form__item, .filters .brand-form .category-form__content .brand-form__item, .filters .brand-form .brand-form__content .category-form__item, .filters .brand-form .brand-form__content .brand-form__item {
+  min-width: 150px;
+}/*# sourceMappingURL=home.css.map */

@@ -34,14 +34,20 @@ export class HomeView extends GlobalView {
     return `
       <section class="filters">
         <form class="category-form">
-          ${categories.reduce(
-            (res: string, category: Category) => res + `<label class="category-form__label"><input class="category-form__checkbox" type="checkbox"/>${category}</label>`, ''
-          )}
+          <div class="category-form__title">Category filters</div>
+          <div class="category-form__content">
+            ${categories.reduce(
+              (res: string, category: Category) => res + `<div class="category-form__item"><label class="category-form__label"><input class="category-form__checkbox" type="checkbox"/>${category}</label></div>`, ''
+            )}
+          </div>
         </form>
         <form class="brand-form">
-          ${brands.reduce(
-            (res: string, brand: Brand) => res + `<label class="brand-form__label"><input class="brand-form__checkbox" type="checkbox"/>${brand}</label>`, ''
-          )}
+        <div class="brand-form__title">Brand filters</div>
+          <div class="brand-form__content">
+            ${brands.reduce(
+              (res: string, brand: Brand) => res + `<div class="brand-form__item"><label class="brand-form__label"><input class="brand-form__checkbox" type="checkbox"/>${brand}</label></div>`, ''
+            )}
+          </div>
         </form>
       </section>
     `;

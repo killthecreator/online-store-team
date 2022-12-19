@@ -1,9 +1,9 @@
 * {
-  font-family: "Montserrat-Medium";
   &:active, &:hover, &:focus {
     outline: 0;
     outline-offset: 0;
-}
+  }
+
 }
 
 $basic-font-size: 1.2 rem;
@@ -25,6 +25,7 @@ body {
   margin: 0 auto;
   background-color: #fff;
   .header {
+    font-family: "Normal";
     @include flex-space-between;
     padding: $basic-padding;
     .logo-wrapper {
@@ -63,7 +64,20 @@ body {
     }
   }
 
+  .main {
+    .filters {
+      .category-form__title, .brand-form__title {
+        font-family: Bold;
+      }
+      .category-form__content, .brand-form__content {
+        font-family: Normal;
+      }
+    }
+  }
+
   .footer {
+
+  font-family: "Normal";
     @include flex-space-between;
     padding: $basic-padding;
     .github {
@@ -85,13 +99,11 @@ body {
 }
 
 @font-face {
-  font-family: "Montserrat-Medium";
-  font-style: normal;
-  src: url("./../../assets/fonts/Montserrat/Montserrat-Medium.woff") format("woff"),
+  font-family: "Bold";
+  src: url("./../../assets/fonts/Montserrat/Montserrat-Bold.woff") format("woff"),
 }
 
 @font-face {
-  font-family: "Montserrat-Black";
-  font-style: normal;
-  src: url("./../../assets/fonts/Montserrat/Montserrat-Black.woff") format("woff"),
+  font-family: "Normal";
+  src: url("./../../assets/fonts/Montserrat/Montserrat-Medium.woff") format("woff"),
 }

@@ -1,0 +1,32 @@
+@mixin flex-col {
+  display: flex;
+  flex-direction: column;
+}
+@mixin flex-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+$basic-font-size: 1.2rem;
+.filters {
+  padding: 0 1vw;
+  @include flex-space-between;
+  .category-form, .brand-form {
+    @include flex-col;
+    padding: 0 1vw;
+    display: flex;
+      .category-form__title, .brand-form__title {
+        font-size: $basic-font-size;
+        font-variant: bold;
+        margin: 0 0 1vw 0;
+      }
+      .category-form__content, .brand-form__content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        .category-form__item, .brand-form__item {
+          min-width: 150px;
+        }
+      }
+  }
+}
