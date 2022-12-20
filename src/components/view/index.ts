@@ -11,10 +11,10 @@ export class GlobalView {
 
   }
 
-  public drawMain = (categories: Category[], brands: Brand[]): void => {
+  /*public drawMain = (categories: Category[], brands: Brand[]): void => {
     this.drawHeader();
     this.drawFooter();
-  }
+  }*/
 
   public drawHeader = (): void => {
     const header = document.createElement('header');

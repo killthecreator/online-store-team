@@ -41,8 +41,8 @@ export class Model {
         this.activeBrands = this.brands;
         this.cartState = 0;
         this.pricesRange = [
-            Math.max(...this.products.map((item) => item.price)),
             Math.min(...this.products.map((item) => item.price)),
+            Math.max(...this.products.map((item) => item.price)),
         ];
         this.stockRange = [0, Math.max(...this.products.map((item) => item.amount))];
     }
