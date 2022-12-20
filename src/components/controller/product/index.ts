@@ -1,9 +1,9 @@
 import { Controller } from "../";
 export class ProductController extends Controller {
-  url: string;
-  constructor(url: string) {
+  /*url: string;*/
+  constructor(/*url: string*/) {
       super();
-      this.url = url;
+     /* this.url = url;*/
   }
 
   setupPage(): void {
