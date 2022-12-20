@@ -26,7 +26,7 @@ export class HomeView extends GlobalView {
     main.innerHTML = this.drawFilters(
         categories,
         brands
-    ) /*+ this.drawRanges() /*+ this.drawButtons() /*+ this.drawCards()*/;
+    ) + this.drawRanges() /*+ this.drawButtons() /*+ this.drawCards()*/;
     document.body.append(main);
 };
 
@@ -57,10 +57,10 @@ export class HomeView extends GlobalView {
     return `
       <section class="ranges">
         <div class="price-range">
-          <input type="range" class="price-range__input" min="${HomeController.findMinPrice()}" max="${HomeController.findMaxPrice()}"/>
+          <input type="range" class="price-range__input" min="${0/*HomeController.findMinPrice()*/}" max="${5/*HomeController.findMaxPrice()*/}"/>
         </div>
         <div class="stock-range">
-          <input type="range" class="stock-range__input" min="${HomeController.findMinStock()}" max="${HomeController.findMaxStock()}"/>
+          <input type="range" class="stock-range__input" min="${0/*HomeController.findMinStock()*/}" max="${5/*HomeController.findMaxStock()*/}"/>
         </div>
       </section>
     `;
