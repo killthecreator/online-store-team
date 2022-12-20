@@ -8,17 +8,25 @@
 }
 
 $basic-font-size: 1.2rem;
+$basic-padding: 2vw 1vw;
+$small-padding: 0 1vw;
+$medium-padding: 1vw 1vw;
+$title-margin: 0 0 1vw 0;
+$color: #eee;
+$gradient: linear-gradient(hotpink 5%, transparent 80%),
+linear-gradient(90deg, darkorchid 5%, transparent 80%),
+linear-gradient(-90deg, violet 5%, transparent 80%), white;/*linear-gradient(180deg, #fff5f5 20%, transparent 80%), linear-gradient(45deg, #fff5f5 20%, transparent 80%), white;*/
 .filters {
-  padding: 0 1vw;
+  padding: $small-padding;
   @include flex-space-between;
   .category-form, .brand-form {
     @include flex-col;
-    padding: 0 1vw;
+    padding: $small-padding;
     display: flex;
       .category-form__title, .brand-form__title {
         font-size: $basic-font-size;
         font-variant: bold;
-        margin: 0 0 1vw 0;
+        margin: $title-margin;
       }
       .category-form__content, .brand-form__content {
         display: flex;
@@ -28,5 +36,48 @@ $basic-font-size: 1.2rem;
           min-width: 150px;
         }
       }
+  }
+}
+
+.ranges {
+  @include flex-space-between;
+  padding: $small-padding;
+  .price-range, .stock-range {
+    flex-grow: 1;
+    padding: $medium-padding;
+    .price-range__header, .stock-range__header {
+      @include flex-space-between;
+      .price-range__min, .stock-range__min, .price-range__max, .stock-range__max {
+        font-family: "Normal";
+        padding: $small-padding;
+      }
+      .price-range__title, .stock-range__title {
+        font-size: $basic-font-size;
+        margin: $title-margin;
+      }
+    }
+    .price-range__input-wrapper, .stock-range__input-wrapper {
+      position: relative;
+      /*pointer-events: none;*/
+      width: 100%;
+      .price-range__input, .stock-range__input {
+        -webkit-appearance: none;
+        background-color: $color;
+        border-radius: 5px;
+        width: 99%;
+        display: block;
+        margin: 0;
+      }
+      .price-range__input::-webkit-slider-thumb, .stock-range__input::-webkit-slider-thumb
+      {
+        -webkit-appearance: none;
+        height: 15px;
+        width: 25px;
+        border-radius: 5px;
+        cursor: pointer;
+        background: $gradient;
+        pointer-events: all;
+      }
+    }
   }
 }

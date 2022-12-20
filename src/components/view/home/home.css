@@ -1,3 +1,4 @@
+/*linear-gradient(180deg, #fff5f5 20%, transparent 80%), linear-gradient(45deg, #fff5f5 20%, transparent 80%), white;*/
 .filters {
   padding: 0 1vw;
   display: flex;
@@ -21,4 +22,48 @@
 }
 .filters .category-form .category-form__content .category-form__item, .filters .category-form .category-form__content .brand-form__item, .filters .category-form .brand-form__content .category-form__item, .filters .category-form .brand-form__content .brand-form__item, .filters .brand-form .category-form__content .category-form__item, .filters .brand-form .category-form__content .brand-form__item, .filters .brand-form .brand-form__content .category-form__item, .filters .brand-form .brand-form__content .brand-form__item {
   min-width: 150px;
+}
+
+.ranges {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1vw;
+}
+.ranges .price-range, .ranges .stock-range {
+  flex-grow: 1;
+  padding: 1vw 1vw;
+}
+.ranges .price-range .price-range__header, .ranges .price-range .stock-range__header, .ranges .stock-range .price-range__header, .ranges .stock-range .stock-range__header {
+  display: flex;
+  justify-content: space-between;
+}
+.ranges .price-range .price-range__header .price-range__min, .ranges .price-range .price-range__header .stock-range__min, .ranges .price-range .price-range__header .price-range__max, .ranges .price-range .price-range__header .stock-range__max, .ranges .price-range .stock-range__header .price-range__min, .ranges .price-range .stock-range__header .stock-range__min, .ranges .price-range .stock-range__header .price-range__max, .ranges .price-range .stock-range__header .stock-range__max, .ranges .stock-range .price-range__header .price-range__min, .ranges .stock-range .price-range__header .stock-range__min, .ranges .stock-range .price-range__header .price-range__max, .ranges .stock-range .price-range__header .stock-range__max, .ranges .stock-range .stock-range__header .price-range__min, .ranges .stock-range .stock-range__header .stock-range__min, .ranges .stock-range .stock-range__header .price-range__max, .ranges .stock-range .stock-range__header .stock-range__max {
+  font-family: "Normal";
+  padding: 0 1vw;
+}
+.ranges .price-range .price-range__header .price-range__title, .ranges .price-range .price-range__header .stock-range__title, .ranges .price-range .stock-range__header .price-range__title, .ranges .price-range .stock-range__header .stock-range__title, .ranges .stock-range .price-range__header .price-range__title, .ranges .stock-range .price-range__header .stock-range__title, .ranges .stock-range .stock-range__header .price-range__title, .ranges .stock-range .stock-range__header .stock-range__title {
+  font-size: 1.2rem;
+  margin: 0 0 1vw 0;
+}
+.ranges .price-range .price-range__input-wrapper, .ranges .price-range .stock-range__input-wrapper, .ranges .stock-range .price-range__input-wrapper, .ranges .stock-range .stock-range__input-wrapper {
+  position: relative;
+  /*pointer-events: none;*/
+  width: 100%;
+}
+.ranges .price-range .price-range__input-wrapper .price-range__input, .ranges .price-range .price-range__input-wrapper .stock-range__input, .ranges .price-range .stock-range__input-wrapper .price-range__input, .ranges .price-range .stock-range__input-wrapper .stock-range__input, .ranges .stock-range .price-range__input-wrapper .price-range__input, .ranges .stock-range .price-range__input-wrapper .stock-range__input, .ranges .stock-range .stock-range__input-wrapper .price-range__input, .ranges .stock-range .stock-range__input-wrapper .stock-range__input {
+  -webkit-appearance: none;
+  background-color: #eee;
+  border-radius: 5px;
+  width: 99%;
+  display: block;
+  margin: 0;
+}
+.ranges .price-range .price-range__input-wrapper .price-range__input::-webkit-slider-thumb, .ranges .price-range .price-range__input-wrapper .stock-range__input::-webkit-slider-thumb, .ranges .price-range .stock-range__input-wrapper .price-range__input::-webkit-slider-thumb, .ranges .price-range .stock-range__input-wrapper .stock-range__input::-webkit-slider-thumb, .ranges .stock-range .price-range__input-wrapper .price-range__input::-webkit-slider-thumb, .ranges .stock-range .price-range__input-wrapper .stock-range__input::-webkit-slider-thumb, .ranges .stock-range .stock-range__input-wrapper .price-range__input::-webkit-slider-thumb, .ranges .stock-range .stock-range__input-wrapper .stock-range__input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 15px;
+  width: 25px;
+  border-radius: 5px;
+  cursor: pointer;
+  background: linear-gradient(hotpink 5%, transparent 80%), linear-gradient(90deg, darkorchid 5%, transparent 80%), linear-gradient(-90deg, violet 5%, transparent 80%), white;
+  pointer-events: all;
 }/*# sourceMappingURL=home.css.map */

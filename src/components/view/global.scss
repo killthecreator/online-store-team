@@ -5,7 +5,7 @@
   }
 
 }
-
+$color: #eee;
 $basic-font-size: 1.2 rem;
 
 $basic-padding: 2vw 1vw;
@@ -65,8 +65,8 @@ body {
   }
 
   .main {
-    .filters {
-      .category-form__title, .brand-form__title {
+    .filters, .ranges {
+      .category-form__title, .brand-form__title, .price-range__title, .stock-range__title {
         font-family: Bold;
       }
       .category-form__content, .brand-form__content {
