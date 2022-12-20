@@ -59,12 +59,12 @@ export class HomeView extends GlobalView {
         <div class="price-range">
           <div class="price-range__input-wrapper">
             <input type="range" value="3" step="1" class="price-range__input price-range__input-1" min="${0/*HomeController.findMinPrice()*/}" max="${5/*HomeController.findMaxPrice()*/}"/>
-            <input type="range" value="7" step="1" class="price-range__input price-range__input-2" min="${5/*HomeController.findMinPrice()*/}" max="${5/*HomeController.findMaxPrice()*/}"/>
+            <input type="range" value="7" step="1" class="price-range__input price-range__input-2" min="${0/*HomeController.findMinPrice()*/}" max="${5/*HomeController.findMaxPrice()*/}"/>
           </div>
           <div class="price-range__header">
-            <div class="price-range__min"></div>
+            <div class="price-range__min">0</div>
             <div class="price-range__title">Price</div>
-            <div class="price-range__max"></div>
+            <div class="price-range__max">5</div>
           </div>
         </div>
         <div class="stock-range">
@@ -73,9 +73,9 @@ export class HomeView extends GlobalView {
             <input type="range" value="7" step="1" class="stock-range__input stock-range__input-2" min="${0/*HomeController.findMinStock()*/}" max="${5/*HomeController.findMaxStock()*/}"/>
           </div>
           <div class="stock-range__header">
-            <div class="stock-range__min">${/*HomeController.findMinStock()*/0}</div>
+            <div class="stock-range__min">0</div>
             <div class="stock-range__title">Stock</div>
-            <div class="stock-range__max">${/*HomeController.findMaxStock()*/0}</div>
+            <div class="stock-range__max">5</div>
           </div>
         </div>
       </section>

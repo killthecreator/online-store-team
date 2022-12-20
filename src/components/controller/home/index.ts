@@ -22,9 +22,9 @@ export class HomeController extends Controller {
       const stockRange1 = document.querySelector('.stock-range__input-1') as HTMLInputElement;
       const stockRange2 = document.querySelector('.stock-range__input-2') as HTMLInputElement;
       const stockMin = document.querySelector('.stock-range__min') as HTMLDivElement;
-      stockMin.innerHTML = app.model.stockRange[0].toString();
+      //stockMin.innerHTML = app.model.stockRange[0].toString();
       const stockMax = document.querySelector('.stock-range__max') as HTMLDivElement;
-      stockMax.innerHTML = app.model.stockRange[1].toString();
+      //stockMax.innerHTML = app.model.stockRange[1].toString();
 
       const priceRange1 = document.querySelector('.price-range__input-1') as HTMLInputElement;
       const priceRange2 = document.querySelector('.price-range__input-2') as HTMLInputElement;
