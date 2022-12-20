@@ -46,19 +46,32 @@
   margin: 0 0 1vw 0;
 }
 .ranges .price-range .price-range__input-wrapper, .ranges .price-range .stock-range__input-wrapper, .ranges .stock-range .price-range__input-wrapper, .ranges .stock-range .stock-range__input-wrapper {
+  height: 25px;
   position: relative;
-  /*pointer-events: none;*/
   width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 .ranges .price-range .price-range__input-wrapper .price-range__input, .ranges .price-range .price-range__input-wrapper .stock-range__input, .ranges .price-range .stock-range__input-wrapper .price-range__input, .ranges .price-range .stock-range__input-wrapper .stock-range__input, .ranges .stock-range .price-range__input-wrapper .price-range__input, .ranges .stock-range .price-range__input-wrapper .stock-range__input, .ranges .stock-range .stock-range__input-wrapper .price-range__input, .ranges .stock-range .stock-range__input-wrapper .stock-range__input {
+  position: absolute;
+  pointer-events: none;
   -webkit-appearance: none;
+  -moz-appearance: none;
+       appearance: none;
   background-color: #eee;
   border-radius: 5px;
   width: 99%;
   display: block;
   margin: 0;
 }
+.ranges .price-range .price-range__input-wrapper .price-range__input-1, .ranges .price-range .price-range__input-wrapper .stock-range__input-1, .ranges .price-range .stock-range__input-wrapper .price-range__input-1, .ranges .price-range .stock-range__input-wrapper .stock-range__input-1, .ranges .stock-range .price-range__input-wrapper .price-range__input-1, .ranges .stock-range .price-range__input-wrapper .stock-range__input-1, .ranges .stock-range .stock-range__input-wrapper .price-range__input-1, .ranges .stock-range .stock-range__input-wrapper .stock-range__input-1 {
+  height: 0;
+  margin-top: 7.5px;
+  z-index: 1;
+}
 .ranges .price-range .price-range__input-wrapper .price-range__input::-webkit-slider-thumb, .ranges .price-range .price-range__input-wrapper .stock-range__input::-webkit-slider-thumb, .ranges .price-range .stock-range__input-wrapper .price-range__input::-webkit-slider-thumb, .ranges .price-range .stock-range__input-wrapper .stock-range__input::-webkit-slider-thumb, .ranges .stock-range .price-range__input-wrapper .price-range__input::-webkit-slider-thumb, .ranges .stock-range .price-range__input-wrapper .stock-range__input::-webkit-slider-thumb, .ranges .stock-range .stock-range__input-wrapper .price-range__input::-webkit-slider-thumb, .ranges .stock-range .stock-range__input-wrapper .stock-range__input::-webkit-slider-thumb {
+  pointer-events: all;
+  box-shadow: 0 0 0 1px #C6C6C6;
   -webkit-appearance: none;
   height: 15px;
   width: 25px;
