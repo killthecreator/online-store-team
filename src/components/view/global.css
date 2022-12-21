@@ -46,13 +46,19 @@ body .header .cart-wrapper {
   justify-content: space-between;
 }
 body .header .cart-wrapper .cart-wrapper__state {
-  font-size: 1.2 rem;
+  font-size: 1.2rem;
   margin: 0 1vw;
 }
 body .main .filters .category-form__title, body .main .filters .brand-form__title, body .main .filters .price-range__title, body .main .filters .stock-range__title, body .main .ranges .category-form__title, body .main .ranges .brand-form__title, body .main .ranges .price-range__title, body .main .ranges .stock-range__title {
   font-family: Bold;
 }
 body .main .filters .category-form__content, body .main .filters .brand-form__content, body .main .ranges .category-form__content, body .main .ranges .brand-form__content {
+  font-family: Normal;
+}
+body .main .buttons .button {
+  font-family: Normal;
+}
+body .main .buttons .sort-options, body .main .buttons .found {
   font-family: Normal;
 }
 body .footer {
@@ -70,7 +76,7 @@ body .footer .github .github__img {
   margin: 0 1vw;
 }
 body .footer .year {
-  font-size: 1.2 rem;
+  font-size: 1.2rem;
 }
 body .footer .rs-school .rs-school__img {
   width: 5vw;

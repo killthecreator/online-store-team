@@ -7,6 +7,38 @@
   justify-content: space-between;
 }
 
+@mixin button-style {
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: #ccc;
+  border-style: solid;
+  &:hover {
+    @include button-hover;
+  }
+  &:active {
+    @include button-active;
+  }
+  &:disabled {
+    @include button-disabled;
+  }
+}
+
+@mixin button-hover {
+  background: $gradient;
+  color: white;
+  cursor: pointer;
+}
+@mixin button-active {
+  background: $gradient;
+  color: white;
+  cursor: pointer;
+}
+@mixin button-disabled {
+  background: #eee;
+  color: #cce;
+  cursor: default;
+}
+
 $basic-font-size: 1.2rem;
 $basic-padding: 2vw 1vw;
 $small-padding: 0 1vw;
@@ -126,6 +158,32 @@ linear-gradient(-90deg, violet 5%, transparent 80%), white;/*linear-gradient(180
         background: $gradient;
         pointer-events: all;
       }
+    }
+  }
+}
+
+.buttons {
+  @include flex-space-between;
+  padding: $medium-padding;
+  background-color: #eee;
+  .button {
+    width: 100px;
+    height: 40px;
+    @include button-style;
+  }
+  .sort-options {
+    padding: $small-padding;
+  }
+  .found {
+    display: flex;
+    align-items: center;
+  }
+  .view-change {
+    .view1, .view2 {
+      font-size: $basic-font-size;
+      width: 40px;
+      height: 40px;
+      @include button-style;
     }
   }
 }

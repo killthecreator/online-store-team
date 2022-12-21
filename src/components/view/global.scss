@@ -6,8 +6,7 @@
 
 }
 $color: #eee;
-$basic-font-size: 1.2 rem;
-
+$basic-font-size: 1.2rem;
 $basic-padding: 2vw 1vw;
 
 @mixin flex-col {
@@ -70,6 +69,16 @@ body {
         font-family: Bold;
       }
       .category-form__content, .brand-form__content {
+        font-family: Normal;
+      }
+    }
+    .buttons {
+      .button {
+
+        font-family: Normal;
+
+      }
+      .sort-options, .found {
         font-family: Normal;
       }
     }

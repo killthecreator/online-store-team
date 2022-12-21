@@ -27,7 +27,7 @@ export class HomeView extends GlobalView {
     main.innerHTML = this.drawFilters(
         categories,
         brands
-    ) + this.drawRanges() /*+ this.drawButtons() /*+ this.drawCards()*/;
+    ) + this.drawRanges() + this.drawButtons() /*+ this.drawCards()*/;
     document.body.append(main);
 };
 
@@ -86,8 +86,8 @@ export class HomeView extends GlobalView {
   public drawButtons = () => {
     return `
       <section class="buttons">
-        <button class="reset-filters button"></button>
-        <button class="copy-link button"></button>
+        <button class="reset-filters button">reset filters</button>
+        <button class="copy-link button">copy link</button>
         <select class="sort-options">
           <option value="priceASC">Sort by price ASC</option>
           <option value="priceDESC">Sort by price DESC</option>
@@ -95,11 +95,11 @@ export class HomeView extends GlobalView {
           <option value="nameDESC">Sort by name DESC</option>
         </select>
         <div class="found">
-          Found: ${/*HomeController.found()*/0}
+          Found: 0
         </div>
         <div class="view-change">
-          <button class="view1"></button>
-          <button class="view2"></button>
+          <button class="view1">⊞</button>
+          <button class="view2">⊟</button>
         </div>
       </section>
     `;

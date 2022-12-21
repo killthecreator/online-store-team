@@ -111,4 +111,65 @@
   cursor: pointer;
   background: linear-gradient(hotpink 5%, transparent 80%), linear-gradient(90deg, darkorchid 5%, transparent 80%), linear-gradient(-90deg, violet 5%, transparent 80%), white;
   pointer-events: all;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 1vw 1vw;
+  background-color: #eee;
+}
+.buttons .button {
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: #ccc;
+  border-style: solid;
+}
+.buttons .button:hover {
+  background: linear-gradient(hotpink 5%, transparent 80%), linear-gradient(90deg, darkorchid 5%, transparent 80%), linear-gradient(-90deg, violet 5%, transparent 80%), white;
+  color: white;
+  cursor: pointer;
+}
+.buttons .button:active {
+  background: linear-gradient(hotpink 5%, transparent 80%), linear-gradient(90deg, darkorchid 5%, transparent 80%), linear-gradient(-90deg, violet 5%, transparent 80%), white;
+  color: white;
+  cursor: pointer;
+}
+.buttons .button:disabled {
+  background: #eee;
+  color: #cce;
+  cursor: default;
+}
+.buttons .sort-options {
+  padding: 0 1vw;
+}
+.buttons .found {
+  display: flex;
+  align-items: center;
+}
+.buttons .view-change .view1, .buttons .view-change .view2 {
+  font-size: 1.2rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: #ccc;
+  border-style: solid;
+}
+.buttons .view-change .view1:hover, .buttons .view-change .view2:hover {
+  background: linear-gradient(hotpink 5%, transparent 80%), linear-gradient(90deg, darkorchid 5%, transparent 80%), linear-gradient(-90deg, violet 5%, transparent 80%), white;
+  color: white;
+  cursor: pointer;
+}
+.buttons .view-change .view1:active, .buttons .view-change .view2:active {
+  background: linear-gradient(hotpink 5%, transparent 80%), linear-gradient(90deg, darkorchid 5%, transparent 80%), linear-gradient(-90deg, violet 5%, transparent 80%), white;
+  color: white;
+  cursor: pointer;
+}
+.buttons .view-change .view1:disabled, .buttons .view-change .view2:disabled {
+  background: #eee;
+  color: #cce;
+  cursor: default;
 }/*# sourceMappingURL=home.css.map */
