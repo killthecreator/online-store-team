@@ -26,18 +26,17 @@
 }
 .filters .category-form .category-form__content .category-form__item .category-form__label:before, .filters .category-form .category-form__content .category-form__item .brand-form__label:before, .filters .category-form .category-form__content .brand-form__item .category-form__label:before, .filters .category-form .category-form__content .brand-form__item .brand-form__label:before, .filters .category-form .brand-form__content .category-form__item .category-form__label:before, .filters .category-form .brand-form__content .category-form__item .brand-form__label:before, .filters .category-form .brand-form__content .brand-form__item .category-form__label:before, .filters .category-form .brand-form__content .brand-form__item .brand-form__label:before, .filters .brand-form .category-form__content .category-form__item .category-form__label:before, .filters .brand-form .category-form__content .category-form__item .brand-form__label:before, .filters .brand-form .category-form__content .brand-form__item .category-form__label:before, .filters .brand-form .category-form__content .brand-form__item .brand-form__label:before, .filters .brand-form .brand-form__content .category-form__item .category-form__label:before, .filters .brand-form .brand-form__content .category-form__item .brand-form__label:before, .filters .brand-form .brand-form__content .brand-form__item .category-form__label:before, .filters .brand-form .brand-form__content .brand-form__item .brand-form__label:before {
   content: " ";
-  color: #000;
   display: inline-block;
   line-height: 0.75rem;
   margin-right: 15px;
   position: relative;
   text-align: center;
   text-indent: 0px;
-  width: 12px;
-  height: 12px;
-  background: #FFF;
-  border: 2px solid #aaa;
-  border-radius: 2px;
+  width: 15px;
+  height: 15px;
+  background: #eee;
+  border: none;
+  border-radius: 5px;
   -o-border-image: initial;
      border-image: initial;
   vertical-align: middle;
@@ -50,6 +49,7 @@
   content: "●";
   color: MediumOrchid;
   background-color: #cce;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1) inset, 0px 1px 1px rgba(10, 0, 10, 0.1) inset, 0px 1px 1px rgba(10, 0, 10, 0.1) inset, 0px 2px 2px rgba(10, 0, 10, 0.1) inset;
 }
 .filters .category-form .category-form__content .category-form__item .category-form__checkbox:disabled + .category-form__label:before, .filters .category-form .category-form__content .category-form__item .category-form__checkbox:disabled + .brand-form__label:before, .filters .category-form .category-form__content .category-form__item .brand-form__checkbox:disabled + .category-form__label:before, .filters .category-form .category-form__content .category-form__item .brand-form__checkbox:disabled + .brand-form__label:before, .filters .category-form .category-form__content .brand-form__item .category-form__checkbox:disabled + .category-form__label:before, .filters .category-form .category-form__content .brand-form__item .category-form__checkbox:disabled + .brand-form__label:before, .filters .category-form .category-form__content .brand-form__item .brand-form__checkbox:disabled + .category-form__label:before, .filters .category-form .category-form__content .brand-form__item .brand-form__checkbox:disabled + .brand-form__label:before, .filters .category-form .brand-form__content .category-form__item .category-form__checkbox:disabled + .category-form__label:before, .filters .category-form .brand-form__content .category-form__item .category-form__checkbox:disabled + .brand-form__label:before, .filters .category-form .brand-form__content .category-form__item .brand-form__checkbox:disabled + .category-form__label:before, .filters .category-form .brand-form__content .category-form__item .brand-form__checkbox:disabled + .brand-form__label:before, .filters .category-form .brand-form__content .brand-form__item .category-form__checkbox:disabled + .category-form__label:before, .filters .category-form .brand-form__content .brand-form__item .category-form__checkbox:disabled + .brand-form__label:before, .filters .category-form .brand-form__content .brand-form__item .brand-form__checkbox:disabled + .category-form__label:before, .filters .category-form .brand-form__content .brand-form__item .brand-form__checkbox:disabled + .brand-form__label:before, .filters .brand-form .category-form__content .category-form__item .category-form__checkbox:disabled + .category-form__label:before, .filters .brand-form .category-form__content .category-form__item .category-form__checkbox:disabled + .brand-form__label:before, .filters .brand-form .category-form__content .category-form__item .brand-form__checkbox:disabled + .category-form__label:before, .filters .brand-form .category-form__content .category-form__item .brand-form__checkbox:disabled + .brand-form__label:before, .filters .brand-form .category-form__content .brand-form__item .category-form__checkbox:disabled + .category-form__label:before, .filters .brand-form .category-form__content .brand-form__item .category-form__checkbox:disabled + .brand-form__label:before, .filters .brand-form .category-form__content .brand-form__item .brand-form__checkbox:disabled + .category-form__label:before, .filters .brand-form .category-form__content .brand-form__item .brand-form__checkbox:disabled + .brand-form__label:before, .filters .brand-form .brand-form__content .category-form__item .category-form__checkbox:disabled + .category-form__label:before, .filters .brand-form .brand-form__content .category-form__item .category-form__checkbox:disabled + .brand-form__label:before, .filters .brand-form .brand-form__content .category-form__item .brand-form__checkbox:disabled + .category-form__label:before, .filters .brand-form .brand-form__content .category-form__item .brand-form__checkbox:disabled + .brand-form__label:before, .filters .brand-form .brand-form__content .brand-form__item .category-form__checkbox:disabled + .category-form__label:before, .filters .brand-form .brand-form__content .brand-form__item .category-form__checkbox:disabled + .brand-form__label:before, .filters .brand-form .brand-form__content .brand-form__item .brand-form__checkbox:disabled + .category-form__label:before, .filters .brand-form .brand-form__content .brand-form__item .brand-form__checkbox:disabled + .brand-form__label:before {
   background: #eee;

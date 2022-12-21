@@ -37,28 +37,31 @@ linear-gradient(-90deg, violet 5%, transparent 80%), white;/*linear-gradient(180
           .category-form__label, .brand-form__label {
             &:before {
               content: " ";
-              color: #000;
               display: inline-block;
               line-height: 0.75rem;
               margin-right: 15px;
               position: relative;
               text-align: center;
               text-indent: 0px;
-              width: 12px;
-              height: 12px;
-              background: #FFF;
-              border: 2px solid #aaa;
-              border-radius: 2px;
+              width: 15px;
+              height: 15px;
+              background: #eee;
+              border: none;
+              border-radius: 5px;
               border-image: initial;
               vertical-align: middle;
             }
           }
           .category-form__checkbox, .brand-form__checkbox {
             display: none;
-            &:checked + .category-form__label:before, &:checked + .brand-form__label:before, {
+            &:checked + .category-form__label:before, &:checked + .brand-form__label:before {
               content: "●";
               color: MediumOrchid;
               background-color: #cce;
+              box-shadow:0px 1px 2px rgba(0,0,0,0.1) inset,
+              0px 1px 1px rgba(10,0,10,0.1) inset,
+              0px 1px 1px rgba(10,0,10,0.1) inset,
+              0px 2px 2px rgba(10,0,10,0.1) inset;
             }
             /* disabled */
             &:disabled + .category-form__label:before, &:disabled + .brand-form__label:before {
