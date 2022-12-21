@@ -15,21 +15,14 @@ import { Model } from './components/model';
 
 export class App {
     controller: HomeController;
-    view: HomeView;
-    model: Model;
     url: string;
 
-    constructor(url: string, model: Model, view: HomeView, controller: HomeController) {
+    constructor(url: string, controller: HomeController) {
         this.url = url;
-        this.view = view;
-        this.model = model;
         this.controller = controller;
     }
 }
 
-export const app = new App('/home', new Model(), new HomeView(), new HomeController());
+export const app = new App('/home', new HomeController(new Model(), new HomeView()));
 
-app.view.drawHeader();
-app.view.drawMain(app.model.categories, app.model.brands);
-app.view.drawFooter();
-app.controller.rangesHandler();
+app.controller.setupPage(app.url);
