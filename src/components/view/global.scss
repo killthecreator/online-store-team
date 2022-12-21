@@ -3,7 +3,7 @@
     outline: 0;
     outline-offset: 0;
   }
-
+  color: #444;
 }
 $color: #eee;
 $basic-font-size: 1.2rem;
@@ -78,8 +78,11 @@ body {
         font-family: Normal;
 
       }
-      .sort-options, .found {
+      .sort-options {
         font-family: Normal;
+      }
+      .found {
+        font-family: "Bold";
       }
     }
   }
