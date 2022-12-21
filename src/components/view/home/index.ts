@@ -38,7 +38,7 @@ export class HomeView extends GlobalView {
           <div class="category-form__title">Category filters</div>
           <div class="category-form__content">
             ${categories.reduce(
-              (res: string, category: Category) => res + `<div class="category-form__item"><label class="category-form__label"><input class="category-form__checkbox" type="checkbox"/>${category}</label></div>`, ''
+              (res: string, category: Category) => res + `<div class="category-form__item"><input id="${category}" class="category-form__checkbox" type="checkbox"/><label for="${category}" class="category-form__label">${category}</label></div>`, ''
             )}
           </div>
         </form>
@@ -46,7 +46,7 @@ export class HomeView extends GlobalView {
         <div class="brand-form__title">Brand filters</div>
           <div class="brand-form__content">
             ${brands.reduce(
-              (res: string, brand: Brand) => res + `<div class="brand-form__item"><label class="brand-form__label"><input class="brand-form__checkbox" type="checkbox"/>${brand}</label></div>`, ''
+              (res: string, brand: Brand) => res + `<div class="brand-form__item"><input id="${brand}" class="brand-form__checkbox" type="checkbox"/><label for="${brand}" class="brand-form__label">${brand}</label></div>`, ''
             )}
           </div>
         </form>

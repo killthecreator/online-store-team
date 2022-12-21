@@ -26,6 +26,7 @@ export class HomeController extends Controller {
     }
 
     public rangesHandler () {
+      const sliderColor = '#cce';
       const stockRange1 = document.querySelector('.stock-range__input-1') as HTMLInputElement;
       const stockRange2 = document.querySelector('.stock-range__input-2') as HTMLInputElement;
       const stockMin = document.querySelector('.stock-range__min') as HTMLDivElement;
@@ -76,7 +77,7 @@ export class HomeController extends Controller {
         if (from === null || to === null) {
           throw new Error('')
         }
-        fillSlider(fromSlider, toSlider, '#eee', '#fbe', toSlider);
+        fillSlider(fromSlider, toSlider, '#eee', sliderColor, toSlider);
         if (from > to) {
           fromSlider.value = to.toString();
           fromInput.textContent = to.toString();
@@ -87,7 +88,7 @@ export class HomeController extends Controller {
 
       function controlToSlider(fromSlider: HTMLInputElement, toSlider: HTMLInputElement, toInput: HTMLDivElement) {
         const [from, to] = getParsed(fromSlider, toSlider);
-        fillSlider(fromSlider, toSlider, '#eee', '#fbe', toSlider);
+        fillSlider(fromSlider, toSlider, '#eee', sliderColor, toSlider);
         setToggleAccessible(toSlider, `.${toSlider.classList[1]}`);
         if (from <= to) {
           toSlider.value = to.toString();
@@ -104,13 +105,13 @@ export class HomeController extends Controller {
         return [from, to];
       }
 
-      fillSlider(stockRange1, stockRange2, '#eee', '#fbe', stockRange2);
+      fillSlider(stockRange1, stockRange2, '#eee', sliderColor, stockRange2);
       setToggleAccessible(stockRange2, '.stock-range__input-2');
 
       stockRange1.addEventListener("input", () => controlFromSlider(stockRange1, stockRange2, stockMin));
       stockRange2.addEventListener("input", () => controlToSlider(stockRange1, stockRange2, stockMax));
 
-      fillSlider(priceRange1, priceRange2, '#eee', '#fbe', priceRange2);
+      fillSlider(priceRange1, priceRange2, '#eee', sliderColor, priceRange2);
       setToggleAccessible(priceRange2, '.price-range__input-2');
 
       priceRange1.addEventListener("input", () => controlFromSlider(priceRange1, priceRange2, priceMin));
