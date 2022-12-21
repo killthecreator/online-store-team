@@ -1,14 +1,4 @@
 import { route } from './routing/routing.js';
-
-const ancors: NodeList = document.querySelectorAll('.routing');
-ancors.forEach((ancor) =>
-    ancor.addEventListener('click', (e) => {
-        console.log('here we are');
-        e.preventDefault();
-        route(e);
-    })
-);
-
 import { GlobalView } from './components/view/';
 import { HomeView } from './components/view/home';
 import { ProductView } from './components/view/product/index.js';
@@ -39,3 +29,12 @@ export const app = new App('/home', new HomeController(new Model(), new HomeView
 if (window.location.pathname === '/') {
   app.homeController.setupPage(app.url);
 }
+
+const ancors = document.querySelectorAll('.routing');
+ancors.forEach((ancor) =>
+    ancor.addEventListener('click', (e) => {
+        e.preventDefault();
+        /*document.location.href = ancor.id;*/
+        route(e, ancor.id);
+    })
+);

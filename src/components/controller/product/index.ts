@@ -14,6 +14,9 @@ export class ProductController extends Controller {
   }
 
   setupPage(location: string): void {
-    console.log('product');
+    const locationArr = location.split('/');
+    const product = this.model.products.find((el) => el.name === locationArr[2]);
+    if (!product) throw new Error(`There is no ${locationArr[2]} among our products`);
+    this.view.drawProduct(product);
 }
 }

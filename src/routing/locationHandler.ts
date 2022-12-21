@@ -1,18 +1,15 @@
-import { routes, Route } from './routes.js';
 import { HomeController } from '../components/controller/home';
 import { ProductController } from '../components/controller/product';
 import { CartController } from '../components/controller/cart';
 import { NonFoundController } from '../components/controller/404';
 import { app } from '../index.js';
 
-export const locationHandler = async () => {
-  let location: string = window.location.pathname;
+export const locationHandler = async (location: string) => {
+  /*let location: string = window.location.pathname;*/
   if (location.length == 0) {
       location = "/";
   }
-
   const page = location.startsWith('/home') ? '/home' : location.startsWith('/product') ? '/product' : location.startsWith('/cart') ? '/cart' : '/404';
-  console.log(page);
   let controller;
   switch (page) {
     case '/home':

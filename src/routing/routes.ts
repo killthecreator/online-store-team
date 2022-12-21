@@ -1,4 +1,4 @@
-import { NonFoundController } from "./../components/controller/404";
+/*import { NonFoundController } from "./../components/controller/404";
 import { HomeController } from "./../components/controller/home";
 import { CartController } from "./../components/controller/cart";
 import { ProductController } from "./../components/controller/product";
@@ -26,4 +26,4 @@ export const routes: Route[] = [
     path: "/product",
     controller: new ProductController(),
   },
-]
+]*/
