@@ -3,6 +3,7 @@ import { HomeController } from '../components/controller/home';
 import { ProductController } from '../components/controller/product';
 import { CartController } from '../components/controller/cart';
 import { NonFoundController } from '../components/controller/404';
+import { app } from '../index.js';
 
 export const locationHandler = async () => {
   let location: string = window.location.pathname;
@@ -11,19 +12,20 @@ export const locationHandler = async () => {
   }
 
   const page = location.startsWith('/home') ? '/home' : location.startsWith('/product') ? '/product' : location.startsWith('/cart') ? '/cart' : '/404';
+  console.log(page);
   let controller;
   switch (page) {
     case '/home':
-      controller = new HomeController();
+      controller = app.homeController;
       break;
     case '/product':
-      controller = new ProductController();
+      controller = app.productController;
       break;
     case '/cart':
-      controller = new CartController();;
+      controller = app.cartController;
       break;
     case '/404':
-      controller = new NonFoundController();
+      controller = app.nonFoundController;
       break;
     default:
       alert( "Нет таких значений" );

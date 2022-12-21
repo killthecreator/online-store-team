@@ -1,6 +1,7 @@
 import { locationHandler } from './locationHandler.js';
 
 export const route = (event: Event) => {
+  console.log('routing');
   event = event || window.event; // get window.event if event argument not provided
   event.preventDefault();
   // window.history.pushState(state, unused, target link);

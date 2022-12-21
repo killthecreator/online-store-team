@@ -6,7 +6,7 @@ export class ProductController extends Controller {
      /* this.url = url;*/
   }
 
-  setupPage(): void {
+  setupPage(location: string): void {
     console.log('product');
 }
 }

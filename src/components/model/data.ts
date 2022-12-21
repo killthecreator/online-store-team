@@ -45,9 +45,9 @@ export const products: Product[] = [
     amount: 5,
     price: 1049,
     photos: [
-      "https://media.musiciansfriend.com/is/image/MMGS7/Player-Plus-Meteora-HH-Maple-Fingerboard-Electric-Guitar-Silver-Burst/L91740000002000-00-500x500.jpg",
-      "https://media.musiciansfriend.com/is/image/MMGS7/L91740000002000-02-500x500.jpg",
-      "https://media.musiciansfriend.com/is/image/MMGS7/L46833000001000-05-500x500.jpg",
+      "https://media.musiciansfriend.com/is/image/MMGS7/Player-Stratocaster-HSS-Maple-Fingerboard-Limited-Edition-Electric-Guitar-Black/L46827000001000-00-500x500.jpg",
+      "https://media.musiciansfriend.com/is/image/MMGS7/L46827000001000-01-500x500.jpg",
+      "https://media.musiciansfriend.com/is/image/MMGS7/L46827000001000-02-500x500.jpg",
     ],
   },
   {

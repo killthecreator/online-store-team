@@ -204,7 +204,7 @@
   padding: 2vw 1vw;
 }
 .cards-wrapper .card-wrapper {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   padding: 0 1vw;
   display: flex;
   flex-direction: column;
@@ -273,6 +273,7 @@
 }
 .cards-wrapper .card-wrapper .name-zone .name-zone__titles .name-zone__category {
   font-family: "Normal";
+  font-size: 1rem;
   margin-top: 0;
 }
 .cards-wrapper .card-wrapper .name-zone .name-zone__price {

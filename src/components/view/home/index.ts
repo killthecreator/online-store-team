@@ -117,7 +117,7 @@ export class HomeView extends GlobalView {
               </div>
               <div class="photo-zone__buttons">
                 <div class="photo-zone__product">
-                  <button class="photo-zone__product-button" onclick="document.location='/product/${card.name}'">details</button>
+                  <button class="photo-zone__product-button routing" onclick="document.location='/product/${card.name}'">details</button>
                 </div>
                 <div class="photo-zone__add-to-cart">
                   <button class="photo-zone__add-to-cart-button">add to cart</button>

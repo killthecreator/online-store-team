@@ -217,7 +217,7 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
   flex-wrap: wrap;
   padding: $basic-padding;
   .card-wrapper {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     padding: $small-padding;
     @include flex-col;
     width: $card-size;
@@ -278,6 +278,7 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
           }
           .name-zone__category{
             font-family: "Normal";
+            font-size: 1rem;
             margin-top: 0;
           }
         }
