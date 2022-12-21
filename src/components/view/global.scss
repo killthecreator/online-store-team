@@ -8,6 +8,7 @@
 $color: #eee;
 $basic-font-size: 1.2rem;
 $basic-padding: 2vw 1vw;
+$small-padding: 0 1vw;
 
 @mixin flex-col {
   display: flex;
@@ -26,7 +27,8 @@ body {
   .header {
     font-family: "Normal";
     @include flex-space-between;
-    padding: $basic-padding;
+    align-items: center;
+    padding: $small-padding;
     .logo-wrapper {
       a {
         text-decoration: none;
@@ -35,10 +37,13 @@ body {
         flex-wrap: nowrap;
         .logo-wrapper__text {
           margin: 0 1vw;
+          display: flex;
+          align-items: center;
         }
       }
     }
     .search-wrapper {
+      height: 40px;
       display: flex;
       border-radius: 5px;
       @include flex-space-between;
@@ -46,7 +51,12 @@ body {
       background-color: #eee;
       align-items: center;
       .search-wrapper__image {
+        display: flex;
+        align-items: center;
         margin: 0 1rem;
+        img {
+          width: 20px;
+        }
       }
       .search-wrapper__input {
         flex-grow: 1;

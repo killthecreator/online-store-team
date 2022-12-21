@@ -16,7 +16,8 @@ body .header {
   font-family: "Normal";
   display: flex;
   justify-content: space-between;
-  padding: 2vw 1vw;
+  align-items: center;
+  padding: 0 1vw;
 }
 body .header .logo-wrapper a {
   text-decoration: none;
@@ -26,8 +27,11 @@ body .header .logo-wrapper a {
 }
 body .header .logo-wrapper a .logo-wrapper__text {
   margin: 0 1vw;
+  display: flex;
+  align-items: center;
 }
 body .header .search-wrapper {
+  height: 40px;
   display: flex;
   border-radius: 5px;
   display: flex;
@@ -37,7 +41,12 @@ body .header .search-wrapper {
   align-items: center;
 }
 body .header .search-wrapper .search-wrapper__image {
+  display: flex;
+  align-items: center;
   margin: 0 1rem;
+}
+body .header .search-wrapper .search-wrapper__image img {
+  width: 20px;
 }
 body .header .search-wrapper .search-wrapper__input {
   flex-grow: 1;

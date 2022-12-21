@@ -4,6 +4,8 @@ import RsschoolLogo from './../../assets/logos/rs_school_js.svg';
 import { Controller } from './../controller';
 import { Brand, Category } from '../model/data';
 import ShoppingCartImg from '../../assets/logos/shopping-cart.svg';
+import SearchIcon from '../../assets/logos/seach-icon.svg';
+import Logo from '../../assets/logos/site-logo.jpg';
 
 //TODO Controller.getCartState() сумма цен товаров в корзине
 
@@ -26,14 +28,14 @@ export class GlobalView {
     <div class="logo-wrapper">
       <a href="/home">
         <div class="logo-wrapper__image">
-          <img src="#"/>
+          <img src="${Logo}"/>
         </div>
         <h1 class="logo-wrapper__text">Cadence</h1>
       </a>
     </div>
     <div class="search-wrapper">
       <div class="search-wrapper__image">
-        <img src="#"/>
+        <img src="${SearchIcon}"/>
       </div>
       <input class="search-wrapper__input"/>
     </div>

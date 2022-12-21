@@ -60,7 +60,7 @@
 }
 .ranges .price-range, .ranges .stock-range {
   flex-grow: 1;
-  padding: 1vw 1vw;
+  padding: 1vw 1vw 0 1vw;
 }
 .ranges .price-range .price-range__header, .ranges .price-range .stock-range__header, .ranges .stock-range .price-range__header, .ranges .stock-range .stock-range__header {
   display: flex;

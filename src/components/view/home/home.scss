@@ -112,7 +112,7 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
   padding: $small-padding;
   .price-range, .stock-range {
     flex-grow: 1;
-    padding: $medium-padding;
+    padding: 1vw 1vw 0 1vw;
     .price-range__header, .stock-range__header {
       @include flex-space-between;
       .price-range__min, .stock-range__min, .price-range__max, .stock-range__max {
