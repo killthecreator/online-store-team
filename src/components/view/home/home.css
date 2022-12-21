@@ -1,5 +1,4 @@
 @charset "UTF-8";
-/*linear-gradient(180deg, #fff5f5 20%, transparent 80%), linear-gradient(45deg, #fff5f5 20%, transparent 80%), white;*/
 .filters {
   padding: 0 1vw;
   display: flex;
@@ -196,4 +195,89 @@
   background: #eee;
   color: #cce;
   cursor: default;
+}
+
+.cards-wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 2vw 1vw;
+}
+.cards-wrapper .card-wrapper {
+  margin-bottom: 1rem;
+  padding: 0 1vw;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  border-radius: 5px;
+}
+.cards-wrapper .card-wrapper .photo-zone {
+  font-family: "Normal";
+  font-size: 1rem;
+  min-height: 300px;
+  background-size: 300px;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.cards-wrapper .card-wrapper .photo-zone .photo-zone__store {
+  background-image: linear-gradient(180deg, mistyrose 5%, transparent 80%), linear-gradient(45deg, lavender 5%, transparent 80%);
+  width: 80px;
+  border-radius: 5px;
+  height: 30px;
+  align-self: flex-end;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cards-wrapper .card-wrapper .photo-zone .photo-zone__buttons {
+  display: flex;
+  justify-content: space-between;
+}
+.cards-wrapper .card-wrapper .photo-zone .photo-zone__buttons .photo-zone__product .photo-zone__product-button, .cards-wrapper .card-wrapper .photo-zone .photo-zone__buttons .photo-zone__product .photo-zone__add-to-cart-button, .cards-wrapper .card-wrapper .photo-zone .photo-zone__buttons .photo-zone__add-to-cart .photo-zone__product-button, .cards-wrapper .card-wrapper .photo-zone .photo-zone__buttons .photo-zone__add-to-cart .photo-zone__add-to-cart-button {
+  font-size: 1rem;
+  background-image: linear-gradient(180deg, mistyrose 5%, transparent 80%), linear-gradient(45deg, lavender 5%, transparent 80%);
+  width: 100px;
+  border-radius: 5px;
+  height: 30px;
+  border-width: 0px;
+}
+.cards-wrapper .card-wrapper .photo-zone .photo-zone__buttons .photo-zone__product .photo-zone__product-button:hover, .cards-wrapper .card-wrapper .photo-zone .photo-zone__buttons .photo-zone__product .photo-zone__add-to-cart-button:hover, .cards-wrapper .card-wrapper .photo-zone .photo-zone__buttons .photo-zone__add-to-cart .photo-zone__product-button:hover, .cards-wrapper .card-wrapper .photo-zone .photo-zone__buttons .photo-zone__add-to-cart .photo-zone__add-to-cart-button:hover {
+  background: linear-gradient(hotpink 5%, transparent 80%), linear-gradient(90deg, darkorchid 5%, transparent 80%), linear-gradient(-90deg, violet 5%, transparent 80%), white;
+  color: white;
+  cursor: pointer;
+}
+.cards-wrapper .card-wrapper .photo-zone .photo-zone__buttons .photo-zone__product .photo-zone__product-button:active, .cards-wrapper .card-wrapper .photo-zone .photo-zone__buttons .photo-zone__product .photo-zone__add-to-cart-button:active, .cards-wrapper .card-wrapper .photo-zone .photo-zone__buttons .photo-zone__add-to-cart .photo-zone__product-button:active, .cards-wrapper .card-wrapper .photo-zone .photo-zone__buttons .photo-zone__add-to-cart .photo-zone__add-to-cart-button:active {
+  background: linear-gradient(hotpink 5%, transparent 80%), linear-gradient(90deg, darkorchid 5%, transparent 80%), linear-gradient(-90deg, violet 5%, transparent 80%), white;
+  color: white;
+  cursor: pointer;
+}
+.cards-wrapper .card-wrapper .photo-zone .photo-zone__buttons .photo-zone__product .photo-zone__product-button:disabled, .cards-wrapper .card-wrapper .photo-zone .photo-zone__buttons .photo-zone__product .photo-zone__add-to-cart-button:disabled, .cards-wrapper .card-wrapper .photo-zone .photo-zone__buttons .photo-zone__add-to-cart .photo-zone__product-button:disabled, .cards-wrapper .card-wrapper .photo-zone .photo-zone__buttons .photo-zone__add-to-cart .photo-zone__add-to-cart-button:disabled {
+  background: #eee;
+  color: #cce;
+  cursor: default;
+}
+.cards-wrapper .card-wrapper .name-zone {
+  display: flex;
+  justify-content: space-between;
+}
+.cards-wrapper .card-wrapper .name-zone .name-zone__titles {
+  flex-grow: 1;
+}
+.cards-wrapper .card-wrapper .name-zone .name-zone__titles .name-zone__name {
+  font-family: "Bold";
+  font-size: 1.2rem;
+  margin-bottom: 0;
+}
+.cards-wrapper .card-wrapper .name-zone .name-zone__titles .name-zone__category {
+  font-family: "Normal";
+  margin-top: 0;
+}
+.cards-wrapper .card-wrapper .name-zone .name-zone__price {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  font-family: "Bold";
 }/*# sourceMappingURL=home.css.map */

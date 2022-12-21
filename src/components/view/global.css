@@ -67,6 +67,9 @@ body .main .buttons .sort-options {
 body .main .buttons .found {
   font-family: "Bold";
 }
+body .main .cards-wrapper .cards-wrapper .photo-zone {
+  font-family: "Normal";
+}
 body .footer {
   font-family: "Normal";
   display: flex;

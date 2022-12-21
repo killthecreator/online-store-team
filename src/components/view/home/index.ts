@@ -21,13 +21,13 @@ export class HomeView extends GlobalView {
     super();
   }
 
-  public drawMain = (categories: Category[], brands: Brand[]): void => {
+  public drawMain = (categories: Category[], brands: Brand[], products: Product[]): void => {
     const main = document.createElement('main');
     main.classList.add('main');
     main.innerHTML = this.drawFilters(
         categories,
         brands
-    ) + this.drawRanges() + this.drawButtons() /*+ this.drawCards()*/;
+    ) + this.drawRanges() + this.drawButtons() + this.drawCards(products);
     document.body.append(main);
 };
 
@@ -117,10 +117,10 @@ export class HomeView extends GlobalView {
               </div>
               <div class="photo-zone__buttons">
                 <div class="photo-zone__product">
-                  <button class="photo-zone__product-button" onclick="document.location='/product'"></button>
+                  <button class="photo-zone__product-button" onclick="document.location='/product/${card.name}'">details</button>
                 </div>
                 <div class="photo-zone__add-to-cart">
-                  <button class="photo-zone__add-to-cart-button" onclick="HomeController.addToCart"></button>
+                  <button class="photo-zone__add-to-cart-button">add to cart</button>
                 </div>
               </div>
             </div>

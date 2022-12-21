@@ -19,7 +19,7 @@ export class HomeController extends Controller {
         /*const app = new App('/home', new Model(), new HomeView()/*, new HomeController());*/
         /*if (locationArr.length === 1) {*/
           this.view.drawHeader();
-          this.view.drawMain(this.model.categories, this.model.brands);
+          this.view.drawMain(this.model.categories, this.model.brands, this.model.products);
           this.view.drawFooter();
           this.rangesHandler();
       //  }

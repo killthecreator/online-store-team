@@ -991,7 +991,7 @@ export const products: Product[] = [
     amount: 5,
     price: 599,
     photos: [
-      "hhttps://media.musiciansfriend.com/is/image/MMGS7/JD-Xi-Synthesizer/J19805000000000-00-500x500.jpg",
+      "https://media.musiciansfriend.com/is/image/MMGS7/JD-Xi-Synthesizer/J19805000000000-00-500x500.jpg",
       "https://media.musiciansfriend.com/is/image/MMGS7/J19805000000000-01-500x500.jpg",
       "https://media.musiciansfriend.com/is/image/MMGS7/J19805000000000-05-500x500.jpg"
     ],
