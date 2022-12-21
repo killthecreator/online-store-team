@@ -56,9 +56,14 @@ body {
     }
     .cart-wrapper {
       @include flex-space-between;
+      align-items: center;
       .cart-wrapper__state {
         font-size: $basic-font-size;
         margin: 0 1vw;
+      }
+      .cart-wrapper__image {
+        width: 30px;
+        padding: 0 1vw 0 0;
       }
     }
   }

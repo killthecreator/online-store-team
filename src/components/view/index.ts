@@ -3,6 +3,7 @@ import GithubLogo from './../../assets/logos/github.png';
 import RsschoolLogo from './../../assets/logos/rs_school_js.svg';
 import { Controller } from './../controller';
 import { Brand, Category } from '../model/data';
+import ShoppingCartImg from '../../assets/logos/shopping-cart.svg';
 
 //TODO Controller.getCartState() сумма цен товаров в корзине
 
@@ -42,7 +43,7 @@ export class GlobalView {
       </div>
       <div class="cart-wrapper__image">
         <a href="/cart">
-          <img src="#"/>
+          <img src="${ShoppingCartImg}"/>
         </a>
       </div>
     </div>`;
