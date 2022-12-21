@@ -15,7 +15,7 @@ export class HomeController extends Controller {
     }
 
     setupPage(location: string): void {
-        const locationArr = location.split('/');
+        //const locationArr = location.split('/');
         /*const app = new App('/home', new Model(), new HomeView()/*, new HomeController());*/
         /*if (locationArr.length === 1) {*/
           this.view.drawHeader();
@@ -33,20 +33,20 @@ export class HomeController extends Controller {
       stockRange1.min = this.model.stockRange[0].toString();
       stockRange2.min = this.model.stockRange[0].toString();
       const stockMax = document.querySelector('.stock-range__max') as HTMLDivElement;
-      //stockMax.innerHTML = app.model.stockRange[1].toString();
-      //stockRange1.max = app.model.stockRange[1].toString();
-      //stockRange2.max = app.model.stockRange[1].toString();
+      stockMax.innerHTML = this.model.stockRange[1].toString();
+      stockRange1.max = this.model.stockRange[1].toString();
+      stockRange2.max = this.model.stockRange[1].toString();
 
       const priceRange1 = document.querySelector('.price-range__input-1') as HTMLInputElement;
       const priceRange2 = document.querySelector('.price-range__input-2') as HTMLInputElement;
       const priceMin = document.querySelector('.price-range__min') as HTMLDivElement;
-      //priceMin.innerHTML = app.model.pricesRange[0].toString();
-      //priceRange1.min = app.model.priceRange[0].toString();
-      //priceRange2.min = app.model.priceRange[0].toString();
+      priceMin.innerHTML = this.model.pricesRange[0].toString();
+      priceRange1.min = this.model.pricesRange[0].toString();
+      priceRange2.min = this.model.pricesRange[0].toString();
       const priceMax = document.querySelector('.price-range__max') as HTMLDivElement;
-      //priceMax.innerHTML = app.model.pricesRange[1].toString();
-      //priceRange1.max = app.model.priceRange[1].toString();
-      //priceRange2.max = app.model.priceRange[1].toString();
+      priceMax.innerHTML = this.model.pricesRange[1].toString();
+      priceRange1.max = this.model.pricesRange[1].toString();
+      priceRange2.max = this.model.pricesRange[1].toString();
 
       function fillSlider(from: HTMLInputElement, to: HTMLInputElement, sliderColor: string, rangeColor: string, controlSlider: HTMLInputElement) {
         const rangeDistance = Number(to.max) - Number(to.min);
@@ -62,10 +62,10 @@ export class HomeController extends Controller {
           ${sliderColor} 100%)`;
       }
 
-      function setToggleAccessible(currentTarget: HTMLInputElement) {
-        const toSlider = document.querySelector('.stock-range__input-2') as HTMLInputElement;
-        if (Number(currentTarget.value) <= 0 ) {
-          toSlider.style.zIndex = "2";
+      function setToggleAccessible(currentTarget: HTMLInputElement, selector: string) {
+        const toSlider = document.querySelector(selector) as HTMLInputElement;
+        if (Number(currentTarget.value) <= Number(currentTarget.min) ) {
+          toSlider.style.zIndex = "3";
         } else {
           toSlider.style.zIndex = "0";
         }
@@ -88,7 +88,7 @@ export class HomeController extends Controller {
       function controlToSlider(fromSlider: HTMLInputElement, toSlider: HTMLInputElement, toInput: HTMLDivElement) {
         const [from, to] = getParsed(fromSlider, toSlider);
         fillSlider(fromSlider, toSlider, '#eee', '#fbe', toSlider);
-        setToggleAccessible(toSlider);
+        setToggleAccessible(toSlider, `.${toSlider.classList[1]}`);
         if (from <= to) {
           toSlider.value = to.toString();
           toInput.textContent = to.toString();
@@ -105,13 +105,13 @@ export class HomeController extends Controller {
       }
 
       fillSlider(stockRange1, stockRange2, '#eee', '#fbe', stockRange2);
-      setToggleAccessible(stockRange2);
+      setToggleAccessible(stockRange2, '.stock-range__input-2');
 
       stockRange1.addEventListener("input", () => controlFromSlider(stockRange1, stockRange2, stockMin));
       stockRange2.addEventListener("input", () => controlToSlider(stockRange1, stockRange2, stockMax));
 
       fillSlider(priceRange1, priceRange2, '#eee', '#fbe', priceRange2);
-      setToggleAccessible(priceRange2);
+      setToggleAccessible(priceRange2, '.price-range__input-2');
 
       priceRange1.addEventListener("input", () => controlFromSlider(priceRange1, priceRange2, priceMin));
       priceRange2.addEventListener("input", () => controlToSlider(priceRange1, priceRange2, priceMax));

@@ -3,6 +3,7 @@ import { Product, Category, Brand } from '../../model/data';
 import { Model } from './../../model';
 import { HomeController } from './../../controller/home';
 import { GlobalView } from '../index';
+import { app } from '../../../index';
 //TODO написать функции которые
 //     -  находят и возвращают
 //         findMinPrice() -- минимальную цену которая только есть cреди товаров
@@ -58,8 +59,8 @@ export class HomeView extends GlobalView {
       <section class="ranges">
         <div class="price-range">
           <div class="price-range__input-wrapper">
-            <input type="range" value="3" step="1" class="price-range__input price-range__input-1" min="${0/*HomeController.findMinPrice()*/}" max="${5/*HomeController.findMaxPrice()*/}"/>
-            <input type="range" value="7" step="1" class="price-range__input price-range__input-2" min="${0/*HomeController.findMinPrice()*/}" max="${5/*HomeController.findMaxPrice()*/}"/>
+            <input type="range" value="2000" step="100" max="50000" class="price-range__input price-range__input-1"/>
+            <input type="range" value="5000" step="100"  max="50000" class="price-range__input price-range__input-2"/>
           </div>
           <div class="price-range__header">
             <div class="price-range__min">0</div>
@@ -69,8 +70,8 @@ export class HomeView extends GlobalView {
         </div>
         <div class="stock-range">
           <div class="stock-range__input-wrapper">
-            <input type="range" value="3" step="1" class="stock-range__input stock-range__input-1" min="${0/*HomeController.findMinStock()*/}" max="${5/*HomeController.findMaxStock()*/}"/>
-            <input type="range" value="7" step="1" class="stock-range__input stock-range__input-2" min="${0/*HomeController.findMinStock()*/}" max="${5/*HomeController.findMaxStock()*/}"/>
+            <input type="range" value="3" step="1" class="stock-range__input stock-range__input-1"/>
+            <input type="range" value="7" step="1" class="stock-range__input stock-range__input-2"/>
           </div>
           <div class="stock-range__header">
             <div class="stock-range__min">0</div>
