@@ -88,7 +88,7 @@ body .footer {
   font-family: "Normal";
   display: flex;
   justify-content: space-between;
-  padding: 2vw 1vw;
+  padding: 1vw 1vw;
 }
 body .footer .github {
   display: flex;

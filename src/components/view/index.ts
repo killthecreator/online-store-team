@@ -44,7 +44,7 @@ export class GlobalView {
         Cart total: 0${/*Controller.getCartState()*/0}$
       </div>
       <div class="cart-wrapper__image">
-        <a href="/cart">
+        <a class="routing" id="/cart" href="/cart">
           <img src="${ShoppingCartImg}"/>
         </a>
       </div>

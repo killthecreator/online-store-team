@@ -113,7 +113,7 @@ body {
 
   font-family: "Normal";
     @include flex-space-between;
-    padding: $basic-padding;
+    padding: 1vw 1vw;
     .github {
       @include flex-space-between;
       .github__img {

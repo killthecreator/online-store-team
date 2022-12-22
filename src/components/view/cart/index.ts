@@ -18,8 +18,8 @@ export class CartView extends GlobalView {
     mainDiv.innerHTML = `
       <section class="summary">
         <div class="summary__title">Summary: </div>
-        <div class="summary__products">Products: ${CartController.productsInCart()}</div>
-        <div class="summary__total">Total: ${CartController.productsTotal()}</div>
+        <div class="summary__products">Products: ${5/*CartController.productsInCart()*/}</div>
+        <div class="summary__total">Total: ${6/*CartController.productsTotal()*/}</div>
         <input class="summary__promo-code-input"/>
         <button class="summary__confirm-promo-code">Confirm</button>
         <button class="summary__buy-now">Buy now</button>
@@ -29,7 +29,7 @@ export class CartView extends GlobalView {
           <div class="products__header-title">Products in cart</div>
           <div class="products__header-items">
             <div class="products__header-items-title">Items</div>
-            <input class="products__header-items-input" value=${CartController.itemsOnPage()}/>
+            <input class="products__header-items-input" value=${5/*CartController.itemsOnPage()*/>}>
           </div>
           <div class="products__header-pages">
             <div class="products__header-pages-decrease"></div>
@@ -50,7 +50,7 @@ export class CartView extends GlobalView {
                 <div class="product__stock">${product.amount}</div>
                 <div class="product__amount">
                   <div class="product__amount-minus"> - </div>
-                  <div class="product__amount-value">${CartController.howManyInCart(product.name)}</div>
+                  <div class="product__amount-value">${2/*CartController.howManyInCart(product.name)*/}</div>
                   <div class="product__amount-plus"> + </div>
                 </div>
                 <div class="product__price">${product.price}</div>

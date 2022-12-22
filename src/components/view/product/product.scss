@@ -108,6 +108,7 @@ $light-grad: linear-gradient(180deg, mistyrose 5%, transparent 80%), linear-grad
       padding: $small-padding;
       .product__description-naming {
         .product__description-name {
+          margin-top: 0;
           font-family: "Bold";
         }
         .product__description-category {

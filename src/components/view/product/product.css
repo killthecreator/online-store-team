@@ -56,6 +56,7 @@
   padding: 0 1vw;
 }
 .product .product__description .product__description-header .product__description-naming .product__description-name {
+  margin-top: 0;
   font-family: "Bold";
 }
 .product .product__description .product__description-header .product__description-naming .product__description-category {
