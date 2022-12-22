@@ -6,6 +6,7 @@ import { app } from '../index.js';
 import { CartView } from '../components/view/cart/';
 import { HomeView } from '../components/view/home/';
 import { ProductView } from '../components/view/product/';
+import { NonExistingView } from '../components/view/404/';
 
 export const locationHandler = async (location: string) => {
     /*let location: string = window.location.pathname;*/
@@ -30,10 +31,11 @@ export const locationHandler = async (location: string) => {
             break;
         case '/cart':
             app.controller = new CartController();
-            //app.view = new CartView();
+            app.view = new CartView();
             break;
         case '/404':
             app.controller = new NonFoundController();
+            app.view = new NonExistingView();
             break;
         default:
             alert('Нет таких значений');

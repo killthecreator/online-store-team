@@ -1,7 +1,6 @@
-import './home.css';
+import './home.scss';
 import { Product, Category, Brand } from '../../model/data';
 import { GlobalView } from '../index';
-import { selectorChecker } from '../../../utils/selectorChecker';
 //TODO написать функции которые
 //     -  находят и возвращают
 //         findMinPrice() -- минимальную цену которая только есть cреди товаров

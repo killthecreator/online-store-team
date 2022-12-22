@@ -1,4 +1,4 @@
-import './global.css';
+import './global.scss';
 import GithubLogo from './../../assets/logos/github.png';
 import RsschoolLogo from './../../assets/logos/rs_school_js.svg';
 import { Controller } from './../controller';
@@ -45,6 +45,7 @@ export class GlobalView {
       </div>
     </div>`;
         document.body.append(header);
+        const logo = document.querySelector('.logo-wrapper');
     };
 
     public drawFooter = (): void => {

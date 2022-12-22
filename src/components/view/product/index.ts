@@ -63,6 +63,7 @@ export class ProductView extends GlobalView {
         const search = document.querySelector('.search-wrapper') as HTMLDivElement;
         search.style.display = 'none';
 
+        /* Know where to put */
         document.querySelectorAll('.product__additional-photo').forEach((item) =>
             item.addEventListener('click', (e) => {
                 const { target } = e;
