@@ -2,6 +2,7 @@ import { route } from './routing/routing.js';
 import { GlobalView } from './components/view/';
 import { HomeView } from './components/view/home';
 import { ProductView } from './components/view/product/index.js';
+import { CartView } from './components/view/cart'
 import { HomeController } from './components/controller/home';
 import { Model } from './components/model';
 import { ProductController } from './components/controller/product/index.js';
@@ -24,7 +25,7 @@ export class App {
     }
 }
 
-export const app = new App('/home', new HomeController(new Model(), new HomeView()), new ProductController(new Model(), new ProductView()), new NonFoundController(), new CartController());
+export const app = new App('/home', new HomeController(new Model(), new HomeView()), new ProductController(new Model(), new ProductView()), new NonFoundController(), new CartController(new Model(), new CartView()));
 
 if (window.location.pathname === '/') {
   app.homeController.setupPage(app.url);
