@@ -3,6 +3,9 @@ import { ProductController } from '../components/controller/product';
 import { CartController } from '../components/controller/cart';
 import { NonFoundController } from '../components/controller/404';
 import { app } from '../index.js';
+import { CartView } from '../components/view/cart/';
+import { HomeView } from '../components/view/home/';
+import { ProductView } from '../components/view/product/';
 
 export const locationHandler = async (location: string) => {
     /*let location: string = window.location.pathname;*/
@@ -16,27 +19,25 @@ export const locationHandler = async (location: string) => {
         : location.startsWith('/cart')
         ? '/cart'
         : '/404';
-    let controller;
     switch (page) {
         case '/home':
-            controller = app.homeController;
+            app.controller = new HomeController();
+            app.view = new HomeView();
             break;
         case '/product':
-            controller = app.productController;
+            app.controller = new ProductController();
+            app.view = new ProductView();
             break;
         case '/cart':
-            controller = app.cartController;
+            app.controller = new CartController();
+            //app.view = new CartView();
             break;
         case '/404':
-            controller = app.nonFoundController;
+            app.controller = new NonFoundController();
             break;
         default:
             alert('Нет таких значений');
     }
 
-    if (!controller) {
-        throw new Error('Incorrect route');
-    }
-
-    controller.setupPage(location); //надо насписать метод с общим названием но разным содержанием для каждой страницы
+    app.controller.setupPage(location, app.view, app.model); //надо насписать метод с общим названием но разным содержанием для каждой страницы
 };

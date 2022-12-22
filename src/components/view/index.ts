@@ -6,18 +6,15 @@ import { Brand, Category } from '../model/data';
 import ShoppingCartImg from '../../assets/logos/shopping-cart.svg';
 import SearchIcon from '../../assets/logos/seach-icon.svg';
 import Logo from '../../assets/logos/site-logo.jpg';
+import { selectorChecker } from '../../utils/selectorChecker';
 
 //TODO Controller.getCartState() сумма цен товаров в корзине
 
 export class GlobalView {
     constructor() {}
 
-    /*public drawMain = (categories: Category[], brands: Brand[]): void => {
-    this.drawHeader();
-    this.drawFooter();
-  }*/
-
     public drawHeader = (): void => {
+        if (document.querySelector('.header')) return;
         const header = document.createElement('header');
         header.classList.add('header');
         //TODO add images links
@@ -50,13 +47,8 @@ export class GlobalView {
         document.body.append(header);
     };
 
-    /*public drawMain = (): void => {
-    const main = document.createElement('main');
-    main.classList.add("main");
-    document.body.append(main);
-  }*/
-
     public drawFooter = (): void => {
+        if (document.querySelector('.footer')) return;
         const footer = document.createElement('footer');
         footer.classList.add('footer');
         footer.innerHTML = `

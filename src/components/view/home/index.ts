@@ -1,9 +1,7 @@
 import './home.css';
 import { Product, Category, Brand } from '../../model/data';
-import { Model } from './../../model';
-import { HomeController } from './../../controller/home';
 import { GlobalView } from '../index';
-import { app } from '../../../index';
+import { selectorChecker } from '../../../utils/selectorChecker';
 //TODO написать функции которые
 //     -  находят и возвращают
 //         findMinPrice() -- минимальную цену которая только есть cреди товаров
@@ -17,28 +15,34 @@ import { app } from '../../../index';
 // создать в контроллере лисенеры на клик по кнопкам reset-filters, copy-link, селекту sort-options, кнопки изменения виду view1 и view2
 
 export class HomeView extends GlobalView {
-  constructor () {
-    super();
-  }
+    constructor() {
+        super();
+    }
 
-  public drawMain = (categories: Category[], brands: Brand[], products: Product[]): void => {
-    const main = document.createElement('main');
-    main.classList.add('main');
-    main.innerHTML = this.drawFilters(
-        categories,
-        brands
-    ) + this.drawRanges() + this.drawButtons() + this.drawCards(products);
-    document.body.append(main);
-};
+    public drawMain = (categories: Category[], brands: Brand[], products: Product[]): void => {
+        let main: Element;
+        if (!document.querySelector('.main')) {
+            main = document.createElement('main');
+            main.classList.add('main');
+        } else {
+            main = selectorChecker(document, '.main');
+        }
+        main.innerHTML =
+            this.drawFilters(categories, brands) + this.drawRanges() + this.drawButtons() + this.drawCards(products);
+        document.body.append(main);
+    };
 
-  public drawFilters = (categories: Category [], brands: Brand[]) => {
-    return `
+    public drawFilters = (categories: Category[], brands: Brand[]) => {
+        return `
       <section class="filters">
         <form class="category-form">
           <div class="category-form__title">Category filters</div>
           <div class="category-form__content">
             ${categories.reduce(
-              (res: string, category: Category) => res + `<div class="category-form__item"><input id="${category}" class="category-form__checkbox" type="checkbox"/><label for="${category}" class="category-form__label">${category}</label></div>`, ''
+                (res: string, category: Category) =>
+                    res +
+                    `<div class="category-form__item"><input id="${category}" class="category-form__checkbox" type="checkbox"/><label for="${category}" class="category-form__label">${category}</label></div>`,
+                ''
             )}
           </div>
         </form>
@@ -46,16 +50,19 @@ export class HomeView extends GlobalView {
         <div class="brand-form__title">Brand filters</div>
           <div class="brand-form__content">
             ${brands.reduce(
-              (res: string, brand: Brand) => res + `<div class="brand-form__item"><input id="${brand}" class="brand-form__checkbox" type="checkbox"/><label for="${brand}" class="brand-form__label">${brand}</label></div>`, ''
+                (res: string, brand: Brand) =>
+                    res +
+                    `<div class="brand-form__item"><input id="${brand}" class="brand-form__checkbox" type="checkbox"/><label for="${brand}" class="brand-form__label">${brand}</label></div>`,
+                ''
             )}
           </div>
         </form>
       </section>
     `;
-  }
+    };
 
-  public drawRanges = () => {
-    return `
+    public drawRanges = () => {
+        return `
       <section class="ranges">
         <div class="price-range">
           <div class="price-range__input-wrapper">
@@ -81,10 +88,10 @@ export class HomeView extends GlobalView {
         </div>
       </section>
     `;
-  }
+    };
 
-  public drawButtons = () => {
-    return `
+    public drawButtons = () => {
+        return `
       <section class="buttons">
         <button class="reset-filters button">reset filters</button>
         <button class="copy-link button">copy link</button>
@@ -103,12 +110,15 @@ export class HomeView extends GlobalView {
         </div>
       </section>
     `;
-  }
+    };
 
-  public drawCards = (cards: Product[]) => {
-    return `
+    public drawCards = (cards: Product[]) => {
+        return `
       <section class="cards-wrapper">
-        ${cards.reduce((res: string, card: Product) => res + `
+        ${cards.reduce(
+            (res: string, card: Product) =>
+                res +
+                `
           <div class="card-wrapper">
 
             <div class="photo-zone" style="background-image: url(${card.photos[0]});">
@@ -126,7 +136,9 @@ export class HomeView extends GlobalView {
             </div>
 
             <div class="name-zone">
-              <div class="name-zone__brand" style="background-image: url(${/*HomeController.brandLogo(card.brand)*/0});">
+              <div class="name-zone__brand" style="background-image: url(${
+                  /*HomeController.brandLogo(card.brand)*/ 0
+              });">
               </div>
               <div class="name-zone__titles">
                 <h4 class="name-zone__name">${card.name}</h4>
@@ -139,10 +151,11 @@ export class HomeView extends GlobalView {
 
           </div>
 
-        `, '')}
+        `,
+            ''
+        )}
 
       </section>
     `;
-  }
-
+    };
 }

@@ -1,54 +1,51 @@
 import { Controller } from '../';
-import { App } from '../../../index';
 import { HomeView } from '../../view/home';
 import { Model } from '../../model';
-import { app } from '../../../index';
 export class HomeController extends Controller {
-    model: Model;
-    view: HomeView;
+    /*     model: Model;
+    view: HomeView; */
     /*url: string;*/
-    constructor(/*url: string*/ model: Model, view: HomeView) {
+    constructor /*url: string*/() /*  model: Model, view: HomeView */ {
         super();
-        this.model = model;
-        this.view = view;
+        /*         this.model = model;
+        this.view = view; */
         /*this.url = url;*/
     }
 
-    setupPage(location: string): void {
-        document.body.innerHTML = ''; /* check if fits */
+    setupPage(location: string, view: HomeView, model: Model): void {
         //const locationArr = location.split('/');
         /*const app = new App('/home', new Model(), new HomeView()/*, new HomeController());*/
         /*if (locationArr.length === 1) {*/
-        this.view.drawHeader();
-        this.view.drawMain(this.model.categories, this.model.brands, this.model.products);
-        this.view.drawFooter();
-        this.rangesHandler();
+        view.drawHeader();
+        view.drawMain(model.categories, model.brands, model.products);
+        view.drawFooter();
+        this.rangesHandler(model);
         //  }
     }
 
-    public rangesHandler() {
+    public rangesHandler(model: Model) {
         const sliderColor = '#cce';
         const stockRange1 = document.querySelector('.stock-range__input-1') as HTMLInputElement;
         const stockRange2 = document.querySelector('.stock-range__input-2') as HTMLInputElement;
         const stockMin = document.querySelector('.stock-range__min') as HTMLDivElement;
-        stockMin.innerHTML = this.model.stockRange[0].toString();
-        stockRange1.min = this.model.stockRange[0].toString();
-        stockRange2.min = this.model.stockRange[0].toString();
+        stockMin.innerHTML = model.stockRange[0].toString();
+        stockRange1.min = model.stockRange[0].toString();
+        stockRange2.min = model.stockRange[0].toString();
         const stockMax = document.querySelector('.stock-range__max') as HTMLDivElement;
-        stockMax.innerHTML = this.model.stockRange[1].toString();
-        stockRange1.max = this.model.stockRange[1].toString();
-        stockRange2.max = this.model.stockRange[1].toString();
+        stockMax.innerHTML = model.stockRange[1].toString();
+        stockRange1.max = model.stockRange[1].toString();
+        stockRange2.max = model.stockRange[1].toString();
 
         const priceRange1 = document.querySelector('.price-range__input-1') as HTMLInputElement;
         const priceRange2 = document.querySelector('.price-range__input-2') as HTMLInputElement;
         const priceMin = document.querySelector('.price-range__min') as HTMLDivElement;
-        priceMin.innerHTML = this.model.pricesRange[0].toString();
-        priceRange1.min = this.model.pricesRange[0].toString();
-        priceRange2.min = this.model.pricesRange[0].toString();
+        priceMin.innerHTML = model.pricesRange[0].toString();
+        priceRange1.min = model.pricesRange[0].toString();
+        priceRange2.min = model.pricesRange[0].toString();
         const priceMax = document.querySelector('.price-range__max') as HTMLDivElement;
-        priceMax.innerHTML = this.model.pricesRange[1].toString();
-        priceRange1.max = this.model.pricesRange[1].toString();
-        priceRange2.max = this.model.pricesRange[1].toString();
+        priceMax.innerHTML = model.pricesRange[1].toString();
+        priceRange1.max = model.pricesRange[1].toString();
+        priceRange2.max = model.pricesRange[1].toString();
 
         function fillSlider(
             from: HTMLInputElement,

@@ -11,7 +11,7 @@ export class ProductView extends GlobalView {
         super();
     }
 
-    public drawProduct = (product: Product) => {
+    public drawMain = (product: Product) => {
         const mainDiv = document.querySelector('.main');
         if (mainDiv === null) throw new Error('There is no #main element in the body');
         mainDiv.innerHTML = `

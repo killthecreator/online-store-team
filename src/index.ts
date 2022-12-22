@@ -6,40 +6,30 @@ import { Model } from './components/model';
 import { ProductController } from './components/controller/product/index.js';
 import { NonFoundController } from './components/controller/404/index.js';
 import { CartController } from './components/controller/cart/index.js';
+import { CartView } from './components/view/cart/index.js';
+import { NonExistingView } from './components/view/404/index.js';
 
 export class App {
-    homeController: HomeController;
-    productController: ProductController;
-    nonFoundController: NonFoundController;
-    cartController: CartController;
     url: string;
+    model: Model;
+    view: HomeView | ProductView | CartView | NonExistingView;
+    controller: HomeController | CartController | NonFoundController | ProductController;
 
     constructor(
         url: string,
-        homeController: HomeController,
-        productController: ProductController,
-        nonFoundController: NonFoundController,
-        cartController: CartController
+        model: Model,
+        view: HomeView | ProductView | CartView | NonExistingView,
+        controller: HomeController | CartController | NonFoundController | ProductController
     ) {
         this.url = url;
-        this.productController = productController;
-        this.cartController = cartController;
-        this.nonFoundController = nonFoundController;
-        this.homeController = homeController;
+        this.model = model;
+        this.view = view;
+        this.controller = controller;
     }
 }
 
-export const app = new App(
-    '',
-    new HomeController(new Model(), new HomeView()),
-    new ProductController(new Model(), new ProductView()),
-    new NonFoundController(),
-    new CartController()
-);
-
-if (window.location.pathname === '/') {
-    app.homeController.setupPage(app.url);
-}
+export const app = new App('/home', new Model(), new HomeView(), new HomeController());
+app.controller.setupPage(app.url, app.view, app.model);
 
 const ancors = document.querySelectorAll('.routing');
 ancors.forEach((ancor) =>
