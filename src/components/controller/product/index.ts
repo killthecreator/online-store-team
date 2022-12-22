@@ -8,7 +8,6 @@ export class ProductController extends Controller {
         super();
         /* this.url = url;*/
     }
-
     setupPage(location: string, view: ProductView, model: Model): void {
         const locationArr = location.split('/');
         const product = model.products.find((el) => el.name === locationArr[2]);
