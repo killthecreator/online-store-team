@@ -10,23 +10,21 @@ import Logo from '../../assets/logos/site-logo.jpg';
 //TODO Controller.getCartState() сумма цен товаров в корзине
 
 export class GlobalView {
-  constructor () {
+    constructor() {}
 
-  }
-
-  /*public drawMain = (categories: Category[], brands: Brand[]): void => {
+    /*public drawMain = (categories: Category[], brands: Brand[]): void => {
     this.drawHeader();
     this.drawFooter();
   }*/
 
-  public drawHeader = (): void => {
-    const header = document.createElement('header');
-    header.classList.add("header");
-    //TODO add images links
-    //TODO implement search
-    header.innerHTML = `
+    public drawHeader = (): void => {
+        const header = document.createElement('header');
+        header.classList.add('header');
+        //TODO add images links
+        //TODO implement search
+        header.innerHTML = `
     <div class="logo-wrapper">
-      <a href="/home">
+      <a href="">
         <div class="logo-wrapper__image">
           <img src="${Logo}"/>
         </div>
@@ -41,7 +39,7 @@ export class GlobalView {
     </div>
     <div class="cart-wrapper">
       <div class="cart-wrapper__state">
-        Cart total: 0${/*Controller.getCartState()*/0}$
+        Cart total: 0${/*Controller.getCartState()*/ 0}$
       </div>
       <div class="cart-wrapper__image">
         <a class="routing" id="/cart" href="/cart">
@@ -49,19 +47,19 @@ export class GlobalView {
         </a>
       </div>
     </div>`;
-    document.body.append(header);
-};
+        document.body.append(header);
+    };
 
-  /*public drawMain = (): void => {
+    /*public drawMain = (): void => {
     const main = document.createElement('main');
     main.classList.add("main");
     document.body.append(main);
   }*/
 
-  public drawFooter = (): void => {
-    const footer = document.createElement('footer');
-    footer.classList.add("footer");
-    footer.innerHTML = `
+    public drawFooter = (): void => {
+        const footer = document.createElement('footer');
+        footer.classList.add('footer');
+        footer.innerHTML = `
     <div class="github">
     <div class="github__1">
       <a href="https://github.com/killthecreator">
@@ -79,9 +77,9 @@ export class GlobalView {
   </div>
   <div class="rs-school">
     <a href="https://rs.school/js/">
-      <img class="rs-school__img" src="${ RsschoolLogo }" alt="RS School JS Front-end course"/>
+      <img class="rs-school__img" src="${RsschoolLogo}" alt="RS School JS Front-end course"/>
     </a>
   </div>`;
-    document.body.append(footer);
-  };
+        document.body.append(footer);
+    };
 }

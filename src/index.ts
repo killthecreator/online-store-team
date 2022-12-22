@@ -1,5 +1,4 @@
 import { route } from './routing/routing.js';
-import { GlobalView } from './components/view/';
 import { HomeView } from './components/view/home';
 import { ProductView } from './components/view/product/index.js';
 import { HomeController } from './components/controller/home';
@@ -15,7 +14,13 @@ export class App {
     cartController: CartController;
     url: string;
 
-    constructor(url: string, homeController: HomeController, productController: ProductController, nonFoundController: NonFoundController, cartController: CartController) {
+    constructor(
+        url: string,
+        homeController: HomeController,
+        productController: ProductController,
+        nonFoundController: NonFoundController,
+        cartController: CartController
+    ) {
         this.url = url;
         this.productController = productController;
         this.cartController = cartController;
@@ -24,10 +29,16 @@ export class App {
     }
 }
 
-export const app = new App('/home', new HomeController(new Model(), new HomeView()), new ProductController(new Model(), new ProductView()), new NonFoundController(), new CartController());
+export const app = new App(
+    '',
+    new HomeController(new Model(), new HomeView()),
+    new ProductController(new Model(), new ProductView()),
+    new NonFoundController(),
+    new CartController()
+);
 
 if (window.location.pathname === '/') {
-  app.homeController.setupPage(app.url);
+    app.homeController.setupPage(app.url);
 }
 
 const ancors = document.querySelectorAll('.routing');
