@@ -1,5 +1,5 @@
 import { Controller } from "../";
-export class NonFoundController extends Controller {
+export class NonExistingController extends Controller {
   /*url: string;*/
     constructor(/*url: string*/) {
         super();

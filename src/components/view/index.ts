@@ -8,8 +8,6 @@ import SearchIcon from '../../assets/logos/seach-icon.svg';
 import Logo from '../../assets/logos/site-logo.jpg';
 import { selectorChecker } from '../../utils/selectorChecker';
 
-//TODO Controller.getCartState() сумма цен товаров в корзине
-
 export class GlobalView {
     constructor() {}
 
@@ -17,7 +15,6 @@ export class GlobalView {
         if (document.querySelector('.header')) return;
         const header = document.createElement('header');
         header.classList.add('header');
-        //TODO add images links
         //TODO implement search
         header.innerHTML = `
     <div class="logo-wrapper">
@@ -36,7 +33,7 @@ export class GlobalView {
     </div>
     <div class="cart-wrapper">
       <div class="cart-wrapper__state">
-        Cart total: 0${/*Controller.getCartState()*/ 0}$
+        Cart total: 0 $
       </div>
       <div class="cart-wrapper__image">
         <a class="routing" id="/cart" href="/cart">

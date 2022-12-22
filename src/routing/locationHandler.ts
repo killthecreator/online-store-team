@@ -8,6 +8,16 @@ import { HomeView } from '../components/view/home/';
 import { ProductView } from '../components/view/product/';
 import { NonExistingView } from '../components/view/404/';
 
+import { homeController } from '../index.js';
+import { productController } from '../index.js';
+import { cartController } from '../index.js';
+import { nonExistingController } from '../index.js';
+
+import { homeView } from '../index.js';
+import { productView } from '../index.js';
+import { cartView } from '../index.js';
+import { nonExistingView } from '../index.js';
+
 export const locationHandler = async (location: string) => {
     /*let location: string = window.location.pathname;*/
     if (location.length == 0) {
@@ -22,20 +32,20 @@ export const locationHandler = async (location: string) => {
         : '/404';
     switch (page) {
         case '/home':
-            app.controller = new HomeController();
-            app.view = new HomeView();
+            app.controller = homeController;
+            app.view = homeView;
             break;
         case '/product':
-            app.controller = new ProductController();
-            app.view = new ProductView();
+            app.controller = productController;
+            app.view = productView;
             break;
         case '/cart':
-            app.controller = new CartController();
-            app.view = new CartView();
+            app.controller = cartController;
+            app.view = cartView;
             break;
         case '/404':
-            app.controller = new NonFoundController();
-            app.view = new NonExistingView();
+            app.controller = nonExistingController;
+            app.view = nonExistingView;
             break;
         default:
             alert('Нет таких значений');
