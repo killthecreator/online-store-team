@@ -1,5 +1,4 @@
-import './cart.css';
-import { CartController } from './../../controller/cart';
+import './cart.scss';
 import { Product } from '../../model/data';
 import { GlobalView } from '../index';
 
@@ -8,18 +7,18 @@ import { GlobalView } from '../index';
 // TODO CartController.howManyInCart(product.name) returns how many is this product in cart
 
 export class CartView extends GlobalView {
-  constructor () {
-    super();
-  }
+    constructor() {
+        super();
+    }
 
-  public drawCart = (products: Product[]) => {
-    const mainDiv = document.querySelector(".main");
-    if (mainDiv === null) throw new Error("There is no #main element in the body");
-    mainDiv.innerHTML = `
+    public drawMain = (products: Product[]) => {
+        const mainDiv = document.querySelector('.main');
+        if (mainDiv === null) throw new Error('There is no #main element in the body');
+        mainDiv.innerHTML = `
       <section class="summary">
         <div class="summary__title">Summary: </div>
-        <div class="summary__products">Products: ${5/*CartController.productsInCart()*/}</div>
-        <div class="summary__total">Total: ${6/*CartController.productsTotal()*/}</div>
+        <div class="summary__products">Products: ${5 /*CartController.productsInCart()*/}</div>
+        <div class="summary__total">Total: ${6 /*CartController.productsTotal()*/}</div>
         <input class="summary__promo-code-input"/>
         <button class="summary__confirm-promo-code">Confirm</button>
         <button class="summary__buy-now">Buy now</button>
@@ -29,7 +28,7 @@ export class CartView extends GlobalView {
           <div class="products__header-title">Products in cart</div>
           <div class="products__header-items">
             <div class="products__header-items-title">Items</div>
-            <input class="products__header-items-input" value="${5/*CartController.itemsOnPage()*/}">
+            <input class="products__header-items-input" value=${5 /*CartController.itemsOnPage()*/}>
           </div>
           <div class="products__header-pages">
             <div class="products__header-pages-decrease"></div>
@@ -38,7 +37,10 @@ export class CartView extends GlobalView {
           </div>
         </div>
         <div class="products__list">
-          ${products.reduce((res: string, product: Product, i: number) => res + `
+          ${products.reduce(
+              (res: string, product: Product, i: number) =>
+                  res +
+                  `
             <div class="product ${i}">
               <div class="product__number">${i}</div>
               <div class="product__picture" style="background-image: url(${product.photos[0]});"></div>
@@ -50,20 +52,22 @@ export class CartView extends GlobalView {
                 <div class="product__stock">${product.amount}</div>
                 <div class="product__amount">
                   <div class="product__amount-minus"> - </div>
-                  <div class="product__amount-value">${2/*CartController.howManyInCart(product.name)*/}</div>
+                  <div class="product__amount-value">${2 /*CartController.howManyInCart(product.name)*/}</div>
                   <div class="product__amount-plus"> + </div>
                 </div>
                 <div class="product__price">${product.price}</div>
               </div>
             </div>
-          `, '')}
+          `,
+              ''
+          )}
         </div>
       </section>
     `;
-  }
+    };
 
-  public drawModalWindow = () => {
-    return `
+    public drawModalWindow = () => {
+        return `
       <div class="popup">
       <form class="form">
         <div class="personal-details">
@@ -87,6 +91,5 @@ export class CartView extends GlobalView {
         </form>
       </div>
     `;
-
-  }
+    };
 }
