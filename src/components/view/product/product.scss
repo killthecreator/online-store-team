@@ -69,7 +69,7 @@ $light-grad: linear-gradient(180deg, mistyrose 5%, transparent 80%), linear-grad
 
 .bread-crumbs {
   font-family: "Normal";
-  padding: $small-padding;
+  padding: 1vw 1vw;
   .bread-crumbs__link {
     @include link;
   }
@@ -80,25 +80,25 @@ $light-grad: linear-gradient(180deg, mistyrose 5%, transparent 80%), linear-grad
   .product__photos {
     @include flex-space-between;
     .product__additional-photos {
-      width: 13vw;
-      height: 38vw;
+      width: 12vw;
+      height: 36vw;
       @include flex-col;
       justify-content: space-between;
       .product__additional-photo {
         border: 1px solid $lightColor;
         border-radius: 5px;
-        width: 12vw;
-        height: 12vw;
-        background-size: 12vw;
+        width: 11vw;
+        height: 11vw;
+        background-size: 11vw;
       }
 
     }
 
     .product__main-photo {
       flex-grow: 1;
-      width: 38vw;
-      height: 38vw;
-      background-size: 38vw;
+      width: 36vw;
+      height: 36vw;
+      background-size: 36vw;
     }
   }
   .product__description {
@@ -121,6 +121,7 @@ $light-grad: linear-gradient(180deg, mistyrose 5%, transparent 80%), linear-grad
       }
     }
     .product__description-text {
+      text-align: justify;
       font-size: 1rem;
       font-family: "Normal";
       padding: $basic-padding;
