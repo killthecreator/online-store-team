@@ -20,13 +20,9 @@ export class HomeView extends GlobalView {
     }
 
     public drawMain = (categories: Category[], brands: Brand[], products: Product[]): void => {
-        let main: Element;
-        if (!document.querySelector('.main')) {
-            main = document.createElement('main');
-            main.classList.add('main');
-        } else {
-            main = selectorChecker(document, '.main');
-        }
+        if (document.querySelector('.main')) return;
+        const main = document.createElement('main');
+        main.classList.add('main');
         main.innerHTML =
             this.drawFilters(categories, brands) + this.drawRanges() + this.drawButtons() + this.drawCards(products);
         document.body.append(main);
