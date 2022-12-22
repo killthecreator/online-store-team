@@ -15,6 +15,7 @@ export class HomeController extends Controller {
     }
 
     setupPage(location: string): void {
+        document.body.innerHTML = ''; /* check if fits */
         //const locationArr = location.split('/');
         /*const app = new App('/home', new Model(), new HomeView()/*, new HomeController());*/
         /*if (locationArr.length === 1) {*/
