@@ -29,6 +29,7 @@ export class HomeController extends Controller {
       this.addRouting();
       this.turnOnSearch();
       this.filtersAndCheckboxes();
+      this.sortByGo();
     }
 
     addRouting() {
@@ -116,35 +117,75 @@ export class HomeController extends Controller {
           }
         });
       }
+    }
 
-      function ranging() {
-        productCards.forEach(card => {
-          const stockDiv = card.querySelector(".photo-zone__store");
-          if (!stockDiv) throw new Error ('there is no store element');
-          const stockDivHTML = stockDiv.innerHTML;
-          if (!stockDivHTML) throw new Error ('there is data in element');
-          const stockArr = stockDivHTML.match(/\d+/);
-          if (!stockArr) throw new Error ('there is data in element');
-          const stockAmount =Number(stockArr[0]);
+    sortByGo() {
+      const productCards: NodeListOf<HTMLDivElement> = document.querySelectorAll(".card-wrapper");
 
-          const priceDiv = card.querySelector(".name-zone__price");
-          if (!priceDiv) throw new Error ('there is no price element');
-          const priceDivHTML = priceDiv.innerHTML;
-          if (!priceDivHTML) throw new Error ('there is data in element');
-          const priceArr = priceDivHTML.match(/\d+/);
-          if (!priceArr) throw new Error ('there is data in element');
-          const price = Number(priceArr[0]);
+      const products = Array.from(productCards);
 
-          if (stockAmount >= Number(stockRanges[0].value)
-            && stockAmount <= Number(stockRanges[1].value)
-            && price >= Number(priceRanges[0].value)
-            && price <= Number(priceRanges[1].value)) {
-              card.style.display = "flex";
-            } else {
-              card.style.display = "none";
-            }
-        });
+      type tempOb = {
+        el: HTMLDivElement,
+        price: number,
+        name: string
       }
+
+      const tempArr: tempOb[] = [];
+
+      products.forEach(product => {
+        const priceDiv = product.querySelector(".name-zone__price");
+        if (!priceDiv) throw new Error ('there is no price element');
+        const priceDivHTML = priceDiv.innerHTML;
+        if (!priceDivHTML) throw new Error ('there is data in element');
+        const priceArr = priceDivHTML.match(/\d+/);
+        if (!priceArr) throw new Error ('there is data in element');
+        const price = Number(priceArr[0]);
+        tempArr.push({
+          el: product,
+          price: price,
+          name: product.id
+        })
+      })
+
+      const cardsWrapper: HTMLDivElement | null = document.querySelector(".cards-wrapper");
+      if (!cardsWrapper) throw new Error("there is no cards wrapper in DOM");
+      const sortOptions: HTMLSelectElement | null = document.querySelector(".sort-options");
+      if (!sortOptions) throw new Error("there is no sort select in DOM");
+      sortOptions.addEventListener('change', () => {
+        switch (sortOptions.value) {
+          case "priceASC":
+            tempArr.sort((a, b) => a.price - b.price);
+            break;
+          case "priceDESC":
+            tempArr.sort((a, b) => b.price - a.price);
+            break;
+          case "nameASC":
+            tempArr.sort((a, b) => {
+              const nameA = a.name.toLowerCase();
+              const nameB=b.name.toLowerCase();
+              if (nameA < nameB)
+                return -1
+              if (nameA > nameB)
+                return 1
+              return 0;
+            });
+            break;
+          case "nameDESC":
+            tempArr.sort((a, b) => {
+              const nameA = a.name.toLowerCase();
+              const nameB=b.name.toLowerCase();
+              if (nameA < nameB)
+                return 1
+              if (nameA > nameB)
+                return -1
+              return 0;
+            });
+            break;
+        }
+        cardsWrapper.innerHTML = '';
+        tempArr.forEach(el => cardsWrapper.append(el.el) );
+      });
+      this.filtersAndCheckboxes();
     }
 
     public rangesHandler(model: Model) {

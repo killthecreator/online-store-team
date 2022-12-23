@@ -94,6 +94,7 @@ export class HomeView extends GlobalView {
         <button class="reset-filters button">reset filters</button>
         <button class="copy-link button">copy link</button>
         <select class="sort-options">
+          <option selected disabled>Sort products</option>
           <option value="priceASC">Sort by price ASC</option>
           <option value="priceDESC">Sort by price DESC</option>
           <option value="nameASC">Sort by name ASC</option>
