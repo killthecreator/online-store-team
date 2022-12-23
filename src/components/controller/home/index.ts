@@ -28,8 +28,7 @@ export class HomeController extends Controller {
     configPage() {
       this.addRouting();
       this.turnOnSearch();
-      this.filtersGo();
-      this.rangesGo();
+      this.filtersAndCheckboxes();
     }
 
     addRouting() {
@@ -69,10 +68,17 @@ export class HomeController extends Controller {
       });
     }
 
-    filtersGo() {
+    filtersAndCheckboxes() {
       const productCards: NodeListOf<HTMLDivElement> = document.querySelectorAll(".card-wrapper");
+
       const brandCheckboxes: NodeListOf<HTMLInputElement> = document.querySelectorAll(".brand-form__checkbox");
       const categoryCheckboxes: NodeListOf<HTMLInputElement> = document.querySelectorAll(".category-form__checkbox");
+
+      const priceRanges: NodeListOf<HTMLInputElement> = document.querySelectorAll(".price-range__input");
+      const stockRanges: NodeListOf<HTMLInputElement> = document.querySelectorAll(".stock-range__input");
+
+      priceRanges.forEach(range => range.addEventListener('input', filtration));
+      stockRanges.forEach(range => range.addEventListener('input', filtration));
 
       brandCheckboxes.forEach(brandcheckbox => brandcheckbox.addEventListener('click', filtration));
       categoryCheckboxes.forEach(categorycheckbox =>categorycheckbox.addEventListener('click', filtration));
@@ -81,23 +87,35 @@ export class HomeController extends Controller {
         productCards.forEach(card => {
           const productCheckbox = Array.from(categoryCheckboxes).find(checkbox => card.innerHTML.indexOf(checkbox.id) > -1);
           const brandCheckbox = Array.from(brandCheckboxes).find(checkbox => card.innerHTML.indexOf(checkbox.id) > -1);
+
+          const stockDiv = card.querySelector(".photo-zone__store");
+          if (!stockDiv) throw new Error ('there is no store element');
+          const stockDivHTML = stockDiv.innerHTML;
+          if (!stockDivHTML) throw new Error ('there is data in element');
+          const stockArr = stockDivHTML.match(/\d+/);
+          if (!stockArr) throw new Error ('there is data in element');
+          const stockAmount =Number(stockArr[0]);
+
+          const priceDiv = card.querySelector(".name-zone__price");
+          if (!priceDiv) throw new Error ('there is no price element');
+          const priceDivHTML = priceDiv.innerHTML;
+          if (!priceDivHTML) throw new Error ('there is data in element');
+          const priceArr = priceDivHTML.match(/\d+/);
+          if (!priceArr) throw new Error ('there is data in element');
+          const price = Number(priceArr[0]);
+
           if (!productCheckbox || !brandCheckbox) throw new Error("Checkboxes were not find");
-          if (productCheckbox.checked && brandCheckbox.checked) {
+
+          if ((productCheckbox.checked && brandCheckbox.checked) && (stockAmount >= Number(stockRanges[0].value)
+          && stockAmount <= Number(stockRanges[1].value)
+          && price >= Number(priceRanges[0].value)
+          && price <= Number(priceRanges[1].value))) {
             card.style.display = "flex";
           } else {
             card.style.display = "none";
           }
         });
       }
-    }
-
-    rangesGo() {
-      const productCards: NodeListOf<HTMLDivElement> = document.querySelectorAll(".card-wrapper");
-      const priceRanges: NodeListOf<HTMLInputElement> = document.querySelectorAll(".price-range__input");
-      const stockRanges: NodeListOf<HTMLInputElement> = document.querySelectorAll(".stock-range__input");
-
-      priceRanges.forEach(range => range.addEventListener('input', ranging));
-      stockRanges.forEach(range => range.addEventListener('input', ranging));
 
       function ranging() {
         productCards.forEach(card => {
@@ -116,7 +134,6 @@ export class HomeController extends Controller {
           const priceArr = priceDivHTML.match(/\d+/);
           if (!priceArr) throw new Error ('there is data in element');
           const price = Number(priceArr[0]);
-          console.log(stockRanges);
 
           if (stockAmount >= Number(stockRanges[0].value)
             && stockAmount <= Number(stockRanges[1].value)
@@ -128,7 +145,6 @@ export class HomeController extends Controller {
             }
         });
       }
-
     }
 
     public rangesHandler(model: Model) {
