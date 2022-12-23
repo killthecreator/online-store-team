@@ -28,6 +28,7 @@ export class HomeController extends Controller {
     configPage() {
       this.addRouting();
       this.turnOnSearch();
+      this.filtersGo();
     }
 
     addRouting() {
@@ -65,9 +66,46 @@ export class HomeController extends Controller {
           })
         }
       });
+    }
+
+    filtersGo() {
+      const productCards: NodeListOf<HTMLDivElement> = document.querySelectorAll(".card-wrapper");
+      const brandCheckboxes: NodeListOf<HTMLInputElement> = document.querySelectorAll(".brand-form__checkbox");
+      const categoryCheckboxes: NodeListOf<HTMLInputElement> = document.querySelectorAll(".category-form__checkbox");
+
+      brandCheckboxes.forEach(brandcheckbox => brandcheckbox.addEventListener('click', filtration));
+      categoryCheckboxes.forEach(categorycheckbox =>categorycheckbox.addEventListener('click', filtration));
+
+      function filtration() {
+        productCards.forEach(card => {
+          const productCheckbox = Array.from(categoryCheckboxes).find(checkbox => card.innerHTML.indexOf(checkbox.id) > -1);
+          const brandCheckbox = Array.from(brandCheckboxes).find(checkbox => card.innerHTML.indexOf(checkbox.id) > -1);
+          if (!productCheckbox || !brandCheckbox) throw new Error("Checkboxes were not find");
+          console.log(productCheckbox.checked);
+          console.log(brandCheckbox.checked);
+          if (productCheckbox.checked && brandCheckbox.checked) {
+            card.style.display = "flex";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      }
 
 
+      /*brandCheckboxes.forEach(checkbox => {
+        const brandProducts: HTMLDivElement[] = Array.from(productCards).filter(card => {
+         return card.innerHTML.indexOf(checkbox.id) > -1
+        });
+        if (brandProducts === undefined) throw new Error("There are no products of this brand");
 
+        checkbox.addEventListener('click', (e) => {
+          if(checkbox.checked){
+            brandProducts.forEach(card => card.style.display = "flex");
+          } else {
+            brandProducts.forEach(card => card.style.display = "none");
+          }
+         });
+      })*/
     }
 
     public rangesHandler(model: Model) {
