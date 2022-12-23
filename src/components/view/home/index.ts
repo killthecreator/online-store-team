@@ -64,8 +64,8 @@ export class HomeView extends GlobalView {
       <section class="ranges">
         <div class="price-range">
           <div class="price-range__input-wrapper">
-            <input type="range" value="2000" step="100" max="50000" class="price-range__input price-range__input-1"/>
-            <input type="range" value="5000" step="100"  max="50000" class="price-range__input price-range__input-2"/>
+            <input type="range" value="0" step="1" max="50000" class="price-range__input price-range__input-1"/>
+            <input type="range" value="20000" step="1"  max="50000" class="price-range__input price-range__input-2"/>
           </div>
           <div class="price-range__header">
             <div class="price-range__min">0</div>
@@ -75,8 +75,8 @@ export class HomeView extends GlobalView {
         </div>
         <div class="stock-range">
           <div class="stock-range__input-wrapper">
-            <input type="range" value="3" step="1" class="stock-range__input stock-range__input-1"/>
-            <input type="range" value="7" step="1" class="stock-range__input stock-range__input-2"/>
+            <input type="range" value="0" step="1" class="stock-range__input stock-range__input-1"/>
+            <input type="range" value="1000" step="1" class="stock-range__input stock-range__input-2"/>
           </div>
           <div class="stock-range__header">
             <div class="stock-range__min">0</div>

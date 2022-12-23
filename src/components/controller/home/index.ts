@@ -29,6 +29,7 @@ export class HomeController extends Controller {
       this.addRouting();
       this.turnOnSearch();
       this.filtersGo();
+      this.rangesGo();
     }
 
     addRouting() {
@@ -81,8 +82,6 @@ export class HomeController extends Controller {
           const productCheckbox = Array.from(categoryCheckboxes).find(checkbox => card.innerHTML.indexOf(checkbox.id) > -1);
           const brandCheckbox = Array.from(brandCheckboxes).find(checkbox => card.innerHTML.indexOf(checkbox.id) > -1);
           if (!productCheckbox || !brandCheckbox) throw new Error("Checkboxes were not find");
-          console.log(productCheckbox.checked);
-          console.log(brandCheckbox.checked);
           if (productCheckbox.checked && brandCheckbox.checked) {
             card.style.display = "flex";
           } else {
@@ -90,22 +89,46 @@ export class HomeController extends Controller {
           }
         });
       }
+    }
 
+    rangesGo() {
+      const productCards: NodeListOf<HTMLDivElement> = document.querySelectorAll(".card-wrapper");
+      const priceRanges: NodeListOf<HTMLInputElement> = document.querySelectorAll(".price-range__input");
+      const stockRanges: NodeListOf<HTMLInputElement> = document.querySelectorAll(".stock-range__input");
 
-      /*brandCheckboxes.forEach(checkbox => {
-        const brandProducts: HTMLDivElement[] = Array.from(productCards).filter(card => {
-         return card.innerHTML.indexOf(checkbox.id) > -1
+      priceRanges.forEach(range => range.addEventListener('input', ranging));
+      stockRanges.forEach(range => range.addEventListener('input', ranging));
+
+      function ranging() {
+        productCards.forEach(card => {
+          const stockDiv = card.querySelector(".photo-zone__store");
+          if (!stockDiv) throw new Error ('there is no store element');
+          const stockDivHTML = stockDiv.innerHTML;
+          if (!stockDivHTML) throw new Error ('there is data in element');
+          const stockArr = stockDivHTML.match(/\d+/);
+          if (!stockArr) throw new Error ('there is data in element');
+          const stockAmount =Number(stockArr[0]);
+
+          const priceDiv = card.querySelector(".name-zone__price");
+          if (!priceDiv) throw new Error ('there is no price element');
+          const priceDivHTML = priceDiv.innerHTML;
+          if (!priceDivHTML) throw new Error ('there is data in element');
+          const priceArr = priceDivHTML.match(/\d+/);
+          if (!priceArr) throw new Error ('there is data in element');
+          const price = Number(priceArr[0]);
+          console.log(stockRanges);
+
+          if (stockAmount >= Number(stockRanges[0].value)
+            && stockAmount <= Number(stockRanges[1].value)
+            && price >= Number(priceRanges[0].value)
+            && price <= Number(priceRanges[1].value)) {
+              card.style.display = "flex";
+            } else {
+              card.style.display = "none";
+            }
         });
-        if (brandProducts === undefined) throw new Error("There are no products of this brand");
+      }
 
-        checkbox.addEventListener('click', (e) => {
-          if(checkbox.checked){
-            brandProducts.forEach(card => card.style.display = "flex");
-          } else {
-            brandProducts.forEach(card => card.style.display = "none");
-          }
-         });
-      })*/
     }
 
     public rangesHandler(model: Model) {
