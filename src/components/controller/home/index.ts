@@ -45,6 +45,29 @@ export class HomeController extends Controller {
       const search: HTMLDivElement | null = document.querySelector('.search-wrapper');
       if (!search) throw new Error("there is no search block");
       search.style.display = "flex";
+
+      this.searchGo();
+    }
+
+    searchGo() {
+      const productCards: NodeListOf<HTMLDivElement> = document.querySelectorAll(".card-wrapper");
+      const input: HTMLInputElement | null = document.querySelector(".search-wrapper__input");
+      if (!input) throw new Error("There is no search input");
+      input.addEventListener("keyup", (e) => {
+        const filter = input.value.toLowerCase();
+        if(e.key === "Enter") {
+          productCards.forEach(card => {
+            if (card.innerHTML.toLowerCase().indexOf(filter) > -1) {
+              card.style.display = "flex";
+            } else {
+              card.style.display = "none";
+            }
+          })
+        }
+      });
+
+
+
     }
 
     public rangesHandler(model: Model) {
