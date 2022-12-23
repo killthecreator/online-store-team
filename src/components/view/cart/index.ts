@@ -33,9 +33,9 @@ export class CartView extends GlobalView {
             <input class="products__header-items-input" value=${5 /*CartController.itemsOnPage()*/}>
           </div>
           <div class="products__header-pages">
-            <div class="products__header-pages-decrease">\<</div>
+            <div class="products__header-pages-decrease"></div>
             <input class="products__header-pages-input" value="5" />
-            <div class="products__header-pages-increase">\></div>
+            <div class="products__header-pages-increase"></div>
           </div>
         </div>
         <div class="products__list">

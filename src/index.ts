@@ -1,7 +1,7 @@
 import { route } from './routing/routing.js';
 import { HomeView } from './components/view/home';
 import { ProductView } from './components/view/product/index.js';
-import { CartView } from './components/view/cart'
+import { CartView } from './components/view/cart';
 import { HomeController } from './components/controller/home';
 import { Model } from './components/model';
 import { ProductController } from './components/controller/product/index.js';
@@ -40,7 +40,6 @@ export const nonExistingView = new NonExistingView();
 
 export const app = new App('/home', new Model(), homeView, homeController);
 app.controller.setupPage(app.url, app.view, app.model);
-
 
 const ancors = document.querySelectorAll('.routing');
 ancors.forEach((ancor) =>

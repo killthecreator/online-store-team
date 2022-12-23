@@ -18,7 +18,7 @@ export class GlobalView {
         //TODO implement search
         header.innerHTML = `
     <div class="logo-wrapper">
-      <a href="" class="routing" id="/home">
+      <a href="" class="routing" id="/404">
         <div class="logo-wrapper__image">
           <img src="${Logo}"/>
         </div>
@@ -42,7 +42,6 @@ export class GlobalView {
       </div>
     </div>`;
         document.body.append(header);
-        const logo = document.querySelector('.logo-wrapper');
     };
 
     public drawFooter = (): void => {

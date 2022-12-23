@@ -47,8 +47,6 @@ export const locationHandler = async (location: string) => {
             app.controller = nonExistingController;
             app.view = nonExistingView;
             break;
-        default:
-            alert('Нет таких значений');
     }
 
     app.controller.setupPage(location, app.view, app.model); //надо насписать метод с общим названием но разным содержанием для каждой страницы

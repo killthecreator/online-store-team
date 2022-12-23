@@ -1,4 +1,4 @@
-import './product.css';
+import './product.scss';
 import { GlobalView } from '../index';
 import { Product } from './../../model/data';
 import { ProductController } from './../../controller/product';
@@ -12,9 +12,13 @@ export class ProductView extends GlobalView {
     }
 
     public drawMain = (product: Product) => {
-        const mainDiv = document.querySelector('.main');
-        if (mainDiv === null) throw new Error('There is no #main element in the body');
-        mainDiv.innerHTML = `
+        let main = document.querySelector('.main');
+        if (!main) {
+            main = document.createElement('main');
+            main.classList.add('main');
+            document.body.append(main);
+        }
+        main.innerHTML = `
       <section class="bread-crumbs">
         <a class="bread-crumbs__link" href="/home">Main</a>&nbsp;>>&nbsp;<a class="bread-crumbs__link" href="/category">${
             product.category

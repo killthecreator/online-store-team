@@ -1,0 +1,38 @@
+.not-found {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-left: 20px;
+    font-family: 'Bold';
+
+    &__text-container {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    &__404 {
+        font-size: 5rem;
+        margin: 0;
+    }
+
+    &__text {
+        font-size: 2rem;
+        margin: 0;
+    }
+
+    &__image {
+        display: block;
+    }
+
+    @media screen and (max-width: 900px) {
+        &__text-container {
+            flex-direction: column;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+    }
+}
