@@ -19,7 +19,9 @@ export class CartView extends GlobalView {
         <div class="summary__title">Summary: </div>
         <div class="summary__products">Products: ${5 /*CartController.productsInCart()*/}</div>
         <div class="summary__total">Total: ${6 /*CartController.productsTotal()*/}</div>
-        <input class="summary__promo-code-input"/>
+        <div class="summary__promo-code">
+          <input class="summary__promo-code-input"/>
+        </div>
         <button class="summary__confirm-promo-code">Confirm</button>
         <button class="summary__buy-now">Buy now</button>
       </section>
@@ -31,9 +33,9 @@ export class CartView extends GlobalView {
             <input class="products__header-items-input" value=${5 /*CartController.itemsOnPage()*/}>
           </div>
           <div class="products__header-pages">
-            <div class="products__header-pages-decrease"></div>
-            <input class="products__header-pages-input" value="5"/>
-            <div class="products__header-pages-increase"></div>
+            <div class="products__header-pages-decrease">\<</div>
+            <input class="products__header-pages-input" value="5" />
+            <div class="products__header-pages-increase">\></div>
           </div>
         </div>
         <div class="products__list">
@@ -46,7 +48,7 @@ export class CartView extends GlobalView {
               <div class="product__picture" style="background-image: url(${product.photos[0]});"></div>
               <div class="product__description">
                 <div class="product__name">${product.name}</div>
-                <div class="product__params">${product.description}</div>
+                <div class="product__desc">${product.description}</div>
               </div>
               <div class="product__params">
                 <div class="product__stock">${product.amount}</div>

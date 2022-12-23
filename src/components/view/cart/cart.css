@@ -1,0 +1,269 @@
+.summary {
+  display: flex;
+  justify-content: space-between;
+  padding: 1vw;
+  align-items: center;
+}
+.summary .summary__title {
+  font-family: "Normal";
+  font-size: 1.2rem;
+}
+.summary .summary__products {
+  font-family: "Bold";
+  font-size: 1.2rem;
+}
+.summary .summary__total {
+  font-family: "Bold";
+  font-size: 1.2rem;
+}
+.summary .summary__promo-code {
+  height: 40px;
+  display: flex;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  width: 150px;
+  background-color: #eee;
+  align-items: center;
+}
+.summary .summary__promo-code .summary__promo-code-input {
+  height: 40px;
+  border-radius: 5px;
+  width: 150px;
+  background-color: #eee;
+  align-items: center;
+  font-size: 1rem;
+  cursor: pointer;
+  font-family: "Normal";
+  border: none;
+  padding: 0 1vw;
+}
+.summary .summary__promo-code .summary__promo-code-input:focus {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.summary .summary__confirm-promo-code {
+  font-family: "Normal";
+  height: 40px;
+  border-radius: 5px;
+  border-width: 0px;
+  background: linear-gradient(180deg, mistyrose 5%, transparent 80%), linear-gradient(45deg, lavender 5%, transparent 80%);
+  width: 100px;
+}
+.summary .summary__confirm-promo-code:hover {
+  background: linear-gradient(hotpink 5%, transparent 80%), linear-gradient(90deg, darkorchid 5%, transparent 80%), linear-gradient(-90deg, violet 5%, transparent 80%), white;
+  color: white;
+  cursor: pointer;
+}
+.summary .summary__confirm-promo-code:active {
+  background: linear-gradient(hotpink 5%, transparent 80%), linear-gradient(90deg, darkorchid 5%, transparent 80%), linear-gradient(-90deg, violet 5%, transparent 80%), white;
+  color: white;
+  cursor: pointer;
+}
+.summary .summary__confirm-promo-code:disabled {
+  background: #eee;
+  color: #cce;
+  cursor: default;
+}
+.summary .summary__buy-now {
+  font-family: "Normal";
+  height: 40px;
+  border-radius: 5px;
+  border-width: 0px;
+  background: linear-gradient(180deg, mistyrose 5%, transparent 80%), linear-gradient(45deg, lavender 5%, transparent 80%);
+  width: 100px;
+}
+.summary .summary__buy-now:hover {
+  background: linear-gradient(hotpink 5%, transparent 80%), linear-gradient(90deg, darkorchid 5%, transparent 80%), linear-gradient(-90deg, violet 5%, transparent 80%), white;
+  color: white;
+  cursor: pointer;
+}
+.summary .summary__buy-now:active {
+  background: linear-gradient(hotpink 5%, transparent 80%), linear-gradient(90deg, darkorchid 5%, transparent 80%), linear-gradient(-90deg, violet 5%, transparent 80%), white;
+  color: white;
+  cursor: pointer;
+}
+.summary .summary__buy-now:disabled {
+  background: #eee;
+  color: #cce;
+  cursor: default;
+}
+
+.products .products__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1vw;
+  background-color: #eee;
+  font-size: 1rem;
+}
+.products .products__header .products__header-title {
+  font-family: "Bold";
+  font-size: 1.2rem;
+  padding: 0 1vw;
+}
+.products .products__header .products__header-items {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+.products .products__header .products__header-items .products__header-items-title {
+  font-size: 1.2rem;
+  font-family: "Normal";
+  padding: 0 1vw;
+}
+.products .products__header .products__header-items .products__header-items-input {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #fff;
+  align-items: center;
+  font-size: 1rem;
+  cursor: pointer;
+  font-family: "Normal";
+  border: none;
+  padding: 0 1vw;
+}
+.products .products__header .products__header-items .products__header-items-input:focus {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.products .products__header .products__header-pages {
+  display: flex;
+  justify-content: space-between;
+  /*.view1, .view2 {
+    font-size: $basic-font-size;
+    width: 40px;
+    height: 40px;
+    @include button-style;
+  }*/
+}
+.products .products__header .products__header-pages .products__header-pages-decrease, .products .products__header .products__header-pages .products__header-pages-increase {
+  font-family: "Normal";
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  border-width: 0px;
+  background: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"), linear-gradient(to bottom, #ffffff 0%, #e5e5e5 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 1rem;
+}
+.products .products__header .products__header-pages .products__header-pages-decrease:hover, .products .products__header .products__header-pages .products__header-pages-increase:hover {
+  background: linear-gradient(hotpink 5%, transparent 80%), linear-gradient(90deg, darkorchid 5%, transparent 80%), linear-gradient(-90deg, violet 5%, transparent 80%), white;
+  color: white;
+  cursor: pointer;
+}
+.products .products__header .products__header-pages .products__header-pages-decrease:active, .products .products__header .products__header-pages .products__header-pages-increase:active {
+  background: linear-gradient(hotpink 5%, transparent 80%), linear-gradient(90deg, darkorchid 5%, transparent 80%), linear-gradient(-90deg, violet 5%, transparent 80%), white;
+  color: white;
+  cursor: pointer;
+}
+.products .products__header .products__header-pages .products__header-pages-decrease:disabled, .products .products__header .products__header-pages .products__header-pages-increase:disabled {
+  background: #eee;
+  color: #cce;
+  cursor: default;
+}
+.products .products__header .products__header-pages .products__header-pages-input {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #fff;
+  align-items: center;
+  font-size: 1rem;
+  cursor: pointer;
+  font-family: "Normal";
+  border: none;
+  padding: 0 1vw;
+}
+.products .products__header .products__header-pages .products__header-pages-input:focus {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.products .products__list .product {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1vw;
+}
+.products .products__list .product .product__number {
+  font-family: "Normal";
+}
+.products .products__list .product .product__picture {
+  width: 10vw;
+  height: 10vw;
+  background-size: 10vw;
+}
+.products .products__list .product .product__description {
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
+}
+.products .products__list .product .product__description .product__name {
+  font-family: "Bold";
+  font-size: 1.2rem;
+}
+.products .products__list .product .product__description .product__desc {
+  font-family: "Normal";
+  text-align: justify;
+}
+.products .products__list .product .product__params {
+  padding: 0 1vw;
+  width: 10vw;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  display: flex;
+  justify-content: space-between;
+}
+.products .products__list .product .product__params .product__stock {
+  font-family: "Bold";
+  font-size: 1.2rem;
+  padding: 1vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.products .products__list .product .product__params .product__amount {
+  display: flex;
+  justify-content: space-between;
+  font-family: "Normal";
+}
+.products .products__list .product .product__params .product__amount .product__amount-minus, .products .products__list .product .product__params .product__amount .product__amount-plus {
+  font-family: "Normal";
+  height: 40px;
+  border-radius: 5px;
+  border-width: 0px;
+  background: linear-gradient(180deg, mistyrose 5%, transparent 80%), linear-gradient(45deg, lavender 5%, transparent 80%);
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.products .products__list .product .product__params .product__amount .product__amount-minus:hover, .products .products__list .product .product__params .product__amount .product__amount-plus:hover {
+  background: linear-gradient(hotpink 5%, transparent 80%), linear-gradient(90deg, darkorchid 5%, transparent 80%), linear-gradient(-90deg, violet 5%, transparent 80%), white;
+  color: white;
+  cursor: pointer;
+}
+.products .products__list .product .product__params .product__amount .product__amount-minus:active, .products .products__list .product .product__params .product__amount .product__amount-plus:active {
+  background: linear-gradient(hotpink 5%, transparent 80%), linear-gradient(90deg, darkorchid 5%, transparent 80%), linear-gradient(-90deg, violet 5%, transparent 80%), white;
+  color: white;
+  cursor: pointer;
+}
+.products .products__list .product .product__params .product__amount .product__amount-minus:disabled, .products .products__list .product .product__params .product__amount .product__amount-plus:disabled {
+  background: #eee;
+  color: #cce;
+  cursor: default;
+}
+.products .products__list .product .product__params .product__amount .product__amount-value {
+  padding: 1vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.products .products__list .product .product__params .product__price {
+  padding: 1vw;
+  font-family: "Bold";
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}/*# sourceMappingURL=cart.css.map */

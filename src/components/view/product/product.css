@@ -40,6 +40,7 @@
   width: 11vw;
   height: 11vw;
   background-size: 11vw;
+  cursor: pointer;
 }
 .product .product__photos .product__main-photo {
   flex-grow: 1;

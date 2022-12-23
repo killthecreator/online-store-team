@@ -53,11 +53,11 @@ $lightColor: #cce;
 }
 @mixin button-disabled {
     background: #eee;
-    color: #cce;
+    color: $color;
     cursor: default;
 }
 
-$color: #eee;
+$color: #cce;
 $basic-font-size: 1.2rem;
 $big-font-size: 1.75rem;
 $basic-padding: 2vw 1vw;

@@ -59,9 +59,21 @@ body {
         }
       }
       .search-wrapper__input {
+        cursor: pointer;
+        font-family: "Normal";
+        font-size: 1rem;
+        margin-left: calc(-2rem - 20px);
+       padding: 0 1rem 0 calc(2rem + 20px);
+      border-radius: 5px;
+        height: 35px;
         flex-grow: 1;
         background-color: transparent;
         border: none;
+
+
+        &:focus {
+          box-shadow: 0px 2px 4px rgba(0, 0, 0, .2);
+        }
       }
     }
     .cart-wrapper {
