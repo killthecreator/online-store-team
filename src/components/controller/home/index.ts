@@ -26,166 +26,170 @@ export class HomeController extends Controller {
     }
 
     configPage() {
-      this.addRouting();
-      this.turnOnSearch();
-      this.filtersAndCheckboxes();
-      this.sortByGo();
+        this.addRouting();
+        this.turnOnSearch();
+        this.filtersAndCheckboxes();
+        this.sortByGo();
     }
 
     addRouting() {
-      const ancors = document.querySelectorAll('.routing');
-      ancors.forEach((ancor) =>
-          ancor.addEventListener('click', (e) => {
-              e.preventDefault();
-              /* document.location.href = ancor.id; */
-              route(e, ancor.id);
-          })
-      );
+        const ancors = document.querySelectorAll('.routing');
+        ancors.forEach((ancor) =>
+            ancor.addEventListener('click', (e) => {
+                e.preventDefault();
+                /* document.location.href = ancor.id; */
+                route(e, ancor.id);
+            })
+        );
     }
 
     turnOnSearch() {
-      const search: HTMLDivElement | null = document.querySelector('.search-wrapper');
-      if (!search) throw new Error("there is no search block");
-      search.style.display = "flex";
+        const search: HTMLDivElement | null = document.querySelector('.search-wrapper');
+        if (!search) throw new Error('there is no search block');
+        search.style.display = 'flex';
 
-      this.searchGo();
+        this.searchGo();
     }
 
     searchGo() {
-      const productCards: NodeListOf<HTMLDivElement> = document.querySelectorAll(".card-wrapper");
-      const input: HTMLInputElement | null = document.querySelector(".search-wrapper__input");
-      if (!input) throw new Error("There is no search input");
-      input.addEventListener("keyup", (e) => {
-        const filter = input.value.toLowerCase();
-        if(e.key === "Enter") {
-          productCards.forEach(card => {
-            if (card.innerHTML.toLowerCase().indexOf(filter) > -1) {
-              card.style.display = "flex";
-            } else {
-              card.style.display = "none";
+        const productCards: NodeListOf<HTMLDivElement> = document.querySelectorAll('.card-wrapper');
+        const input: HTMLInputElement | null = document.querySelector('.search-wrapper__input');
+        if (!input) throw new Error('There is no search input');
+        input.addEventListener('keyup', (e) => {
+            const filter = input.value.toLowerCase();
+            if (e.key === 'Enter') {
+                productCards.forEach((card) => {
+                    if (card.innerHTML.toLowerCase().indexOf(filter) > -1) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
             }
-          })
-        }
-      });
+        });
     }
 
     filtersAndCheckboxes() {
-      const productCards: NodeListOf<HTMLDivElement> = document.querySelectorAll(".card-wrapper");
+        const productCards: NodeListOf<HTMLDivElement> = document.querySelectorAll('.card-wrapper');
 
-      const brandCheckboxes: NodeListOf<HTMLInputElement> = document.querySelectorAll(".brand-form__checkbox");
-      const categoryCheckboxes: NodeListOf<HTMLInputElement> = document.querySelectorAll(".category-form__checkbox");
+        const brandCheckboxes: NodeListOf<HTMLInputElement> = document.querySelectorAll('.brand-form__checkbox');
+        const categoryCheckboxes: NodeListOf<HTMLInputElement> = document.querySelectorAll('.category-form__checkbox');
 
-      const priceRanges: NodeListOf<HTMLInputElement> = document.querySelectorAll(".price-range__input");
-      const stockRanges: NodeListOf<HTMLInputElement> = document.querySelectorAll(".stock-range__input");
+        const priceRanges: NodeListOf<HTMLInputElement> = document.querySelectorAll('.price-range__input');
+        const stockRanges: NodeListOf<HTMLInputElement> = document.querySelectorAll('.stock-range__input');
 
-      priceRanges.forEach(range => range.addEventListener('input', filtration));
-      stockRanges.forEach(range => range.addEventListener('input', filtration));
+        priceRanges.forEach((range) => range.addEventListener('input', filtration));
+        stockRanges.forEach((range) => range.addEventListener('input', filtration));
 
-      brandCheckboxes.forEach(brandcheckbox => brandcheckbox.addEventListener('click', filtration));
-      categoryCheckboxes.forEach(categorycheckbox =>categorycheckbox.addEventListener('click', filtration));
+        brandCheckboxes.forEach((brandcheckbox) => brandcheckbox.addEventListener('click', filtration));
+        categoryCheckboxes.forEach((categorycheckbox) => categorycheckbox.addEventListener('click', filtration));
 
-      function filtration() {
-        productCards.forEach(card => {
-          const productCheckbox = Array.from(categoryCheckboxes).find(checkbox => card.innerHTML.indexOf(checkbox.id) > -1);
-          const brandCheckbox = Array.from(brandCheckboxes).find(checkbox => card.innerHTML.indexOf(checkbox.id) > -1);
+        function filtration() {
+            productCards.forEach((card) => {
+                const productCheckbox = Array.from(categoryCheckboxes).find(
+                    (checkbox) => card.innerHTML.indexOf(checkbox.id) > -1
+                );
+                const brandCheckbox = Array.from(brandCheckboxes).find(
+                    (checkbox) => card.innerHTML.indexOf(checkbox.id) > -1
+                );
 
-          const stockDiv = card.querySelector(".photo-zone__store");
-          if (!stockDiv) throw new Error ('there is no store element');
-          const stockDivHTML = stockDiv.innerHTML;
-          if (!stockDivHTML) throw new Error ('there is data in element');
-          const stockArr = stockDivHTML.match(/\d+/);
-          if (!stockArr) throw new Error ('there is data in element');
-          const stockAmount =Number(stockArr[0]);
+                const stockDiv = card.querySelector('.photo-zone__store');
+                if (!stockDiv) throw new Error('there is no store element');
+                const stockDivHTML = stockDiv.innerHTML;
+                if (!stockDivHTML) throw new Error('there is data in element');
+                const stockArr = stockDivHTML.match(/\d+/);
+                if (!stockArr) throw new Error('there is data in element');
+                const stockAmount = Number(stockArr[0]);
 
-          const priceDiv = card.querySelector(".name-zone__price");
-          if (!priceDiv) throw new Error ('there is no price element');
-          const priceDivHTML = priceDiv.innerHTML;
-          if (!priceDivHTML) throw new Error ('there is data in element');
-          const priceArr = priceDivHTML.match(/\d+/);
-          if (!priceArr) throw new Error ('there is data in element');
-          const price = Number(priceArr[0]);
+                const priceDiv = card.querySelector('.name-zone__price');
+                if (!priceDiv) throw new Error('there is no price element');
+                const priceDivHTML = priceDiv.innerHTML;
+                if (!priceDivHTML) throw new Error('there is data in element');
+                const priceArr = priceDivHTML.match(/\d+/);
+                if (!priceArr) throw new Error('there is data in element');
+                const price = Number(priceArr[0]);
 
-          if (!productCheckbox || !brandCheckbox) throw new Error("Checkboxes were not find");
+                if (!productCheckbox || !brandCheckbox) throw new Error('Checkboxes were not find');
 
-          if ((productCheckbox.checked && brandCheckbox.checked) && (stockAmount >= Number(stockRanges[0].value)
-          && stockAmount <= Number(stockRanges[1].value)
-          && price >= Number(priceRanges[0].value)
-          && price <= Number(priceRanges[1].value))) {
-            card.style.display = "flex";
-          } else {
-            card.style.display = "none";
-          }
-        });
-      }
+                if (
+                    productCheckbox.checked &&
+                    brandCheckbox.checked &&
+                    stockAmount >= Number(stockRanges[0].value) &&
+                    stockAmount <= Number(stockRanges[1].value) &&
+                    price >= Number(priceRanges[0].value) &&
+                    price <= Number(priceRanges[1].value)
+                ) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
     }
 
     sortByGo() {
-      const productCards: NodeListOf<HTMLDivElement> = document.querySelectorAll(".card-wrapper");
+        const productCards: NodeListOf<HTMLDivElement> = document.querySelectorAll('.card-wrapper');
 
-      const products = Array.from(productCards);
+        const products = Array.from(productCards);
 
-      type tempOb = {
-        el: HTMLDivElement,
-        price: number,
-        name: string
-      }
+        type tempOb = {
+            el: HTMLDivElement;
+            price: number;
+            name: string;
+        };
 
-      const tempArr: tempOb[] = [];
+        const tempArr: tempOb[] = [];
 
-      products.forEach(product => {
-        const priceDiv = product.querySelector(".name-zone__price");
-        if (!priceDiv) throw new Error ('there is no price element');
-        const priceDivHTML = priceDiv.innerHTML;
-        if (!priceDivHTML) throw new Error ('there is data in element');
-        const priceArr = priceDivHTML.match(/\d+/);
-        if (!priceArr) throw new Error ('there is data in element');
-        const price = Number(priceArr[0]);
-        tempArr.push({
-          el: product,
-          price: price,
-          name: product.id
-        })
-      })
-
-      const cardsWrapper: HTMLDivElement | null = document.querySelector(".cards-wrapper");
-      if (!cardsWrapper) throw new Error("there is no cards wrapper in DOM");
-      const sortOptions: HTMLSelectElement | null = document.querySelector(".sort-options");
-      if (!sortOptions) throw new Error("there is no sort select in DOM");
-      sortOptions.addEventListener('change', () => {
-        switch (sortOptions.value) {
-          case "priceASC":
-            tempArr.sort((a, b) => a.price - b.price);
-            break;
-          case "priceDESC":
-            tempArr.sort((a, b) => b.price - a.price);
-            break;
-          case "nameASC":
-            tempArr.sort((a, b) => {
-              const nameA = a.name.toLowerCase();
-              const nameB=b.name.toLowerCase();
-              if (nameA < nameB)
-                return -1
-              if (nameA > nameB)
-                return 1
-              return 0;
+        products.forEach((product) => {
+            const priceDiv = product.querySelector('.name-zone__price');
+            if (!priceDiv) throw new Error('there is no price element');
+            const priceDivHTML = priceDiv.innerHTML;
+            if (!priceDivHTML) throw new Error('there is data in element');
+            const priceArr = priceDivHTML.match(/\d+/);
+            if (!priceArr) throw new Error('there is data in element');
+            const price = Number(priceArr[0]);
+            tempArr.push({
+                el: product,
+                price: price,
+                name: product.id,
             });
-            break;
-          case "nameDESC":
-            tempArr.sort((a, b) => {
-              const nameA = a.name.toLowerCase();
-              const nameB=b.name.toLowerCase();
-              if (nameA < nameB)
-                return 1
-              if (nameA > nameB)
-                return -1
-              return 0;
-            });
-            break;
-        }
-        cardsWrapper.innerHTML = '';
-        tempArr.forEach(el => cardsWrapper.append(el.el) );
-      });
-      this.filtersAndCheckboxes();
+        });
+
+        const cardsWrapper: HTMLDivElement | null = document.querySelector('.cards-wrapper');
+        if (!cardsWrapper) throw new Error('there is no cards wrapper in DOM');
+        const sortOptions: HTMLSelectElement | null = document.querySelector('.sort-options');
+        if (!sortOptions) throw new Error('there is no sort select in DOM');
+        sortOptions.addEventListener('change', () => {
+            switch (sortOptions.value) {
+                case 'priceASC':
+                    tempArr.sort((a, b) => a.price - b.price);
+                    break;
+                case 'priceDESC':
+                    tempArr.sort((a, b) => b.price - a.price);
+                    break;
+                case 'nameASC':
+                    tempArr.sort((a, b) => {
+                        const nameA = a.name.toLowerCase();
+                        const nameB = b.name.toLowerCase();
+                        if (nameA < nameB) return -1;
+                        if (nameA > nameB) return 1;
+                        return 0;
+                    });
+                    break;
+                case 'nameDESC':
+                    tempArr.sort((a, b) => {
+                        const nameA = a.name.toLowerCase();
+                        const nameB = b.name.toLowerCase();
+                        if (nameA < nameB) return 1;
+                        if (nameA > nameB) return -1;
+                        return 0;
+                    });
+                    break;
+            }
+            cardsWrapper.innerHTML = '';
+            tempArr.forEach((el) => cardsWrapper.append(el.el));
+        });
+        this.filtersAndCheckboxes();
     }
 
     public rangesHandler(model: Model) {

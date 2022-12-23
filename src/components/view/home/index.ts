@@ -21,13 +21,22 @@ export class HomeView extends GlobalView {
     public drawMain = (categories: Category[], brands: Brand[], products: Product[]): void => {
         let main = document.querySelector('.main');
         if (!main) {
-          main = document.createElement('main');
-          main.classList.add('main');
-          document.body.append(main);
+            main = document.createElement('main');
+            main.classList.add('main');
+            document.body.append(main);
         }
         main.innerHTML =
             this.drawFilters(categories, brands) + this.drawRanges() + this.drawButtons() + this.drawCards(products);
 
+        /*         const cardsWrapper = document.querySelector('.cards-wrapper') as HTMLDivElement;
+        document.querySelector('.view1')?.addEventListener('click', () => {
+            cardsWrapper.style.flexDirection = 'row';
+            window.history.pushState({}, '', 'blue');
+        });
+        document.querySelector('.view2')?.addEventListener('click', () => {
+            cardsWrapper.style.flexDirection = 'column';
+            window.history.pushState({}, '', 'red');
+        }); */
     };
 
     public drawFilters = (categories: Category[], brands: Brand[]) => {
@@ -136,8 +145,8 @@ export class HomeView extends GlobalView {
 
             <div class="name-zone">
               <div class="name-zone__brand" id="${card.brand}" style="background-image: url(${
-                  /*HomeController.brandLogo(card.brand)*/ 0
-              });">
+                    /*HomeController.brandLogo(card.brand)*/ 0
+                });">
               </div>
               <div class="name-zone__titles">
                 <h4 class="name-zone__name">${card.name}</h4>
