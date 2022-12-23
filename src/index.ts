@@ -45,7 +45,7 @@ const ancors = document.querySelectorAll('.routing');
 ancors.forEach((ancor) =>
     ancor.addEventListener('click', (e) => {
         e.preventDefault();
-        /* document.location.href = ancor.id; */
+        /* window.location.pathname = ancor.id; */
         route(e, ancor.id);
     })
 );

@@ -18,20 +18,17 @@ import { productView } from '../index.js';
 import { cartView } from '../index.js';
 import { nonExistingView } from '../index.js';
 
-export const locationHandler = async (location: string) => {
-    /*let location: string = window.location.pathname;*/
-    if (location.length == 0) {
-        location = '/';
-    }
-    const page = location.startsWith('/home')
-        ? '/home'
-        : location.startsWith('/product')
-        ? '/product'
-        : location.startsWith('/cart')
-        ? '/cart'
-        : '/404';
+export const locationHandler = (location: string) => {
+    const page =
+        location === '/'
+            ? '/'
+            : location.startsWith('/product')
+            ? '/product'
+            : location.startsWith('/cart')
+            ? '/cart'
+            : '/404';
     switch (page) {
-        case '/home':
+        case '/':
             app.controller = homeController;
             app.view = homeView;
             break;
