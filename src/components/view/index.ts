@@ -18,7 +18,7 @@ export class GlobalView {
         //TODO implement search
         header.innerHTML = `
     <div class="logo-wrapper">
-      <a href="">
+      <a href="" class="routing" id="/home">
         <div class="logo-wrapper__image">
           <img src="${Logo}"/>
         </div>

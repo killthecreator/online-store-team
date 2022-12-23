@@ -1,6 +1,7 @@
 import { Controller } from '../';
 import { HomeView } from '../../view/home';
 import { Model } from '../../model';
+import { route } from '../../../routing/routing';
 export class HomeController extends Controller {
     /*     model: Model;
     view: HomeView; */
@@ -21,6 +22,22 @@ export class HomeController extends Controller {
         view.drawFooter();
         this.rangesHandler(model);
         //  }
+        this.configPage();
+    }
+
+    configPage() {
+      this.addRouting();
+    }
+
+    addRouting() {
+      const ancors = document.querySelectorAll('.routing');
+      ancors.forEach((ancor) =>
+          ancor.addEventListener('click', (e) => {
+              e.preventDefault();
+              /* document.location.href = ancor.id; */
+              route(e, ancor.id);
+          })
+      );
     }
 
     public rangesHandler(model: Model) {
