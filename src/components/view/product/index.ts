@@ -13,7 +13,6 @@ export class ProductView extends GlobalView {
 
     public drawMain = (product: Product) => {
         const mainDiv = document.querySelector('.main');
-        alert('kuku');
         if (mainDiv === null) throw new Error('There is no #main element in the body');
         mainDiv.innerHTML = `
       <section class="bread-crumbs">

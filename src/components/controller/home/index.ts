@@ -27,6 +27,7 @@ export class HomeController extends Controller {
 
     configPage() {
       this.addRouting();
+      this.turnOnSearch();
     }
 
     addRouting() {
@@ -38,6 +39,12 @@ export class HomeController extends Controller {
               route(e, ancor.id);
           })
       );
+    }
+
+    turnOnSearch() {
+      const search: HTMLDivElement | null = document.querySelector('.search-wrapper');
+      if (!search) throw new Error("there is no search block");
+      search.style.display = "flex";
     }
 
     public rangesHandler(model: Model) {

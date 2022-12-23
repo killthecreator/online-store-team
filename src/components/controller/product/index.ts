@@ -13,5 +13,17 @@ export class ProductController extends Controller {
         const product = model.products.find((el) => el.name === locationArr[2]);
         if (!product) throw new Error(`There is no ${locationArr[2]} among our products`);
         view.drawMain(product);
-    }
+
+        this.configPage();
+      }
+
+      configPage() {
+        this.turnOffSearch();
+      }
+
+      turnOffSearch() {
+        const search: HTMLDivElement | null = document.querySelector('.search-wrapper');
+        if (!search) throw new Error("there is no search block");
+        search.style.display = "none";
+      }
 }

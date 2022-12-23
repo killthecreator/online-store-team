@@ -8,5 +8,17 @@ export class NonExistingController extends Controller {
 
     setupPage(): void {
       console.log(404);
-  }
+
+      this.configPage();
+    }
+
+    configPage() {
+      this.turnOffSearch();
+    }
+
+    turnOffSearch() {
+      const search: HTMLDivElement | null = document.querySelector('.search-wrapper');
+      if (!search) throw new Error("there is no search block");
+      search.style.display = "none";
+    }
 }

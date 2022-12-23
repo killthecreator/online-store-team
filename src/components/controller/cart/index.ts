@@ -17,6 +17,17 @@ export class CartController extends Controller {
     const products = model.products;
     if (!products) throw new Error(`There is no ${locationArr[2]} among our products`);
     view.drawMain(model.products);
+
+    this.configPage();
   }
 
+  configPage() {
+    this.turnOffSearch();
+  }
+
+  turnOffSearch() {
+    const search: HTMLDivElement | null = document.querySelector('.search-wrapper');
+    if (!search) throw new Error("there is no search block");
+    search.style.display = "none";
+  }
 }
