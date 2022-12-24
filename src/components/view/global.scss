@@ -94,6 +94,7 @@ body {
     }
 
     .main {
+      flex-grow: 1;
         .filters,
         .ranges {
             .category-form__title,

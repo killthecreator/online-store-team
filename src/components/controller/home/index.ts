@@ -61,13 +61,14 @@ export class HomeController extends Controller {
 
     searchGo() {
         const productCards: NodeListOf<HTMLDivElement> = document.querySelectorAll('.card-wrapper');
+
         const input: HTMLInputElement | null = document.querySelector('.search-wrapper__input');
         if (!input) throw new Error('There is no search input');
         input.addEventListener('keyup', (e) => {
             const filter = input.value.toLowerCase();
             if (e.key === 'Enter') {
-                productCards.forEach((card) => {
-                    if (card.innerHTML.toLowerCase().indexOf(filter) > -1) {
+              productCards.forEach((card, i) => {
+                    if ((card.innerHTML.toLowerCase().indexOf(filter) > -1 && card.style.display !== "none") || input.value === '') {
                         card.style.display = 'flex';
                     } else {
                         card.style.display = 'none';
