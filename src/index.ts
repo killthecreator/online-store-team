@@ -57,5 +57,5 @@ ancors.forEach((ancor) =>
 
 window.onpopstate = (event) => {
     route(event, document.location.pathname);
-    alert(`location: ${document.location}, state: ${JSON.stringify(event.state)}`);
+    //alert(`location: ${document.location}, state: ${JSON.stringify(event.state)}`);
 };

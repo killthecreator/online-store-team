@@ -1,10 +1,10 @@
 import { Controller } from '../';
 import { PageNotFoundView } from '../../view/404/';
 export class PageNotFoundController extends Controller {
-    /*url: string;*/
-    constructor(/*url: string*/) {
+    url: string;
+    constructor() {
         super();
-        /*this.url = url;*/
+        this.url = '';
     }
 
     setupPage(location: string, view: PageNotFoundView): void {

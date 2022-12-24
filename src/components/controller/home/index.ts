@@ -2,24 +2,25 @@ import { Controller } from '../';
 import { HomeView } from '../../view/home';
 import { Model } from '../../model';
 import { route } from '../../../routing/routing';
-import { ProductView } from '../../view/product/index';
-import { CartView } from '../../view/cart/index';
-import { PageNotFoundView } from '../../view/404/index';
 import { locationHandler } from '../../../routing/locationHandler';
 import { selectorChecker } from '../../../utils/selectorChecker';
 export class HomeController extends Controller {
+    url: Partial<{
+        big: string;
+        sort: string;
+        search: string;
+        categories: string;
+        brands: string;
+        price: string;
+        stock: string;
+    }>;
     constructor() {
         super();
+        this.url = {};
     }
 
     setupPage(location: string, view: HomeView, model: Model): void {
-        //const locationArr = location.split('/');
-        /*const app = new App('/home', new Model(), new HomeView()/*, new HomeController());*/
-        /*if (locationArr.length === 1) {*/
-        //view.drawHeader();
         view.drawMain(model.categories, model.brands, model.products);
-        //view.drawFooter();
-        //  }
         this.configPage(model);
     }
 
@@ -41,8 +42,8 @@ export class HomeController extends Controller {
         ancors.forEach((ancor) =>
             ancor.addEventListener('click', (e) => {
                 e.preventDefault();
-                if (e.target === ancor) {
-                    /*window.history.pushState({}, `Title`, ancor.id);*/
+                if (e.currentTarget === ancor) {
+                    window.history.pushState({}, ``, ancor.id);
                     locationHandler(ancor.id);
                 }
             })
@@ -64,6 +65,12 @@ export class HomeController extends Controller {
         if (!input) throw new Error('There is no search input');
         input.addEventListener('input', () => {
             const filter = input.value.toLowerCase();
+            filter.length !== 0 ? (this.url.search = `search=${filter}`) : delete this.url.search;
+
+            Object.keys(this.url).length !== 0
+                ? window.history.replaceState({}, '', `?${Object.values(this.url).join('&')}`)
+                : window.history.replaceState({}, '', ``);
+
             productCards.forEach((card) => {
                 if (
                     (card.id.toLowerCase().indexOf(filter) > -1 && card.style.display !== 'none') ||
@@ -84,6 +91,8 @@ export class HomeController extends Controller {
 
         const brandCheckboxes: NodeListOf<HTMLInputElement> = document.querySelectorAll('.brand-form__checkbox');
         const categoryCheckboxes: NodeListOf<HTMLInputElement> = document.querySelectorAll('.category-form__checkbox');
+        const categoryCheckboxesArr = Array.from(categoryCheckboxes);
+        const brandCheckboxesArr = Array.from(brandCheckboxes);
 
         const priceRanges: NodeListOf<HTMLInputElement> = document.querySelectorAll('.price-range__input');
         const stockRanges: NodeListOf<HTMLInputElement> = document.querySelectorAll('.stock-range__input');
@@ -97,9 +106,21 @@ export class HomeController extends Controller {
         const that = this;
 
         function filtration() {
+            const activeCategories = categoryCheckboxesArr
+                .filter((checkbox) => checkbox.checked)
+                .map((item) => item.id);
+            const activeBrands = brandCheckboxesArr.filter((checkbox) => checkbox.checked).map((item) => item.id);
+
+            activeCategories.length !== 0
+                ? (that.url.categories = `category=${activeCategories.join('↕l')}`)
+                : delete that.url.categories;
+            activeBrands.length !== 0 ? (that.url.brands = `brand=${activeBrands.join('↕l')}`) : delete that.url.brands;
+
+            Object.keys(that.url).length !== 0
+                ? window.history.replaceState({}, '', `?${Object.values(that.url).join('&')}`)
+                : window.history.replaceState({}, '', ``);
+
             productCards.forEach((card) => {
-                const categoryCheckboxesArr = Array.from(categoryCheckboxes);
-                const brandCheckboxesArr = Array.from(brandCheckboxes);
                 const categoryCheckbox = categoryCheckboxesArr.find(
                     (checkbox) => card.innerHTML.indexOf(checkbox.id) !== -1
                 );
@@ -151,8 +172,7 @@ export class HomeController extends Controller {
         const tempArr: tempOb[] = [];
 
         products.forEach((product) => {
-            const priceDiv = product.querySelector('.name-zone__price');
-            if (!priceDiv) throw new Error('there is no price element');
+            const priceDiv = selectorChecker(product, '.name-zone__price');
             const priceDivHTML = priceDiv.innerHTML;
             if (!priceDivHTML) throw new Error('there is data in element');
             const priceArr = priceDivHTML.match(/\d+/);
@@ -198,6 +218,8 @@ export class HomeController extends Controller {
             }
             cardsWrapper.innerHTML = '';
             tempArr.forEach((el) => cardsWrapper.append(el.el));
+            this.url.sort = `sort=${sortOptions.value}`;
+            window.history.replaceState({}, '', `?${Object.values(this.url).join('&')}`);
         });
         this.filtersAndCheckboxes();
     }
@@ -260,7 +282,8 @@ export class HomeController extends Controller {
         function controlFromSlider(
             fromSlider: HTMLInputElement,
             toSlider: HTMLInputElement,
-            fromInput: HTMLDivElement
+            fromInput: HTMLDivElement,
+            e: Event
         ) {
             const [from, to] = getParsed(fromSlider, toSlider);
             if (from === null || to === null) {
@@ -274,9 +297,21 @@ export class HomeController extends Controller {
                 fromInput.textContent = from.toString();
             }
             that.found();
+
+            if (e.target === priceRange1) that.url.price = `price=${[from, to].join('↕l')}`;
+            if (e.target === stockRange1) that.url.stock = `stock=${[from, to].join('↕l')}`;
+
+            Object.keys(that.url).length !== 0
+                ? window.history.replaceState({}, '', `?${Object.values(that.url).join('&')}`)
+                : window.history.replaceState({}, '', ``);
         }
 
-        function controlToSlider(fromSlider: HTMLInputElement, toSlider: HTMLInputElement, toInput: HTMLDivElement) {
+        function controlToSlider(
+            fromSlider: HTMLInputElement,
+            toSlider: HTMLInputElement,
+            toInput: HTMLDivElement,
+            e: Event
+        ) {
             const [from, to] = getParsed(fromSlider, toSlider);
             fillSlider(fromSlider, toSlider, '#eee', sliderColor, toSlider);
             setToggleAccessible(toSlider, `.${toSlider.classList[1]}`);
@@ -288,6 +323,13 @@ export class HomeController extends Controller {
                 toSlider.value = from.toString();
             }
             that.found();
+
+            if (e.target === priceRange2) that.url.price = `price=${[from, to].join('↕l')}`;
+            if (e.target === stockRange2) that.url.stock = `stock=${[from, to].join('↕l')}`;
+
+            Object.keys(that.url).length !== 0
+                ? window.history.replaceState({}, '', `?${Object.values(that.url).join('&')}`)
+                : window.history.replaceState({}, '', ``);
         }
 
         function getParsed(currentFrom: HTMLInputElement, currentTo: HTMLInputElement) {
@@ -299,14 +341,14 @@ export class HomeController extends Controller {
         fillSlider(stockRange1, stockRange2, '#eee', sliderColor, stockRange2);
         setToggleAccessible(stockRange2, '.stock-range__input-2');
 
-        stockRange1.addEventListener('input', () => controlFromSlider(stockRange1, stockRange2, stockMin));
-        stockRange2.addEventListener('input', () => controlToSlider(stockRange1, stockRange2, stockMax));
+        stockRange1.addEventListener('input', (e) => controlFromSlider(stockRange1, stockRange2, stockMin, e));
+        stockRange2.addEventListener('input', (e) => controlToSlider(stockRange1, stockRange2, stockMax, e));
 
         fillSlider(priceRange1, priceRange2, '#eee', sliderColor, priceRange2);
         setToggleAccessible(priceRange2, '.price-range__input-2');
 
-        priceRange1.addEventListener('input', () => controlFromSlider(priceRange1, priceRange2, priceMin));
-        priceRange2.addEventListener('input', () => controlToSlider(priceRange1, priceRange2, priceMax));
+        priceRange1.addEventListener('input', (e) => controlFromSlider(priceRange1, priceRange2, priceMin, e));
+        priceRange2.addEventListener('input', (e) => controlToSlider(priceRange1, priceRange2, priceMax, e));
     }
 
     addingToCart(model: Model) {
@@ -328,13 +370,12 @@ export class HomeController extends Controller {
                 }
                 if (!cartCount) throw new Error('There is no cart count');
                 cartCount.innerHTML = model.cart.length.toString();
-
-                console.log(model.cart);
             }
         });
     }
 
     changeView() {
+        const that = this;
         const view1: HTMLButtonElement | null = document.querySelector('.view1');
         const view2 = document.querySelector('.view2');
         if (!view1) throw new Error('There is no view1');
@@ -349,19 +390,30 @@ export class HomeController extends Controller {
             buttons.forEach((button) => buttonArr.push(button));
         });
 
-        view1.addEventListener('click', changeView);
-        view2.addEventListener('click', changeView);
+        view1.addEventListener('click', (e) => changeView(e));
+        view2.addEventListener('click', (e) => changeView(e));
 
-        function changeView() {
-            if (!view1) throw new Error('There is no view1');
-            if (!view2) throw new Error('There is no view2');
+        function changeView(e: Event) {
             if (!cardWrappers) throw new Error('There is no cardWrapper');
             if (!photoZones) throw new Error('There is nophotoZone');
-            view1.classList.toggle('togleView');
-            view2.classList.toggle('togleView');
-            cardWrappers.forEach((cardWrapper) => cardWrapper.classList.toggle('togleCardWrapper'));
-            photoZones.forEach((photo) => photo.classList.toggle('toglePhotoZone'));
-            buttonArr.forEach((button) => button.classList.toggle('togleBtn'));
+            const target = e.target as HTMLButtonElement;
+            if (target === view1) {
+                view2?.classList.remove('toggleView');
+                cardWrappers.forEach((cardWrapper) => cardWrapper.classList.add('toggleCardWrapper'));
+                photoZones.forEach((photo) => photo.classList.add('toglePhotoZone'));
+                buttonArr.forEach((button) => button.classList.add('togleBtn'));
+                that.url.big = `big=false`;
+            } else {
+                view1?.classList.remove('toggleView');
+                cardWrappers.forEach((cardWrapper) => cardWrapper.classList.remove('togleCardWrapper'));
+                photoZones.forEach((photo) => photo.classList.remove('toglePhotoZone'));
+                buttonArr.forEach((button) => button.classList.remove('togleBtn'));
+                that.url.big = `big=true`;
+            }
+
+            Object.keys(that.url).length !== 0
+                ? window.history.replaceState({}, '', `?${Object.values(that.url).join('&')}`)
+                : window.history.replaceState({}, '', ``);
         }
     }
 
