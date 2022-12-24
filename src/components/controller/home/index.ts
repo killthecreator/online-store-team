@@ -6,6 +6,7 @@ import { ProductView } from '../../view/product/index';
 import { CartView } from '../../view/cart/index';
 import { PageNotFoundView } from '../../view/404/index';
 import { locationHandler } from '../../../routing/locationHandler';
+import { selectorChecker } from '../../../utils/selectorChecker';
 export class HomeController extends Controller {
     constructor() {
         super();
@@ -97,34 +98,30 @@ export class HomeController extends Controller {
 
         function filtration() {
             productCards.forEach((card) => {
-                const productCheckbox = Array.from(categoryCheckboxes).find(
-                    (checkbox) => card.innerHTML.indexOf(checkbox.id) > -1
+                const categoryCheckboxesArr = Array.from(categoryCheckboxes);
+                const brandCheckboxesArr = Array.from(brandCheckboxes);
+                const categoryCheckbox = categoryCheckboxesArr.find(
+                    (checkbox) => card.innerHTML.indexOf(checkbox.id) !== -1
                 );
-                const brandCheckbox = Array.from(brandCheckboxes).find(
-                    (checkbox) => card.innerHTML.indexOf(checkbox.id) > -1
-                );
+                const brandCheckbox = brandCheckboxesArr.find((checkbox) => card.innerHTML.indexOf(checkbox.id) !== -1);
 
-                const stockDiv = card.querySelector('.photo-zone__store');
-                if (!stockDiv) throw new Error('there is no store element');
+                const stockDiv = selectorChecker(card, '.photo-zone__store');
                 const stockDivHTML = stockDiv.innerHTML;
-                if (!stockDivHTML) throw new Error('there is data in element');
                 const stockArr = stockDivHTML.match(/\d+/);
                 if (!stockArr) throw new Error('there is data in element');
                 const stockAmount = Number(stockArr[0]);
 
-                const priceDiv = card.querySelector('.name-zone__price');
-                if (!priceDiv) throw new Error('there is no price element');
+                const priceDiv = selectorChecker(card, '.name-zone__price');
                 const priceDivHTML = priceDiv.innerHTML;
-                if (!priceDivHTML) throw new Error('there is data in element');
                 const priceArr = priceDivHTML.match(/\d+/);
                 if (!priceArr) throw new Error('there is data in element');
                 const price = Number(priceArr[0]);
 
-                if (!productCheckbox || !brandCheckbox) throw new Error('Checkboxes were not find');
+                if (!categoryCheckbox || !brandCheckbox) throw new Error('Checkboxes were not found');
 
                 if (
-                    productCheckbox.checked &&
-                    brandCheckbox.checked &&
+                    (categoryCheckbox.checked || categoryCheckboxesArr.every((checkbox) => !checkbox.checked)) &&
+                    (brandCheckbox.checked || brandCheckboxesArr.every((checkbox) => !checkbox.checked)) &&
                     stockAmount >= Number(stockRanges[0].value) &&
                     stockAmount <= Number(stockRanges[1].value) &&
                     price >= Number(priceRanges[0].value) &&
@@ -310,7 +307,6 @@ export class HomeController extends Controller {
 
         priceRange1.addEventListener('input', () => controlFromSlider(priceRange1, priceRange2, priceMin));
         priceRange2.addEventListener('input', () => controlToSlider(priceRange1, priceRange2, priceMax));
-
     }
 
     addingToCart(model: Model) {
@@ -339,46 +335,46 @@ export class HomeController extends Controller {
     }
 
     changeView() {
-      const view1: HTMLButtonElement | null = document.querySelector(".view1");
-      const view2 = document.querySelector(".view2");
-      if (!view1) throw new Error("There is no view1");
-      if (!view2) throw new Error("There is no view2");
+        const view1: HTMLButtonElement | null = document.querySelector('.view1');
+        const view2 = document.querySelector('.view2');
+        if (!view1) throw new Error('There is no view1');
+        if (!view2) throw new Error('There is no view2');
 
-      const cardWrappers = document.querySelectorAll(".card-wrapper");
-      const photoZones = document.querySelectorAll(".photo-zone");
-      if (!photoZones) throw new Error("There is no photo zone");
-      const buttonArr: HTMLButtonElement[] = [];
-      photoZones.forEach(photo => {
-        const buttons = photo.querySelectorAll("button");
-        buttons.forEach(button => buttonArr.push(button));
-      })
+        const cardWrappers = document.querySelectorAll('.card-wrapper');
+        const photoZones = document.querySelectorAll('.photo-zone');
+        if (!photoZones) throw new Error('There is no photo zone');
+        const buttonArr: HTMLButtonElement[] = [];
+        photoZones.forEach((photo) => {
+            const buttons = photo.querySelectorAll('button');
+            buttons.forEach((button) => buttonArr.push(button));
+        });
 
-      view1.addEventListener('click', chengeView);
-      view2.addEventListener('click', chengeView);
+        view1.addEventListener('click', changeView);
+        view2.addEventListener('click', changeView);
 
-      function chengeView() {
-        if (!view1) throw new Error("There is no view1");
-        if (!view2) throw new Error("There is no view2");
-        if (!cardWrappers) throw new Error("There is no cardWrapper");
-        if (!photoZones) throw new Error("There is nophotoZone");
-        view1.classList.toggle("togleView");
-        view2.classList.toggle("togleView");
-        cardWrappers.forEach(cardWrapper => cardWrapper.classList.toggle("togleCardWrapper"));
-        photoZones.forEach(photo => photo.classList.toggle("toglePhotoZone"));
-        buttonArr.forEach(button => button.classList.toggle("togleBtn"));
-      }
+        function changeView() {
+            if (!view1) throw new Error('There is no view1');
+            if (!view2) throw new Error('There is no view2');
+            if (!cardWrappers) throw new Error('There is no cardWrapper');
+            if (!photoZones) throw new Error('There is nophotoZone');
+            view1.classList.toggle('togleView');
+            view2.classList.toggle('togleView');
+            cardWrappers.forEach((cardWrapper) => cardWrapper.classList.toggle('togleCardWrapper'));
+            photoZones.forEach((photo) => photo.classList.toggle('toglePhotoZone'));
+            buttonArr.forEach((button) => button.classList.toggle('togleBtn'));
+        }
     }
 
     found() {
-      const foundDiv: Element | null = document.querySelector(".found");
-      const products: NodeListOf<HTMLDivElement> = document.querySelectorAll('.card-wrapper');
-      let displaingProducts: number = 0;
-      products.forEach(prod => {
-        if (prod.style.display === "" || prod.style.display === "flex") {
-          displaingProducts += 1 ;
-        }
-      });
-      if (!foundDiv) throw new Error("No dives found");
-      foundDiv.innerHTML = `Found: ${displaingProducts}`;
+        const foundDiv: Element | null = document.querySelector('.found');
+        const products: NodeListOf<HTMLDivElement> = document.querySelectorAll('.card-wrapper');
+        let displaingProducts: number = 0;
+        products.forEach((prod) => {
+            if (prod.style.display === '' || prod.style.display === 'flex') {
+                displaingProducts += 1;
+            }
+        });
+        if (!foundDiv) throw new Error('No dives found');
+        foundDiv.innerHTML = `Found: ${displaingProducts}`;
     }
 }
