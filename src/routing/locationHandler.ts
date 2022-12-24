@@ -1,12 +1,50 @@
-import { routes, Route } from './routes.js';
+import { HomeController } from '../components/controller/home';
+import { ProductController } from '../components/controller/product';
+import { CartController } from '../components/controller/cart';
+import { NonFoundController } from '../components/controller/404';
+import { app } from '../index.js';
+import { CartView } from '../components/view/cart/';
+import { HomeView } from '../components/view/home/';
+import { ProductView } from '../components/view/product/';
+import { NonExistingView } from '../components/view/404/';
 
-export const locationHandler = async () => {
-  let location: string = window.location.pathname;
-  if (location.length == 0) {
-      location = "/";
-  }
-  const route: Route | undefined = routes.find(r => r.path.match(/^location/) || r.path.match(/^\/404/));
-  if (route === undefined) throw new Error(`There is no such location`);
+import { homeController } from '../index.js';
+import { productController } from '../index.js';
+import { cartController } from '../index.js';
+import { nonExistingController } from '../index.js';
 
-  route.controller.setupPage(); //надо насписать метод с общим названием но разным содержанием для каждой страницы
+import { homeView } from '../index.js';
+import { productView } from '../index.js';
+import { cartView } from '../index.js';
+import { nonExistingView } from '../index.js';
+
+export const locationHandler = (location: string) => {
+    const page =
+        location === '/'
+            ? '/'
+            : location.startsWith('/product')
+            ? '/product'
+            : location.startsWith('/cart')
+            ? '/cart'
+            : '/404';
+    switch (page) {
+        case '/':
+            app.controller = homeController;
+            app.view = homeView;
+            break;
+        case '/product':
+            app.controller = productController;
+            app.view = productView;
+            break;
+        case '/cart':
+            app.controller = cartController;
+            app.view = cartView;
+            break;
+        case '/404':
+            app.controller = nonExistingController;
+            app.view = nonExistingView;
+            break;
+    }
+
+    app.controller.setupPage(location, app.view, app.model); //надо насписать метод с общим названием но разным содержанием для каждой страницы
 };

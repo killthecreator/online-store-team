@@ -1,5 +1,5 @@
 * {
-  font-family: "Montserrat-Medium";
+  color: #444;
 }
 *:active, *:hover, *:focus {
   outline: 0;
@@ -13,9 +13,11 @@ body {
   background-color: #fff;
 }
 body .header {
+  font-family: "Normal";
   display: flex;
   justify-content: space-between;
-  padding: 2vw 1vw;
+  align-items: center;
+  padding: 0 1vw;
 }
 body .header .logo-wrapper a {
   text-decoration: none;
@@ -25,8 +27,11 @@ body .header .logo-wrapper a {
 }
 body .header .logo-wrapper a .logo-wrapper__text {
   margin: 0 1vw;
+  display: flex;
+  align-items: center;
 }
 body .header .search-wrapper {
+  height: 40px;
   display: flex;
   border-radius: 5px;
   display: flex;
@@ -36,25 +41,64 @@ body .header .search-wrapper {
   align-items: center;
 }
 body .header .search-wrapper .search-wrapper__image {
+  display: flex;
+  align-items: center;
   margin: 0 1rem;
 }
+body .header .search-wrapper .search-wrapper__image img {
+  width: 20px;
+}
 body .header .search-wrapper .search-wrapper__input {
+  cursor: pointer;
+  font-family: "Normal";
+  font-size: 1rem;
+  margin-left: calc(-2rem - 20px);
+  padding: 0 1rem 0 calc(2rem + 20px);
+  border-radius: 5px;
+  height: 35px;
   flex-grow: 1;
   background-color: transparent;
   border: none;
 }
+body .header .search-wrapper .search-wrapper__input:focus {
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
 body .header .cart-wrapper {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 body .header .cart-wrapper .cart-wrapper__state {
-  font-size: 1.2 rem;
+  font-size: 1.2rem;
   margin: 0 1vw;
 }
+body .header .cart-wrapper .cart-wrapper__image {
+  width: 30px;
+  padding: 0 1vw 0 0;
+}
+body .main .filters .category-form__title, body .main .filters .brand-form__title, body .main .filters .price-range__title, body .main .filters .stock-range__title, body .main .ranges .category-form__title, body .main .ranges .brand-form__title, body .main .ranges .price-range__title, body .main .ranges .stock-range__title {
+  font-family: Bold;
+}
+body .main .filters .category-form__content, body .main .filters .brand-form__content, body .main .ranges .category-form__content, body .main .ranges .brand-form__content {
+  font-family: Normal;
+}
+body .main .buttons .button {
+  font-family: Normal;
+}
+body .main .buttons .sort-options {
+  font-family: Normal;
+}
+body .main .buttons .found {
+  font-family: "Bold";
+}
+body .main .cards-wrapper .cards-wrapper .photo-zone {
+  font-family: "Normal";
+}
 body .footer {
+  font-family: "Normal";
   display: flex;
   justify-content: space-between;
-  padding: 2vw 1vw;
+  padding: 1vw 1vw;
 }
 body .footer .github {
   display: flex;
@@ -65,19 +109,17 @@ body .footer .github .github__img {
   margin: 0 1vw;
 }
 body .footer .year {
-  font-size: 1.2 rem;
+  font-size: 1.2rem;
 }
 body .footer .rs-school .rs-school__img {
   width: 5vw;
 }
 
 @font-face {
-  font-family: "Montserrat-Medium";
-  font-style: normal;
-  src: url("./../../assets/fonts/Montserrat/Montserrat-Medium.woff") format("woff");
+  font-family: "Bold";
+  src: url("./../../assets/fonts/Montserrat/Montserrat-Bold.woff") format("woff");
 }
 @font-face {
-  font-family: "Montserrat-Black";
-  font-style: normal;
-  src: url("./../../assets/fonts/Montserrat/Montserrat-Black.woff") format("woff");
+  font-family: "Normal";
+  src: url("./../../assets/fonts/Montserrat/Montserrat-Medium.woff") format("woff");
 }/*# sourceMappingURL=global.css.map */

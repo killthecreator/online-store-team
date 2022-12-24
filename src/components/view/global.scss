@@ -1,97 +1,160 @@
 * {
-  font-family: "Montserrat-Medium";
-  &:active, &:hover, &:focus {
-    outline: 0;
-    outline-offset: 0;
+    &:active,
+    &:hover,
+    &:focus {
+        outline: 0;
+        outline-offset: 0;
+    }
+    color: #444;
 }
-}
-
-$basic-font-size: 1.2 rem;
-
+$color: #eee;
+$basic-font-size: 1.2rem;
 $basic-padding: 2vw 1vw;
+$small-padding: 0 1vw;
 
 @mixin flex-col {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 @mixin flex-space-between {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 
 body {
-  @include flex-col;
-  margin: 0 auto;
-  background-color: #fff;
-  .header {
+    @include flex-col;
     @include flex-space-between;
-    padding: $basic-padding;
-    .logo-wrapper {
-      a {
-        text-decoration: none;
-        color: black;
-        display: flex;
-        flex-wrap: nowrap;
-        .logo-wrapper__text {
-          margin: 0 1vw;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #fff;
+    .header {
+        font-family: 'Normal';
+        @include flex-space-between;
+        align-items: center;
+        padding: $small-padding;
+        .logo-wrapper {
+            a {
+                text-decoration: none;
+                color: black;
+                display: flex;
+                flex-wrap: nowrap;
+                .logo-wrapper__text {
+                    margin: 0 1vw;
+                    display: flex;
+                    align-items: center;
+                }
+            }
         }
-      }
-    }
-    .search-wrapper {
-      display: flex;
-      border-radius: 5px;
-      @include flex-space-between;
-      flex-grow: 1;
-      background-color: #eee;
-      align-items: center;
-      .search-wrapper__image {
-        margin: 0 1rem;
-      }
-      .search-wrapper__input {
-        flex-grow: 1;
-        background-color: transparent;
-        border: none;
-      }
-    }
-    .cart-wrapper {
-      @include flex-space-between;
-      .cart-wrapper__state {
-        font-size: $basic-font-size;
-        margin: 0 1vw;
-      }
-    }
-  }
+        .search-wrapper {
+            height: 40px;
+            display: flex;
+            border-radius: 5px;
+            @include flex-space-between;
+            flex-grow: 1;
+            background-color: #eee;
+            align-items: center;
+            .search-wrapper__image {
+                display: flex;
+                align-items: center;
+                margin: 0 1rem;
+                img {
+                    width: 20px;
+                }
+            }
+            .search-wrapper__input {
+                cursor: pointer;
+                font-family: 'Normal';
+                font-size: 1rem;
+                margin-left: calc(-2rem - 20px);
+                padding: 0 1rem 0 calc(2rem + 20px);
+                border-radius: 5px;
+                height: 35px;
+                flex-grow: 1;
+                background-color: transparent;
+                border: none;
 
-  .footer {
-    @include flex-space-between;
-    padding: $basic-padding;
-    .github {
-      @include flex-space-between;
-      .github__img {
-        width: 3vw;
-        margin: 0 1vw;
-      }
+                &:focus {
+                    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+                }
+            }
+        }
+        .cart-wrapper {
+            @include flex-space-between;
+            align-items: center;
+            .cart-wrapper__state {
+                font-size: $basic-font-size;
+                margin: 0 1vw;
+            }
+            .cart-wrapper__image {
+                width: 30px;
+                padding: 0 1vw 0 0;
+            }
+        }
     }
-    .year {
-      font-size: $basic-font-size;
+
+    .main {
+        .filters,
+        .ranges {
+            .category-form__title,
+            .brand-form__title,
+            .price-range__title,
+            .stock-range__title {
+                font-family: Bold;
+            }
+            .category-form__content,
+            .brand-form__content {
+                font-family: Normal;
+            }
+        }
+        .buttons {
+            .button {
+                font-family: Normal;
+            }
+            .sort-options {
+                font-family: Normal;
+            }
+            .found {
+                font-family: 'Bold';
+            }
+        }
+        .cards-wrapper {
+            .cards-wrapper {
+                .photo-zone {
+                    font-family: 'Normal';
+                }
+            }
+        }
     }
-    .rs-school {
-      .rs-school__img {
-        width: 5vw;
-      }
+
+    .footer {
+        font-family: 'Normal';
+        @include flex-space-between;
+        padding: 1vw 1vw;
+        .github {
+            @include flex-space-between;
+            .github__img {
+                width: 3vw;
+                margin: 0 1vw;
+            }
+        }
+        .year {
+            font-size: $basic-font-size;
+        }
+        .rs-school {
+            .rs-school__img {
+                width: 5vw;
+            }
+        }
     }
-  }
 }
 
 @font-face {
-  font-family: "Montserrat-Medium";
-  font-style: normal;
-  src: url("./../../assets/fonts/Montserrat/Montserrat-Medium.woff") format("woff"),
+    font-family: 'Bold';
+    src: url('./../../assets/fonts/Montserrat/Montserrat-Bold.woff') format('woff');
 }
 
 @font-face {
-  font-family: "Montserrat-Black";
-  font-style: normal;
-  src: url("./../../assets/fonts/Montserrat/Montserrat-Black.woff") format("woff"),
+    font-family: 'Normal';
+    src: url('./../../assets/fonts/Montserrat/Montserrat-Medium.woff') format('woff');
 }

@@ -1,12 +1,33 @@
 import { Controller } from "../";
+import { Model } from '../../model';
+import { CartView } from "../../view/cart/index";
 export class CartController extends Controller {
-  url: string;
-  constructor(url: string) {
+  /*model: Model;
+  view: CartView;*/
+  /*url: string;*/
+  constructor(/*model: Model, productView: CartView /*url: string*/) {
       super();
-      this.url = url;
+     /* this.url = url;*/
+     /*this.model = model;
+     this.view = productView;*/
   }
 
-  setupPage(): void {
-    console.log(404);
-}
+  setupPage(location: string, view: CartView, model: Model): void {
+    const locationArr = location.split('/');
+    const products = model.products;
+    if (!products) throw new Error(`There is no ${locationArr[2]} among our products`);
+    view.drawMain(model.products);
+
+    this.configPage();
+  }
+
+  configPage() {
+    this.turnOffSearch();
+  }
+
+  turnOffSearch() {
+    const search: HTMLDivElement | null = document.querySelector('.search-wrapper');
+    if (!search) throw new Error("there is no search block");
+    search.style.display = "none";
+  }
 }

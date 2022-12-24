@@ -1,4 +1,4 @@
-import { NonFoundController } from "./../components/controller/404";
+/*import { NonFoundController } from "./../components/controller/404";
 import { HomeController } from "./../components/controller/home";
 import { CartController } from "./../components/controller/cart";
 import { ProductController } from "./../components/controller/product";
@@ -12,18 +12,18 @@ export type Route = {
 export const routes: Route[] = [
   {
     path: "/404",
-    controller: NonFoundController,
+    controller: new NonFoundController(),
   },
   {
-    path: "/",
-    controller: HomeController,
+    path: "/home",
+    controller: new HomeController(),
   },
   {
     path: "/cart",
-    controller: CartController,
+    controller: new CartController(),
   },
   {
     path: "/product",
-    controller: ProductController,
+    controller: new ProductController(),
   },
-]
+]*/
