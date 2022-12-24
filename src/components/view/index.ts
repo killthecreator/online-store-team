@@ -15,7 +15,6 @@ export class GlobalView {
         if (document.querySelector('.header')) return;
         const header = document.createElement('header');
         header.classList.add('header');
-        //TODO implement search
         header.innerHTML = `
     <div class="logo-wrapper">
       <a href="">

@@ -26,14 +26,15 @@ export class HomeController extends Controller {
         view.drawFooter();
         this.rangesHandler(model);
         //  }
-        this.configPage();
+        this.configPage(model);
     }
 
-    configPage() {
+    configPage(model: Model) {
         this.addRouting();
         this.turnOnSearch();
         this.filtersAndCheckboxes();
         this.sortByGo();
+        this.addingToCart(model);
     }
 
     addRouting() {
@@ -44,7 +45,7 @@ export class HomeController extends Controller {
             ancor.addEventListener('click', (e) => {
                 e.preventDefault();
                 if (e.target === ancor ){
-                  window.history.pushState({}, `Title`, ancor.id);
+                  /*window.history.pushState({}, `Title`, ancor.id);*/
                   locationHandler(ancor.id);
                 }
             })
@@ -302,5 +303,28 @@ export class HomeController extends Controller {
 
         priceRange1.addEventListener('input', () => controlFromSlider(priceRange1, priceRange2, priceMin));
         priceRange2.addEventListener('input', () => controlToSlider(priceRange1, priceRange2, priceMax));
+    }
+
+    addingToCart(model: Model) {
+      const addToCartButtons = document.querySelectorAll('.photo-zone__add-to-cart-button');
+      addToCartButtons.forEach(button => {
+        button.addEventListener('click', adding);
+        function adding() {
+          if (!button) throw new Error ('there is no addToCartButton');
+          const product = model.products.find(product => product.name === button.id);
+          if (!product) throw new Error ('there is no such product');
+          const productInCart = model.cart.find(product => product.name === button.id);
+          if (productInCart) {
+            button.innerHTML = 'add to cart';
+            model.cart.splice(model.cart.indexOf(product), 1);
+          } else {
+            button.innerHTML = 'remove';
+            model.cart.push(product);
+          }
+
+
+          console.log(model.cart);
+        }
+      })
     }
 }

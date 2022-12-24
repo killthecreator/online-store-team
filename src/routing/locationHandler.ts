@@ -48,5 +48,5 @@ export const locationHandler = (location: string) => {
             break;
     }
 
-    app.controller.setupPage(location, app.view, app.model); //надо насписать метод с общим названием но разным содержанием для каждой страницы
+    app.controller.setupPage(location, app.view, app.model);
 };

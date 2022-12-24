@@ -39,7 +39,9 @@ export const productView = new ProductView();
 export const cartView = new CartView();
 export const pageNotFoundView = new PageNotFoundView();
 
-export const app = new App('/home', new Model(), homeView, homeController);
+const model = new Model();
+
+export const app = new App('/home', model, homeView, homeController);
 app.controller.setupPage(app.url, app.view, app.model);
 
 const header = document.querySelector('.header');
@@ -53,7 +55,7 @@ ancors1.forEach((ancor) =>
   ancor.addEventListener('click', (e) => {
     e.preventDefault();
       if (e.target === ancor) {
-        window.history.pushState({}, `Title`, ancor.id);
+        /*window.history.pushState({}, `Title`, ancor.id);*/
         locationHandler(ancor.id);
       }
   })
@@ -62,7 +64,7 @@ ancors2.forEach((ancor) =>
     ancor.addEventListener('click', (e) => {
         e.preventDefault();
         if(ancor === e.target) {
-          window.history.pushState({}, `Title`, ancor.id);
+          /*window.history.pushState({}, `Title`, ancor.id);*/
           locationHandler(ancor.id);
         }
     })

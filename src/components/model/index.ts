@@ -1,6 +1,7 @@
 import { Category, Brand, products, Product } from './data.js';
 
 export class Model {
+    cart: Product[];
     categories: Category[];
     brands: Brand[];
     products: Product[];
@@ -45,5 +46,6 @@ export class Model {
             Math.max(...this.products.map((item) => item.price)),
         ];
         this.stockRange = [ 0, Math.max(...this.products.map((item) => item.amount))];
+        this.cart = [];
     }
 }

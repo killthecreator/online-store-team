@@ -14,9 +14,10 @@ export class CartController extends Controller {
 
   setupPage(location: string, view: CartView, model: Model): void {
     const locationArr = location.split('/');
-    const products = model.products;
+    const products = model.cart;
+    console.log(model.cart);
     if (!products) throw new Error(`There is no ${locationArr[2]} among our products`);
-    view.drawMain(model.products);
+    view.drawMain(products);
 
     this.configPage();
   }

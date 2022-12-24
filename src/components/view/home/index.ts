@@ -27,16 +27,6 @@ export class HomeView extends GlobalView {
         }
         main.innerHTML =
             this.drawFilters(categories, brands) + this.drawRanges() + this.drawButtons() + this.drawCards(products);
-
-        /*         const cardsWrapper = document.querySelector('.cards-wrapper') as HTMLDivElement;
-        document.querySelector('.view1')?.addEventListener('click', () => {
-            cardsWrapper.style.flexDirection = 'row';
-            window.history.pushState({}, '', 'blue');
-        });
-        document.querySelector('.view2')?.addEventListener('click', () => {
-            cardsWrapper.style.flexDirection = 'column';
-            window.history.pushState({}, '', 'red');
-        }); */
     };
 
     public drawFilters = (categories: Category[], brands: Brand[]) => {
@@ -138,7 +128,7 @@ export class HomeView extends GlobalView {
                   <button class="photo-zone__product-button routing" id='/product/${card.name}'>details</button>
                 </div>
                 <div class="photo-zone__add-to-cart">
-                  <button class="photo-zone__add-to-cart-button">add to cart</button>
+                  <button class="photo-zone__add-to-cart-button" id="${card.name}">add to cart</button>
                 </div>
               </div>
             </div>
