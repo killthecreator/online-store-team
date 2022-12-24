@@ -91,25 +91,25 @@ body {
                 padding: 0 1vw 0 0;
                 align-items: center;
                 img {
-                  width: 30px;
-                  height: 30px;
+                    width: 30px;
+                    height: 30px;
                 }
                 .cart-wrapper__count {
-                  display: flex;
-                  align-items: center;
-                  justify-content: flex-end;
-                  width: 30px;
-                  height: 30px;
-                  font-family: "Bold";
-                  color: violet;
-                  font-size: 2rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+                    width: 30px;
+                    height: 30px;
+                    font-family: 'Bold';
+                    color: violet;
+                    font-size: 2rem;
                 }
             }
         }
     }
 
     .main {
-      flex-grow: 1;
+        flex-grow: 1;
         .filters,
         .ranges {
             .category-form__title,

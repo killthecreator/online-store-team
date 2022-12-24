@@ -48,7 +48,7 @@ const ancors = document.querySelectorAll('.routing');
 ancors.forEach((ancor) =>
     ancor.addEventListener('click', (e) => {
         e.preventDefault();
-        if (e.target === ancor) {
+        if (e.currentTarget === ancor) {
             window.history.pushState({}, `Title`, ancor.id);
             locationHandler(ancor.id);
         }
