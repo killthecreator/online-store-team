@@ -17,10 +17,9 @@ export class GlobalView {
         header.classList.add('header');
         header.innerHTML = `
     <div class="logo-wrapper">
-      <a href="">
-        <div class="logo-wrapper__image">
-          <img src="${Logo}" class="routing" id="/"/>
-        </div>
+      <a href="" class="routing" id="/">
+          <img src="${Logo}" class="logo__image"/>
+
         <h1 class="logo-wrapper__text">Cadence</h1>
       </a>
     </div>

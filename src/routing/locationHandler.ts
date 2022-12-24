@@ -1,12 +1,4 @@
-import { HomeController } from '../components/controller/home';
-import { ProductController } from '../components/controller/product';
-import { CartController } from '../components/controller/cart';
-import { PageNotFoundController } from '../components/controller/404';
 import { app } from '../index.js';
-import { CartView } from '../components/view/cart/';
-import { HomeView } from '../components/view/home/';
-import { ProductView } from '../components/view/product/';
-import { PageNotFoundView } from '../components/view/404/';
 
 import { homeController } from '../index.js';
 import { productController } from '../index.js';
@@ -18,7 +10,6 @@ import { cartView } from '../index.js';
 import { pageNotFoundView } from '../index.js';
 
 export const locationHandler = (location: string) => {
-
     //location = window.location.pathname;
     const page =
         location === '/'

@@ -7,7 +7,7 @@ import { CartView } from '../../view/cart/index';
 import { PageNotFoundView } from '../../view/404/index';
 import { locationHandler } from '../../../routing/locationHandler';
 export class HomeController extends Controller {
-    constructor () {
+    constructor() {
         super();
     }
 
@@ -39,9 +39,9 @@ export class HomeController extends Controller {
         ancors.forEach((ancor) =>
             ancor.addEventListener('click', (e) => {
                 e.preventDefault();
-                if (e.target === ancor ){
-                  /*window.history.pushState({}, `Title`, ancor.id);*/
-                  locationHandler(ancor.id);
+                if (e.target === ancor) {
+                    /*window.history.pushState({}, `Title`, ancor.id);*/
+                    locationHandler(ancor.id);
                 }
             })
         );
@@ -60,17 +60,18 @@ export class HomeController extends Controller {
 
         const input: HTMLInputElement | null = document.querySelector('.search-wrapper__input');
         if (!input) throw new Error('There is no search input');
-        input.addEventListener('keyup', (e) => {
+        input.addEventListener('input', () => {
             const filter = input.value.toLowerCase();
-            if (e.key === 'Enter') {
-              productCards.forEach((card, i) => {
-                    if ((card.innerHTML.toLowerCase().indexOf(filter) > -1 && card.style.display !== "none") || input.value === '') {
-                        card.style.display = 'flex';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            }
+            productCards.forEach((card) => {
+                if (
+                    (card.innerHTML.toLowerCase().indexOf(filter) > -1 && card.style.display !== 'none') ||
+                    input.value === ''
+                ) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
         });
     }
 
@@ -301,28 +302,28 @@ export class HomeController extends Controller {
     }
 
     addingToCart(model: Model) {
-      const addToCartButtons = document.querySelectorAll('.photo-zone__add-to-cart-button');
-      const cartCount = document.querySelector(".cart-wrapper__count");
-      addToCartButtons.forEach(button => {
-        button.addEventListener('click', adding);
-        function adding() {
-          if (!button) throw new Error ('there is no addToCartButton');
-          const product = model.products.find(product => product.name === button.id);
-          if (!product) throw new Error ('there is no such product');
-          const productInCart = model.cart.find(product => product.name === button.id);
-          if (productInCart) {
-            button.innerHTML = 'add to cart';
-            model.cart.splice(model.cart.indexOf(product), 1);
-          } else {
-            button.innerHTML = 'remove';
-            model.cart.push(product);
-          }
-          if(!cartCount) throw new Error ("There is no cart count");
-          cartCount.innerHTML = model.cart.length.toString();
+        const addToCartButtons = document.querySelectorAll('.photo-zone__add-to-cart-button');
+        const cartCount = document.querySelector('.cart-wrapper__count');
+        addToCartButtons.forEach((button) => {
+            button.addEventListener('click', adding);
+            function adding() {
+                if (!button) throw new Error('there is no addToCartButton');
+                const product = model.products.find((product) => product.name === button.id);
+                if (!product) throw new Error('there is no such product');
+                const productInCart = model.cart.find((product) => product.name === button.id);
+                if (productInCart) {
+                    button.innerHTML = 'add to cart';
+                    model.cart.splice(model.cart.indexOf(product), 1);
+                } else {
+                    button.innerHTML = 'remove';
+                    model.cart.push(product);
+                }
+                if (!cartCount) throw new Error('There is no cart count');
+                cartCount.innerHTML = model.cart.length.toString();
 
-          console.log(model.cart);
-        }
-      })
+                console.log(model.cart);
+            }
+        });
     }
 
     changeView() {
