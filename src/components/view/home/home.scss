@@ -18,6 +18,7 @@
     border-color: #ccc;
     border-style: solid;
     background: $button-image;
+    cursor: pointer;
     &:hover {
         @include button-hover;
     }
@@ -32,12 +33,10 @@
 @mixin button-hover {
     background: $gradient;
     color: white;
-    cursor: pointer;
 }
 @mixin button-active {
     background: $gradient;
     color: white;
-    cursor: pointer;
 }
 @mixin button-disabled {
     background: #eee;
@@ -213,6 +212,7 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
         background-repeat: no-repeat, repeat;
         background-position: right 0.7em top 50%, 0 0;
         background-size: 0.65em auto, 100%;
+        cursor: pointer;
         &::-ms-expand {
             display: none;
         }
@@ -235,8 +235,8 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
             @include button-style;
         }
         .togleView {
-          background: $gradient;
-          color: white;
+            background: $gradient;
+            color: white;
         }
     }
 }
@@ -294,14 +294,14 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
                         }
                     }
                     .togleBtn {
-                      width: 90px;
+                        width: 90px;
                     }
                 }
             }
         }
-        .toglePhotoZone{
-          background-size: 200px;
-          min-height: 200px;
+        .toglePhotoZone {
+            background-size: 200px;
+            min-height: 200px;
         }
         .name-zone {
             @include flex-space-between;
@@ -329,7 +329,7 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
         }
     }
 
-    .togleCardWrapper{
-      width: 200px;
+    .togleCardWrapper {
+        width: 200px;
     }
 }

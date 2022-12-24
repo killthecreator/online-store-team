@@ -33,6 +33,7 @@ export class HomeController extends Controller {
         this.addingToCart(model);
         this.changeView();
         this.found();
+        this.copyLink();
     }
 
     addRouting() {
@@ -87,7 +88,7 @@ export class HomeController extends Controller {
     }
 
     filtersAndCheckboxes() {
-      const productCards: NodeListOf<HTMLDivElement> = document.querySelectorAll('.card-wrapper');
+        const productCards: NodeListOf<HTMLDivElement> = document.querySelectorAll('.card-wrapper');
 
         const brandCheckboxes: NodeListOf<HTMLInputElement> = document.querySelectorAll('.brand-form__checkbox');
         const categoryCheckboxes: NodeListOf<HTMLInputElement> = document.querySelectorAll('.category-form__checkbox');
@@ -352,34 +353,33 @@ export class HomeController extends Controller {
     }
 
     addingToCart(model: Model) {
-        const productCards/*: NodeListOf<HTMLDivElement>*/ = document.querySelectorAll('.card-wrapper');
-        productCards.forEach(card => {
-          const stockDiv = card.querySelector('.photo-zone__store');
-          const addToCartButton = card.querySelector('.photo-zone__add-to-cart-button');
-          if (!addToCartButton) throw new Error('there is no addToCartButton');
-          const cartCount = document.querySelector('.cart-wrapper__count');
+        const productCards /*: NodeListOf<HTMLDivElement>*/ = document.querySelectorAll('.card-wrapper');
+        productCards.forEach((card) => {
+            const stockDiv = card.querySelector('.photo-zone__store');
+            const addToCartButton = card.querySelector('.photo-zone__add-to-cart-button');
+            if (!addToCartButton) throw new Error('there is no addToCartButton');
+            const cartCount = document.querySelector('.cart-wrapper__count');
             addToCartButton.addEventListener('click', adding);
-              function adding() {
-                  if (!addToCartButton) throw new Error('there is no addToCartButton');
-                  const product = model.products.find((product) => product.name === addToCartButton.id);
-                  if (!product) throw new Error('there is no such product');
-                  const productInCart = model.cart.find((product) => product.product.name === addToCartButton.id);
-                  if (productInCart) {
-                      addToCartButton.innerHTML = 'add to cart';
-                      product.amount += 1;
-                      model.cart.splice(model.cart.indexOf(productInCart), 1);
-                  } else {
-                      addToCartButton.innerHTML = 'remove';
-                      model.cart.push({product: product, amount: 1});
-                      product.amount -= 1;
-                  }
-                  if (!cartCount) throw new Error('There is no cart count');
-                  cartCount.innerHTML = model.cart.length.toString();
-                  if (!stockDiv) throw new Error('There is no stock div');
-                  stockDiv.innerHTML = `Stock: ${product.amount}`;
+            function adding() {
+                if (!addToCartButton) throw new Error('there is no addToCartButton');
+                const product = model.products.find((product) => product.name === addToCartButton.id);
+                if (!product) throw new Error('there is no such product');
+                const productInCart = model.cart.find((product) => product.product.name === addToCartButton.id);
+                if (productInCart) {
+                    addToCartButton.innerHTML = 'add to cart';
+                    product.amount += 1;
+                    model.cart.splice(model.cart.indexOf(productInCart), 1);
+                } else {
+                    addToCartButton.innerHTML = 'remove';
+                    model.cart.push({ product: product, amount: 1 });
+                    product.amount -= 1;
+                }
+                if (!cartCount) throw new Error('There is no cart count');
+                cartCount.innerHTML = model.cart.length.toString();
+                if (!stockDiv) throw new Error('There is no stock div');
+                stockDiv.innerHTML = `Stock: ${product.amount}`;
             }
-        })
-
+        });
 
         /*const addToCartButtons = document.querySelectorAll('.photo-zone__add-to-cart-button');
         const cartCount = document.querySelector('.cart-wrapper__count');
@@ -451,7 +451,7 @@ export class HomeController extends Controller {
     found() {
         const foundDiv: Element | null = document.querySelector('.found');
         const products: NodeListOf<HTMLDivElement> = document.querySelectorAll('.card-wrapper');
-        let displaingProducts: number = 0;
+        let displaingProducts = 0;
         products.forEach((prod) => {
             if (prod.style.display === '' || prod.style.display === 'flex') {
                 displaingProducts += 1;
@@ -459,5 +459,18 @@ export class HomeController extends Controller {
         });
         if (!foundDiv) throw new Error('No dives found');
         foundDiv.innerHTML = `Found: ${displaingProducts}`;
+    }
+
+    copyLink() {
+        selectorChecker(document, '.copy-link').addEventListener('click', (e) => {
+            (async () => {
+                await navigator.clipboard.writeText(window.location.href);
+                const target = e.target as HTMLButtonElement;
+                target.textContent = 'Copied!';
+                setTimeout(() => {
+                    target.textContent = 'Copy link';
+                }, 500);
+            })().catch(() => '');
+        });
     }
 }
