@@ -30,6 +30,7 @@ export class HomeController extends Controller {
         this.sortByGo();
         this.addingToCart(model);
         this.changeView();
+        this.found();
     }
 
     addRouting() {
@@ -68,8 +69,10 @@ export class HomeController extends Controller {
                     input.value === ''
                 ) {
                     card.style.display = 'flex';
+                    this.found();
                 } else {
                     card.style.display = 'none';
+                    this.found();
                 }
             });
         });
@@ -89,6 +92,8 @@ export class HomeController extends Controller {
 
         brandCheckboxes.forEach((brandcheckbox) => brandcheckbox.addEventListener('click', filtration));
         categoryCheckboxes.forEach((categorycheckbox) => categorycheckbox.addEventListener('click', filtration));
+
+        const that = this;
 
         function filtration() {
             productCards.forEach((card) => {
@@ -126,8 +131,10 @@ export class HomeController extends Controller {
                     price <= Number(priceRanges[1].value)
                 ) {
                     card.style.display = 'flex';
+                    that.found();
                 } else {
                     card.style.display = 'none';
+                    that.found();
                 }
             });
         }
@@ -199,6 +206,8 @@ export class HomeController extends Controller {
     }
 
     public rangesHandler(model: Model) {
+        const that = this;
+
         const sliderColor = '#cce';
         const stockRange1 = document.querySelector('.stock-range__input-1') as HTMLInputElement;
         const stockRange2 = document.querySelector('.stock-range__input-2') as HTMLInputElement;
@@ -267,6 +276,7 @@ export class HomeController extends Controller {
             } else {
                 fromInput.textContent = from.toString();
             }
+            that.found();
         }
 
         function controlToSlider(fromSlider: HTMLInputElement, toSlider: HTMLInputElement, toInput: HTMLDivElement) {
@@ -280,6 +290,7 @@ export class HomeController extends Controller {
                 toInput.textContent = from.toString();
                 toSlider.value = from.toString();
             }
+            that.found();
         }
 
         function getParsed(currentFrom: HTMLInputElement, currentTo: HTMLInputElement) {
@@ -299,6 +310,7 @@ export class HomeController extends Controller {
 
         priceRange1.addEventListener('input', () => controlFromSlider(priceRange1, priceRange2, priceMin));
         priceRange2.addEventListener('input', () => controlToSlider(priceRange1, priceRange2, priceMax));
+
     }
 
     addingToCart(model: Model) {
@@ -357,4 +369,16 @@ export class HomeController extends Controller {
       }
     }
 
+    found() {
+      const foundDiv: Element | null = document.querySelector(".found");
+      const products: NodeListOf<HTMLDivElement> = document.querySelectorAll('.card-wrapper');
+      let displaingProducts: number = 0;
+      products.forEach(prod => {
+        if (prod.style.display === "" || prod.style.display === "flex") {
+          displaingProducts += 1 ;
+        }
+      });
+      if (!foundDiv) throw new Error("No dives found");
+      foundDiv.innerHTML = `Found: ${displaingProducts}`;
+    }
 }
