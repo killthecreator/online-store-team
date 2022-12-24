@@ -29,6 +29,7 @@ export class HomeController extends Controller {
         this.filtersAndCheckboxes();
         this.sortByGo();
         this.addingToCart(model);
+        this.changeView();
     }
 
     addRouting() {
@@ -323,4 +324,36 @@ export class HomeController extends Controller {
         }
       })
     }
+
+    changeView() {
+      const view1: HTMLButtonElement | null = document.querySelector(".view1");
+      const view2 = document.querySelector(".view2");
+      if (!view1) throw new Error("There is no view1");
+      if (!view2) throw new Error("There is no view2");
+
+      const cardWrappers = document.querySelectorAll(".card-wrapper");
+      const photoZones = document.querySelectorAll(".photo-zone");
+      if (!photoZones) throw new Error("There is no photo zone");
+      const buttonArr: HTMLButtonElement[] = [];
+      photoZones.forEach(photo => {
+        const buttons = photo.querySelectorAll("button");
+        buttons.forEach(button => buttonArr.push(button));
+      })
+
+      view1.addEventListener('click', chengeView);
+      view2.addEventListener('click', chengeView);
+
+      function chengeView() {
+        if (!view1) throw new Error("There is no view1");
+        if (!view2) throw new Error("There is no view2");
+        if (!cardWrappers) throw new Error("There is no cardWrapper");
+        if (!photoZones) throw new Error("There is nophotoZone");
+        view1.classList.toggle("togleView");
+        view2.classList.toggle("togleView");
+        cardWrappers.forEach(cardWrapper => cardWrapper.classList.toggle("togleCardWrapper"));
+        photoZones.forEach(photo => photo.classList.toggle("toglePhotoZone"));
+        buttonArr.forEach(button => button.classList.toggle("togleBtn"));
+      }
+    }
+
 }
