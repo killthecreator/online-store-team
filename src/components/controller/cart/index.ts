@@ -19,16 +19,47 @@ export class CartController extends Controller {
     if (!products) throw new Error(`There is no ${locationArr[2]} among our products`);
     view.drawMain(products);
 
-    this.configPage();
+    this.configPage(model);
   }
 
-  configPage() {
+  configPage(model: Model) {
     this.turnOffSearch();
+    this.productAmount(model);
   }
 
   turnOffSearch() {
     const search: HTMLDivElement | null = document.querySelector('.search-wrapper');
     if (!search) throw new Error("there is no search block");
     search.style.display = "none";
+  }
+
+  productAmount(model: Model) {
+    const productAmounts = document.querySelectorAll(".product");
+    productAmounts.forEach(div => {
+      const productName = div.querySelector(".product__name")?.innerHTML;
+      const amountDiv = div.querySelector(".product__amount-value");
+      const ourProduct = model.cart.find(prodObj => prodObj.product.name === productName);
+      if (!ourProduct) throw new Error('There is no our Product');
+      if (!amountDiv) throw new Error('There is no amount div');
+      const plus = div.querySelector(".product__amount-plus");
+      const minus = div.querySelector(".product__amount-minus");
+      if (!plus) throw new Error('There is no plus button');
+      if (!minus) throw new Error('There is no minus button');
+      plus.addEventListener('click', () => {
+        if (ourProduct.product.amount > 0) {
+          ourProduct.amount += 1;
+          ourProduct.product.amount -= 1;
+          amountDiv.innerHTML = ourProduct.amount.toString()
+        }
+      });
+      minus.addEventListener('click', () => {
+        if (ourProduct.amount > 0) {
+          ourProduct.amount -= 1;
+          ourProduct.product.amount += 1;
+          amountDiv.innerHTML = ourProduct.amount.toString()
+        }
+      });
+      //minus.addEventListener('click', () => amount.innerHTML = (Number(amount.innerHTML) - 1).toString())
+    })
   }
 }
