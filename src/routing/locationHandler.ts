@@ -12,7 +12,6 @@ import { homeController } from '../index.js';
 import { productController } from '../index.js';
 import { cartController } from '../index.js';
 import { pageNotFoundController } from '../index.js';
-
 import { homeView } from '../index.js';
 import { productView } from '../index.js';
 import { cartView } from '../index.js';
