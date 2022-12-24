@@ -234,6 +234,10 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
             height: 40px;
             @include button-style;
         }
+        .togleView {
+          background: $gradient;
+          color: white;
+        }
     }
 }
 
@@ -289,8 +293,15 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
                             @include button-disabled;
                         }
                     }
+                    .togleBtn {
+                      width:75px;
+                    }
                 }
             }
+        }
+        .toglePhotoZone{
+          background-size: 200px;
+          min-height: 200px;
         }
         .name-zone {
             @include flex-space-between;
@@ -316,5 +327,9 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
                 font-family: 'Bold';
             }
         }
+    }
+
+    .togleCardWrapper{
+      width: 200px;
     }
 }
