@@ -1,6 +1,8 @@
+import { ProductController } from '../controller/product/index.js';
 import { Category, Brand, products, Product } from './data.js';
 
 export class Model {
+    cart: { product: Product; amount: 1 }[];
     categories: Category[];
     brands: Brand[];
     products: Product[];
