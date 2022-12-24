@@ -66,7 +66,7 @@ export class HomeController extends Controller {
             const filter = input.value.toLowerCase();
             productCards.forEach((card) => {
                 if (
-                    (card.innerHTML.toLowerCase().indexOf(filter) > -1 && card.style.display !== 'none') ||
+                    (card.id.toLowerCase().indexOf(filter) > -1 && card.style.display !== 'none') ||
                     input.value === ''
                 ) {
                     card.style.display = 'flex';

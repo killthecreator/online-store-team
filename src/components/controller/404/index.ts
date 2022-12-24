@@ -1,5 +1,4 @@
 import { Controller } from '../';
-import { Model } from '../../model/';
 import { PageNotFoundView } from '../../view/404/';
 export class PageNotFoundController extends Controller {
     /*url: string;*/
@@ -8,7 +7,7 @@ export class PageNotFoundController extends Controller {
         /*this.url = url;*/
     }
 
-    setupPage(location: string, view: PageNotFoundView, model: Model): void {
+    setupPage(location: string, view: PageNotFoundView): void {
         view.drawMain();
     }
 

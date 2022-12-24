@@ -1,7 +1,6 @@
 import { Category, Brand, products, Product } from './data.js';
 
 export class Model {
-    cart: Product[];
     categories: Category[];
     brands: Brand[];
     products: Product[];
@@ -10,6 +9,7 @@ export class Model {
     cartState: number;
     pricesRange: [number, number];
     stockRange: [0, number];
+    cart: Product[];
 
     constructor() {
         this.categories = ['guitars', 'basses', 'drums', 'keyboards', 'microphones'];
@@ -45,7 +45,7 @@ export class Model {
             Math.min(...this.products.map((item) => item.price)),
             Math.max(...this.products.map((item) => item.price)),
         ];
-        this.stockRange = [ 0, Math.max(...this.products.map((item) => item.amount))];
+        this.stockRange = [0, Math.max(...this.products.map((item) => item.amount))];
         this.cart = [];
     }
 }

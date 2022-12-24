@@ -37,7 +37,7 @@ export const pageNotFoundView = new PageNotFoundView();
 
 const model = new Model();
 
-export const app = new App('/home', model, homeView, homeController);
+export const app = new App('/', model, homeView, homeController);
 //app.controller.setupPage(app.url, app.view, app.model);
 app.view.drawHeader();
 app.controller.setupPage(app.url, app.view, app.model);
