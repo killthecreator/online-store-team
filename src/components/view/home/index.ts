@@ -38,7 +38,7 @@ export class HomeView extends GlobalView {
             ${categories.reduce(
                 (res: string, category: Category) =>
                     res +
-                    `<div class="category-form__item"><input id="${category}" class="category-form__checkbox" type="checkbox" checked/><label for="${category}" class="category-form__label">${category}</label></div>`,
+                    `<div class="category-form__item"><input id="${category}" class="category-form__checkbox" type="checkbox"/><label for="${category}" class="category-form__label">${category}</label></div>`,
                 ''
             )}
           </div>
@@ -49,7 +49,7 @@ export class HomeView extends GlobalView {
             ${brands.reduce(
                 (res: string, brand: Brand) =>
                     res +
-                    `<div class="brand-form__item"><input id="${brand}" class="brand-form__checkbox" type="checkbox"  checked/><label for="${brand}" class="brand-form__label">${brand}</label></div>`,
+                    `<div class="brand-form__item"><input id="${brand}" class="brand-form__checkbox" type="checkbox"/><label for="${brand}" class="brand-form__label">${brand}</label></div>`,
                 ''
             )}
           </div>
@@ -121,7 +121,7 @@ export class HomeView extends GlobalView {
 
             <div class="photo-zone" style="background-image: url(${card.photos[0]});">
               <div class="photo-zone__store">
-                Store: ${card.amount}
+                Stock: ${card.amount}
               </div>
               <div class="photo-zone__buttons">
                 <div class="photo-zone__product">
