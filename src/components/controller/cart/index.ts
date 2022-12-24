@@ -49,17 +49,30 @@ export class CartController extends Controller {
         if (ourProduct.product.amount > 0) {
           ourProduct.amount += 1;
           ourProduct.product.amount -= 1;
-          amountDiv.innerHTML = ourProduct.amount.toString()
+          amountDiv.innerHTML = ourProduct.amount.toString();
+
+
+      const cartCount = document.querySelector('.cart-wrapper__count');
+      if (!cartCount) throw new Error('There is no cart Count');
+      let num: number = 0;
+      model.cart.forEach(product => num += product.amount);
+      cartCount.innerHTML = num.toString();
         }
       });
       minus.addEventListener('click', () => {
         if (ourProduct.amount > 0) {
           ourProduct.amount -= 1;
           ourProduct.product.amount += 1;
-          amountDiv.innerHTML = ourProduct.amount.toString()
+          amountDiv.innerHTML = ourProduct.amount.toString();
+
+
+      const cartCount = document.querySelector('.cart-wrapper__count');
+      if (!cartCount) throw new Error('There is no cart Count');
+      let num: number = 0;
+      model.cart.forEach(product => num += product.amount);
+      cartCount.innerHTML = num.toString();
         }
       });
-      //minus.addEventListener('click', () => amount.innerHTML = (Number(amount.innerHTML) - 1).toString())
     })
   }
 }
