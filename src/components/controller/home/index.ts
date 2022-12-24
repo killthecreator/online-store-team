@@ -7,29 +7,23 @@ import { CartView } from '../../view/cart/index';
 import { PageNotFoundView } from '../../view/404/index';
 import { locationHandler } from '../../../routing/locationHandler';
 export class HomeController extends Controller {
-    /*     model: Model;
-    view: HomeView; */
-    /*url: string;*/
-    constructor /*url: string*/() /*  model: Model, view: HomeView */ {
+    constructor() {
         super();
-        /*         this.model = model;
-        this.view = view; */
-        /*this.url = url;*/
     }
 
     setupPage(location: string, view: HomeView, model: Model): void {
         //const locationArr = location.split('/');
         /*const app = new App('/home', new Model(), new HomeView()/*, new HomeController());*/
         /*if (locationArr.length === 1) {*/
-        view.drawHeader();
+        //view.drawHeader();
         view.drawMain(model.categories, model.brands, model.products);
-        view.drawFooter();
-        this.rangesHandler(model);
+        //view.drawFooter();
         //  }
         this.configPage(model);
     }
 
     configPage(model: Model) {
+        this.rangesHandler(model);
         this.addRouting();
         this.turnOnSearch();
         this.filtersAndCheckboxes();
@@ -308,6 +302,7 @@ export class HomeController extends Controller {
 
     addingToCart(model: Model) {
         const addToCartButtons = document.querySelectorAll('.photo-zone__add-to-cart-button');
+        const cartCount = document.querySelector('.cart-wrapper__count');
         addToCartButtons.forEach((button) => {
             button.addEventListener('click', adding);
             function adding() {
@@ -322,6 +317,8 @@ export class HomeController extends Controller {
                     button.innerHTML = 'remove';
                     model.cart.push(product);
                 }
+                if (!cartCount) throw new Error('There is no cart count');
+                cartCount.innerHTML = model.cart.length.toString();
 
                 console.log(model.cart);
             }

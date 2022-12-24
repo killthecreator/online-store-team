@@ -237,7 +237,8 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
 }
 
 .cards-wrapper {
-    @include flex-centered;
+    display: flex;
+    justify-content: space-evenly;
     flex-wrap: wrap;
     padding: $basic-padding;
     .card-wrapper {

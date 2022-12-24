@@ -36,6 +36,7 @@ export class GlobalView {
       </div>
       <div class="cart-wrapper__image">
         <a href="/cart"><img class="routing" id="/cart" src="${ShoppingCartImg}"/></a>
+        <div class="cart-wrapper__count"></div>
       </div>
     </div>`;
         document.body.append(header);

@@ -87,8 +87,23 @@ body {
                 margin: 0 1vw;
             }
             .cart-wrapper__image {
-                width: 30px;
+                @include flex-space-between;
                 padding: 0 1vw 0 0;
+                align-items: center;
+                img {
+                  width: 30px;
+                  height: 30px;
+                }
+                .cart-wrapper__count {
+                  display: flex;
+                  align-items: center;
+                  justify-content: flex-end;
+                  width: 30px;
+                  height: 30px;
+                  font-family: "Bold";
+                  color: violet;
+                  font-size: 2rem;
+                }
             }
         }
     }
