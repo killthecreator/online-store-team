@@ -103,7 +103,7 @@ export class HomeView extends GlobalView {
           Found: 0
         </div>
         <div class="view-change">
-          <button class="view1 togleView">⊞</button>
+          <button class="view1">⊞</button>
           <button class="view2">⊟</button>
         </div>
       </section>
