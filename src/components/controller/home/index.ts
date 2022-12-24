@@ -2,6 +2,9 @@ import { Controller } from '../';
 import { HomeView } from '../../view/home';
 import { Model } from '../../model';
 import { route } from '../../../routing/routing';
+import { ProductView } from '../../view/product/index';
+import { CartView } from '../../view/cart/index';
+import { PageNotFoundView } from '../../view/404/index';
 export class HomeController extends Controller {
     /*     model: Model;
     view: HomeView; */
@@ -33,12 +36,15 @@ export class HomeController extends Controller {
     }
 
     addRouting() {
-        const ancors = document.querySelectorAll('.routing');
+        const main = document.querySelector('.main');
+        if (!main) throw new Error('There is no main element');
+        const ancors = main.querySelectorAll('.routing');
         ancors.forEach((ancor) =>
             ancor.addEventListener('click', (e) => {
                 e.preventDefault();
-                /* document.location.href = ancor.id; */
-                route(e, ancor.id);
+                if (e.target === ancor ){
+                  route(e, ancor.id);
+                }
             })
         );
     }

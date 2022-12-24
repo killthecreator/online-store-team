@@ -5,21 +5,21 @@ import { CartView } from './components/view/cart';
 import { HomeController } from './components/controller/home';
 import { Model } from './components/model';
 import { ProductController } from './components/controller/product/index.js';
-import { NonExistingController } from './components/controller/404/index.js';
+import { PageNotFoundController } from './components/controller/404/index.js';
 import { CartController } from './components/controller/cart/index.js';
-import { NonExistingView } from './components/view/404/index.js';
+import { PageNotFoundView } from './components/view/404/index.js';
 
 export class App {
     url: string;
     model: Model;
-    view: HomeView | ProductView | CartView | NonExistingView;
-    controller: HomeController | CartController | NonExistingController | ProductController;
+    view: HomeView | ProductView | CartView | PageNotFoundView;
+    controller: HomeController | CartController | PageNotFoundController | ProductController;
 
     constructor(
         url: string,
         model: Model,
-        view: HomeView | ProductView | CartView | NonExistingView,
-        controller: HomeController | CartController | NonExistingController | ProductController
+        view: HomeView | ProductView | CartView | PageNotFoundView,
+        controller: HomeController | CartController | PageNotFoundController | ProductController
     ) {
         this.url = url;
         this.model = model;
@@ -28,24 +28,42 @@ export class App {
     }
 }
 
-export const homeController = new HomeController();
+const homeController = new HomeController();
 export const productController = new ProductController();
 export const cartController = new CartController();
-export const nonExistingController = new NonExistingController();
+export const pageNotFoundController = new PageNotFoundController();
 
 export const homeView = new HomeView();
 export const productView = new ProductView();
 export const cartView = new CartView();
-export const nonExistingView = new NonExistingView();
+export const pageNotFoundView = new PageNotFoundView();
 
 export const app = new App('/home', new Model(), homeView, homeController);
 app.controller.setupPage(app.url, app.view, app.model);
 
-const ancors = document.querySelectorAll('.routing');
-ancors.forEach((ancor) =>
+const header = document.querySelector('.header');
+if (!header) throw new Error('There is no header');
+const ancors1 = header.querySelectorAll('.routing');
+const footer = document.querySelector('.footer');
+if (!footer) throw new Error('There is no footer');
+const ancors2 = footer.querySelectorAll('.routing');
+
+console.log(ancors1);
+
+ancors1.forEach((ancor) =>
     ancor.addEventListener('click', (e) => {
+        console.log(e.target);
         e.preventDefault();
-        /* window.location.pathname = ancor.id; */
         route(e, ancor.id);
     })
 );
+ancors2.forEach((ancor) =>
+    ancor.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        if(ancor === e.target) {
+          route(e, ancor.id);
+        }
+    })
+);
+export {homeController};

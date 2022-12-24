@@ -1,7 +1,7 @@
 import './404.scss';
 import { GlobalView } from '../index';
 
-export class NonExistingView extends GlobalView {
+export class PageNotFoundView extends GlobalView {
     constructor() {
         super();
     }

@@ -1,14 +1,14 @@
 import { Controller } from '../';
 import { Model } from '../../model/';
-import { NonExistingView } from '../../view/404/';
-export class NonExistingController extends Controller {
+import { PageNotFoundView } from '../../view/404/';
+export class PageNotFoundController extends Controller {
     /*url: string;*/
     constructor(/*url: string*/) {
         super();
         /*this.url = url;*/
     }
 
-    setupPage(location: string, view: NonExistingView, model: Model): void {
+    setupPage(location: string, view: PageNotFoundView, model: Model): void {
         view.drawMain();
     }
 
