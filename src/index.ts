@@ -9,24 +9,26 @@ import { PageNotFoundController } from './components/controller/404/index.js';
 import { CartController } from './components/controller/cart/index.js';
 import { PageNotFoundView } from './components/view/404/index.js';
 import { locationHandler } from './routing/locationHandler.js';
+import { GlobalView } from './components/view/index.js';
+import { Controller } from './components/controller/index.js';
 
 export class App {
-    url: string;
-    model: Model;
-    view: HomeView | ProductView | CartView | PageNotFoundView;
-    controller: HomeController | CartController | PageNotFoundController | ProductController;
+  url: string;
+  model: Model;
+  view: GlobalView;
+  controller: Controller;
 
-    constructor(
-        url: string,
-        model: Model,
-        view: HomeView | ProductView | CartView | PageNotFoundView,
-        controller: HomeController | CartController | PageNotFoundController | ProductController
-    ) {
-        this.url = url;
-        this.model = model;
-        this.view = view;
-        this.controller = controller;
-    }
+  constructor(
+    url: string,
+    model: Model,
+    view: GlobalView,
+    controller: Controller
+  ) {
+    this.url = url;
+    this.model = model;
+    this.view = view;
+    this.controller = controller;
+  }
 }
 
 export const homeController = new HomeController();
@@ -54,20 +56,20 @@ const ancors2 = footer.querySelectorAll('.routing');
 ancors1.forEach((ancor) =>
   ancor.addEventListener('click', (e) => {
     e.preventDefault();
-      if (e.target === ancor) {
-        /*window.history.pushState({}, `Title`, ancor.id);*/
-        locationHandler(ancor.id);
-      }
+    if (e.target === ancor) {
+      /*window.history.pushState({}, `Title`, ancor.id);*/
+      locationHandler(ancor.id);
+    }
   })
 );
 ancors2.forEach((ancor) =>
-    ancor.addEventListener('click', (e) => {
-        e.preventDefault();
-        if(ancor === e.target) {
-          /*window.history.pushState({}, `Title`, ancor.id);*/
-          locationHandler(ancor.id);
-        }
-    })
+  ancor.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (ancor === e.target) {
+      /*window.history.pushState({}, `Title`, ancor.id);*/
+      locationHandler(ancor.id);
+    }
+  })
 );
 
 window.onpopstate = (event) => {
