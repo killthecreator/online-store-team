@@ -8,6 +8,7 @@ import { ProductController } from './components/controller/product/index.js';
 import { PageNotFoundController } from './components/controller/404/index.js';
 import { CartController } from './components/controller/cart/index.js';
 import { PageNotFoundView } from './components/view/404/index.js';
+import { locationHandler } from './routing/locationHandler.js';
 
 export class App {
     url: string;
@@ -28,7 +29,7 @@ export class App {
     }
 }
 
-const homeController = new HomeController();
+export const homeController = new HomeController();
 export const productController = new ProductController();
 export const cartController = new CartController();
 export const pageNotFoundController = new PageNotFoundController();
@@ -48,22 +49,26 @@ const footer = document.querySelector('.footer');
 if (!footer) throw new Error('There is no footer');
 const ancors2 = footer.querySelectorAll('.routing');
 
-console.log(ancors1);
-
 ancors1.forEach((ancor) =>
-    ancor.addEventListener('click', (e) => {
-        console.log(e.target);
-        e.preventDefault();
-        route(e, ancor.id);
-    })
+  ancor.addEventListener('click', (e) => {
+    e.preventDefault();
+      if (e.target === ancor) {
+        window.history.pushState({}, `Title`, ancor.id);
+        locationHandler(ancor.id);
+      }
+  })
 );
 ancors2.forEach((ancor) =>
     ancor.addEventListener('click', (e) => {
         e.preventDefault();
-
         if(ancor === e.target) {
-          route(e, ancor.id);
+          window.history.pushState({}, `Title`, ancor.id);
+          locationHandler(ancor.id);
         }
     })
 );
-export {homeController};
+
+window.onpopstate = (event) => {
+  route(event, document.location.pathname);
+  //alert(`location: ${document.location}, state: ${JSON.stringify(event.state)}`)
+}

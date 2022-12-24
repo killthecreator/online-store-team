@@ -19,8 +19,8 @@ import { cartView } from '../index.js';
 import { pageNotFoundView } from '../index.js';
 
 export const locationHandler = (location: string) => {
-    location = window.location.pathname;
-    alert(location);
+
+    //location = window.location.pathname;
     const page =
         location === '/'
             ? '/'

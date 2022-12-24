@@ -18,9 +18,9 @@ export class GlobalView {
         //TODO implement search
         header.innerHTML = `
     <div class="logo-wrapper">
-      <a href="" class="routing" id="/">
+      <a href="">
         <div class="logo-wrapper__image">
-          <img src="${Logo}"/>
+          <img src="${Logo}" class="routing" id="/"/>
         </div>
         <h1 class="logo-wrapper__text">Cadence</h1>
       </a>
@@ -36,9 +36,7 @@ export class GlobalView {
         Cart total: 0 $
       </div>
       <div class="cart-wrapper__image">
-        <a class="routing" id="/cart" href="/cart">
-          <img src="${ShoppingCartImg}"/>
-        </a>
+        <a href="/cart"><img class="routing" id="/cart" src="${ShoppingCartImg}"/></a>
       </div>
     </div>`;
         document.body.append(header);

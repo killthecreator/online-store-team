@@ -5,6 +5,7 @@ import { route } from '../../../routing/routing';
 import { ProductView } from '../../view/product/index';
 import { CartView } from '../../view/cart/index';
 import { PageNotFoundView } from '../../view/404/index';
+import { locationHandler } from '../../../routing/locationHandler';
 export class HomeController extends Controller {
     /*     model: Model;
     view: HomeView; */
@@ -43,7 +44,8 @@ export class HomeController extends Controller {
             ancor.addEventListener('click', (e) => {
                 e.preventDefault();
                 if (e.target === ancor ){
-                  route(e, ancor.id);
+                  window.history.pushState({}, `Title`, ancor.id);
+                  locationHandler(ancor.id);
                 }
             })
         );
