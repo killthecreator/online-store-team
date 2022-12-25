@@ -1,6 +1,6 @@
 import { Model } from '../model';
 import { GlobalView } from '../view';
-import { URL } from '../../utils/URLInterface';
+import { URL } from '../../utils/urlInterface';
 
 export abstract class Controller {
     abstract url: Partial<URL>;

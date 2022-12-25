@@ -1,7 +1,7 @@
 import { Controller } from '../';
 import { Model } from '../../model';
 import { CartView } from '../../view/cart/index';
-import { URL } from '../../../utils/URLInterface';
+import { URL } from '../../../utils/urlInterface';
 export class CartController extends Controller {
     url: Partial<URL>;
     constructor() {

@@ -3,7 +3,7 @@ import { HomeView } from '../../view/home';
 import { Model } from '../../model';
 import { locationHandler } from '../../../routing/locationHandler';
 import { selectorChecker } from '../../../utils/selectorChecker';
-import { URL } from '../../../utils/URLInterface';
+import { URL } from '../../../utils/urlInterface';
 export class HomeController extends Controller {
     url: Partial<URL>;
     constructor() {
@@ -390,12 +390,19 @@ export class HomeController extends Controller {
             const addToCartButton = card.querySelector('.photo-zone__add-to-cart-button');
             if (!addToCartButton) throw new Error('there is no addToCartButton');
             const cartCount = document.querySelector('.cart-wrapper__count');
+
+            let productInCart = model.cart.find((product) => product.product.name === addToCartButton.id);
+
+            if (productInCart) {
+              addToCartButton.innerHTML = 'remove';
+            }
+
             addToCartButton.addEventListener('click', adding);
             function adding() {
                 if (!addToCartButton) throw new Error('there is no addToCartButton');
                 const product = model.products.find((product) => product.name === addToCartButton.id);
                 if (!product) throw new Error('there is no such product');
-                const productInCart = model.cart.find((product) => product.product.name === addToCartButton.id);
+                productInCart = model.cart.find((product) => product.product.name === addToCartButton.id);
                 if (productInCart) {
                     addToCartButton.innerHTML = 'add to cart';
                     product.amount += 1;
@@ -493,7 +500,7 @@ export class HomeController extends Controller {
         foundDiv.innerHTML = `Found: ${displaingProducts}`;
 
         const notFound = selectorChecker(document, '.no-products') as HTMLDivElement;
-        
+
         if (displaingProducts === 0) notFound.style.display = 'flex';
         if (displaingProducts > 0) notFound.style.display = 'none';
     }
