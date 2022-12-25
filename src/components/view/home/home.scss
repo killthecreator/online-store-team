@@ -188,6 +188,7 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
     padding: $medium-padding;
     background-color: #eee;
     font-size: 1rem;
+
     .button {
         width: 100px;
         height: 40px;
@@ -258,7 +259,7 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
             background-repeat: no-repeat;
             @include flex-col;
             justify-content: space-between;
-            .photo-zone__store {
+            &__store {
                 background-image: $light-grad;
                 width: 80px;
                 border-radius: 5px;
@@ -268,36 +269,34 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
                 justify-content: center;
                 align-items: center;
             }
-            .photo-zone__empty {
-              flex-grow: 1;
-              cursor: pointer;
+            &__empty {
+                flex-grow: 1;
+                cursor: pointer;
             }
-            .photo-zone__buttons {
+            &__buttons {
                 @include flex-space-between;
-                .photo-zone__product,
-                .photo-zone__add-to-cart {
-                    .photo-zone__product-button,
-                    .photo-zone__add-to-cart-button {
-                        font-size: 1rem;
-                        background-image: $light-grad;
-                        width: 100px;
-                        border-radius: 5px;
-                        height: 30px;
-                        border-width: 0px;
-                        &:hover {
-                            @include button-hover;
-                        }
-                        &:active {
-                            @include button-active;
-                        }
-                        &:disabled {
-                            @include button-disabled;
-                        }
-                    }
-                    .togleBtn {
-                        width: 90px;
-                    }
+            }
+            &__product-button,
+            &__add-to-cart-button {
+                font-size: 1rem;
+                background-image: $light-grad;
+                width: 100px;
+                border-radius: 5px;
+                height: 30px;
+                border-width: 0px;
+                cursor: pointer;
+                &:hover {
+                    @include button-hover;
                 }
+                &:active {
+                    @include button-active;
+                }
+                &:disabled {
+                    @include button-disabled;
+                }
+            }
+            .togleBtn {
+                width: 90px;
             }
         }
         .toglePhotoZone {
@@ -311,7 +310,7 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
             .name-zone__titles {
                 flex-grow: 1;
                 .name-zone__name {
-                  cursor: pointer;
+                    cursor: pointer;
                     font-family: 'Bold';
                     font-size: $basic-font-size;
                     margin-bottom: 0;
@@ -337,8 +336,8 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
 }
 
 .no-products {
-  display: none;
-  @include flex-centered;
-  font-family: "Normal";
-  font-size: $basic-font-size;
+    display: none;
+    @include flex-centered;
+    font-family: 'Normal';
+    font-size: $basic-font-size;
 }

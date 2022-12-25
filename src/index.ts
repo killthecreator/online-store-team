@@ -12,7 +12,7 @@ import { locationHandler } from './routing/locationHandler.js';
 import { GlobalView } from './components/view/index.js';
 import { Controller } from './components/controller/index.js';
 
-export class App {
+class App {
     location: string;
     model: Model;
     view: GlobalView;
@@ -36,6 +36,7 @@ export const cartView = new CartView();
 export const pageNotFoundView = new PageNotFoundView();
 
 const model = new Model();
+
 if (window.location.pathname === '/') {
     window.location.href = `${window.location.origin}/home`;
 }
