@@ -11,7 +11,6 @@ export class Model {
     cartState: number;
     pricesRange: [number, number];
     stockRange: [0, number];
-    cart: Product[];
 
     constructor() {
         this.categories = ['guitars', 'basses', 'drums', 'keyboards', 'microphones'];

@@ -154,6 +154,7 @@ export class HomeView extends GlobalView {
         )}
 
       </section>
+      <section class="no-products">No products were found for your request</section>
     `;
     };
 }

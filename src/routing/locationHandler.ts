@@ -12,7 +12,7 @@ import { pageNotFoundView } from '../index.js';
 export const locationHandler = (location: string) => {
     location = window.location.pathname;
     const page =
-        location === '/home'
+            location.startsWith('/home')
             ? '/home'
             : location.startsWith('/product')
             ? '/product'
