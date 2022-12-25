@@ -110,45 +110,19 @@ export class HomeController extends Controller {
         const priceRanges: NodeListOf<HTMLInputElement> = document.querySelectorAll('.price-range__input');
         const stockRanges: NodeListOf<HTMLInputElement> = document.querySelectorAll('.stock-range__input');
 
-        priceRanges.forEach((range) => range.addEventListener('input', filtration));
-        stockRanges.forEach((range) => range.addEventListener('input', filtration));
-
-        brandCheckboxes.forEach((brandcheckbox) => brandcheckbox.addEventListener('click', filtration));
-        categoryCheckboxes.forEach((categorycheckbox) => categorycheckbox.addEventListener('click', filtration));
-
-        const that = this;
-
-        if (this.url.categories || this.url.brands) {
-            if (this.url.categories) {
-                categoryCheckboxes.forEach((checkbox) => {
-                    if (this.url.categories?.includes(checkbox.id)) {
-                        checkbox.checked = true;
-                    }
-                });
-            }
-            if (this.url.brands) {
-                brandCheckboxes.forEach((checkbox) => {
-                    if (this.url.brands?.includes(checkbox.id)) {
-                        checkbox.checked = true;
-                    }
-                });
-            }
-            filtration();
-        }
-
-        function filtration() {
+        const filtration = () => {
             const activeCategories = categoryCheckboxesArr
                 .filter((checkbox) => checkbox.checked)
                 .map((item) => item.id);
             const activeBrands = brandCheckboxesArr.filter((checkbox) => checkbox.checked).map((item) => item.id);
 
             activeCategories.length !== 0
-                ? (that.url.categories = `category=${activeCategories.join('↕')}`)
-                : delete that.url.categories;
-            activeBrands.length !== 0 ? (that.url.brands = `brand=${activeBrands.join('↕')}`) : delete that.url.brands;
+                ? (this.url.categories = `category=${activeCategories.join('↕')}`)
+                : delete this.url.categories;
+            activeBrands.length !== 0 ? (this.url.brands = `brand=${activeBrands.join('↕')}`) : delete this.url.brands;
 
-            Object.keys(that.url).length !== 0
-                ? window.history.replaceState({}, '', `/home/?${Object.values(that.url).join('&')}`)
+            Object.keys(this.url).length !== 0
+                ? window.history.replaceState({}, '', `/home/?${Object.values(this.url).join('&')}`)
                 : window.history.replaceState({}, '', `/home`);
 
             productCards.forEach((card) => {
@@ -180,12 +154,36 @@ export class HomeController extends Controller {
                     price <= Number(priceRanges[1].value)
                 ) {
                     card.style.display = 'flex';
-                    that.found();
+                    this.found();
                 } else {
                     card.style.display = 'none';
-                    that.found();
+                    this.found();
                 }
             });
+        };
+
+        priceRanges.forEach((range) => range.addEventListener('input', filtration));
+        stockRanges.forEach((range) => range.addEventListener('input', filtration));
+
+        brandCheckboxes.forEach((brandcheckbox) => brandcheckbox.addEventListener('click', filtration));
+        categoryCheckboxes.forEach((categorycheckbox) => categorycheckbox.addEventListener('click', filtration));
+
+        if (this.url.categories || this.url.brands) {
+            if (this.url.categories) {
+                categoryCheckboxes.forEach((checkbox) => {
+                    if (this.url.categories?.includes(checkbox.id)) {
+                        checkbox.checked = true;
+                    }
+                });
+            }
+            if (this.url.brands) {
+                brandCheckboxes.forEach((checkbox) => {
+                    if (this.url.brands?.includes(checkbox.id)) {
+                        checkbox.checked = true;
+                    }
+                });
+            }
+            filtration();
         }
     }
 
@@ -260,8 +258,6 @@ export class HomeController extends Controller {
     }
 
     public rangesHandler(model: Model) {
-        const that = this;
-
         const sliderColor = '#cce';
         const stockRange1 = document.querySelector('.stock-range__input-1') as HTMLInputElement;
         const stockRange2 = document.querySelector('.stock-range__input-2') as HTMLInputElement;
@@ -285,13 +281,13 @@ export class HomeController extends Controller {
         priceRange1.max = model.pricesRange[1].toString();
         priceRange2.max = model.pricesRange[1].toString();
 
-        function fillSlider(
+        const fillSlider = (
             from: HTMLInputElement,
             to: HTMLInputElement,
             sliderColor: string,
             rangeColor: string,
             controlSlider: HTMLInputElement
-        ) {
+        ) => {
             const rangeDistance = Number(to.max) - Number(to.min);
             const fromPosition = Number(from.value) - Number(to.min);
             const toPosition = Number(to.value) - Number(to.min);
@@ -303,7 +299,7 @@ export class HomeController extends Controller {
           ${rangeColor} ${(toPosition / rangeDistance) * 100}%,
           ${sliderColor} ${(toPosition / rangeDistance) * 100}%,
           ${sliderColor} 100%)`;
-        }
+        };
 
         function setToggleAccessible(currentTarget: HTMLInputElement, selector: string) {
             const toSlider = document.querySelector(selector) as HTMLInputElement;
@@ -314,12 +310,12 @@ export class HomeController extends Controller {
             }
         }
 
-        function controlFromSlider(
+        const controlFromSlider = (
             fromSlider: HTMLInputElement,
             toSlider: HTMLInputElement,
             fromInput: HTMLDivElement,
             e: Event
-        ) {
+        ) => {
             const [from, to] = getParsed(fromSlider, toSlider);
 
             if (from === null || to === null) {
@@ -332,22 +328,22 @@ export class HomeController extends Controller {
             } else {
                 fromInput.textContent = from.toString();
             }
-            that.found();
+            this.found();
 
-            if (e.target === priceRange1) that.url.price = `price=${[from, to].join('↕')}`;
-            if (e.target === stockRange1) that.url.stock = `stock=${[from, to].join('↕')}`;
+            if (e.target === priceRange1) this.url.price = `price=${[from, to].join('↕')}`;
+            if (e.target === stockRange1) this.url.stock = `stock=${[from, to].join('↕')}`;
 
-            Object.keys(that.url).length !== 0
-                ? window.history.replaceState({}, '', `/home/?${Object.values(that.url).join('&')}`)
+            Object.keys(this.url).length !== 0
+                ? window.history.replaceState({}, '', `/home/?${Object.values(this.url).join('&')}`)
                 : window.history.replaceState({}, '', `/home`);
-        }
+        };
 
-        function controlToSlider(
+        const controlToSlider = (
             fromSlider: HTMLInputElement,
             toSlider: HTMLInputElement,
             toInput: HTMLDivElement,
             e: Event
-        ) {
+        ) => {
             const [from, to] = getParsed(fromSlider, toSlider);
             fillSlider(fromSlider, toSlider, '#eee', sliderColor, toSlider);
             setToggleAccessible(toSlider, `.${toSlider.classList[1]}`);
@@ -358,15 +354,15 @@ export class HomeController extends Controller {
                 toInput.textContent = from.toString();
                 toSlider.value = from.toString();
             }
-            that.found();
+            this.found();
 
-            if (e.target === priceRange2) that.url.price = `price=${[from, to].join('↕')}`;
-            if (e.target === stockRange2) that.url.stock = `stock=${[from, to].join('↕')}`;
+            if (e.target === priceRange2) this.url.price = `price=${[from, to].join('↕')}`;
+            if (e.target === stockRange2) this.url.stock = `stock=${[from, to].join('↕')}`;
 
-            Object.keys(that.url).length !== 0
-                ? window.history.replaceState({}, '', `/home/?${Object.values(that.url).join('&')}`)
+            Object.keys(this.url).length !== 0
+                ? window.history.replaceState({}, '', `/home/?${Object.values(this.url).join('&')}`)
                 : window.history.replaceState({}, '', `/home`);
-        }
+        };
 
         function getParsed(currentFrom: HTMLInputElement, currentTo: HTMLInputElement) {
             const from = parseInt(currentFrom.value, 10);
@@ -441,7 +437,6 @@ export class HomeController extends Controller {
     }
 
     changeView() {
-        const that = this;
         const view1: HTMLButtonElement | null = document.querySelector('.view1');
         const view2 = document.querySelector('.view2');
         if (!view1) throw new Error('There is no view1');
@@ -456,17 +451,7 @@ export class HomeController extends Controller {
             buttons.forEach((button) => buttonArr.push(button));
         });
 
-        view1.addEventListener('click', (e) => changeView(e.target as EventTarget));
-        view2.addEventListener('click', (e) => changeView(e.target as EventTarget));
-        if (that.url.big) {
-            if (that.url.big === 'big=true') {
-                changeView(view2);
-            } else if (that.url.big === 'big=false') {
-                changeView(view1);
-            }
-        }
-
-        function changeView(target: EventTarget) {
+        const changeView = (target: EventTarget) => {
             if (!cardWrappers) throw new Error('There is no cardWrapper');
             if (!photoZones) throw new Error('There is nophotoZone');
             if (target === view1) {
@@ -474,18 +459,28 @@ export class HomeController extends Controller {
                 cardWrappers.forEach((cardWrapper) => cardWrapper.classList.add('toggleCardWrapper'));
                 photoZones.forEach((photo) => photo.classList.add('toglePhotoZone'));
                 buttonArr.forEach((button) => button.classList.add('togleBtn'));
-                that.url.big = `big=false`;
+                this.url.big = `big=false`;
             } else {
                 view1?.classList.remove('toggleView');
                 cardWrappers.forEach((cardWrapper) => cardWrapper.classList.remove('togleCardWrapper'));
                 photoZones.forEach((photo) => photo.classList.remove('toglePhotoZone'));
                 buttonArr.forEach((button) => button.classList.remove('togleBtn'));
-                that.url.big = `big=true`;
+                this.url.big = `big=true`;
             }
 
-            Object.keys(that.url).length !== 0
-                ? window.history.replaceState({}, '', `/home/?${Object.values(that.url).join('&')}`)
+            Object.keys(this.url).length !== 0
+                ? window.history.replaceState({}, '', `/home/?${Object.values(this.url).join('&')}`)
                 : window.history.replaceState({}, '', `/home`);
+        };
+
+        view1.addEventListener('click', (e) => changeView(e.target as EventTarget));
+        view2.addEventListener('click', (e) => changeView(e.target as EventTarget));
+        if (this.url.big) {
+            if (this.url.big === 'big=true') {
+                changeView(view2);
+            } else if (this.url.big === 'big=false') {
+                changeView(view1);
+            }
         }
     }
 
