@@ -11,14 +11,14 @@ import { pageNotFoundView } from '../index.js';
 
 export const locationHandler = (location: string) => {
     location = window.location.pathname;
-    const page =
-            location.startsWith('/home')
-            ? '/home'
-            : location.startsWith('/product')
-            ? '/product'
-            : location.startsWith('/cart')
-            ? '/cart'
-            : '/404';
+
+    const page = location.startsWith('/home')
+        ? '/home'
+        : location.startsWith('/product')
+        ? '/product'
+        : location.startsWith('/cart')
+        ? '/cart'
+        : '/404';
     switch (page) {
         case '/home':
             app.controller = homeController;
