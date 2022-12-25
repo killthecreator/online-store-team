@@ -311,9 +311,6 @@ export class HomeController extends Controller {
         ) => {
             const [from, to] = getParsed(fromSlider, toSlider);
 
-            if (from === null || to === null) {
-                throw new Error('');
-            }
             fillSlider(fromSlider, toSlider, '#eee', sliderColor, toSlider);
             if (from > to) {
                 fromSlider.value = to.toString();
@@ -443,11 +440,15 @@ export class HomeController extends Controller {
 
         const changeView = (target: EventTarget) => {
             if (target === view1) {
+                view1.classList.add('togleView');
+                view2.classList.remove('togleView');
                 cardWrappers.forEach((cardWrapper) => cardWrapper.classList.add('toggleCardWrapper'));
                 photoZones.forEach((photo) => photo.classList.add('toglePhotoZone'));
                 buttonArr.forEach((button) => button.classList.add('togleBtn'));
                 this.url.big = `big=false`;
             } else {
+                view2.classList.add('togleView');
+                view1.classList.remove('togleView');
                 cardWrappers.forEach((cardWrapper) => cardWrapper.classList.remove('togleCardWrapper'));
                 photoZones.forEach((photo) => photo.classList.remove('toglePhotoZone'));
                 buttonArr.forEach((button) => button.classList.remove('togleBtn'));
