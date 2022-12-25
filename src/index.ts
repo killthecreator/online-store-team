@@ -13,13 +13,13 @@ import { GlobalView } from './components/view/index.js';
 import { Controller } from './components/controller/index.js';
 
 export class App {
-    url: string;
+    location: string;
     model: Model;
     view: GlobalView;
     controller: Controller;
 
-    constructor(url: string, model: Model, view: GlobalView, controller: Controller) {
-        this.url = url;
+    constructor(location: string, model: Model, view: GlobalView, controller: Controller) {
+        this.location = location;
         this.model = model;
         this.view = view;
         this.controller = controller;
@@ -36,12 +36,10 @@ export const cartView = new CartView();
 export const pageNotFoundView = new PageNotFoundView();
 
 const model = new Model();
+const currentPath = window.location.href.replace(`${window.location.origin}/home/?`, '');
 
-export const app = new App('/', model, homeView, homeController);
-//app.controller.setupPage(app.url, app.view, app.model);
-app.view.drawHeader();
-app.controller.setupPage(app.url, app.view, app.model);
-app.view.drawFooter();
+export const app = new App(currentPath, model, homeView, homeController);
+app.controller.setupPage(app.location, app.view, app.model);
 
 const ancors = document.querySelectorAll('.routing');
 
@@ -49,13 +47,12 @@ ancors.forEach((ancor) =>
     ancor.addEventListener('click', (e) => {
         e.preventDefault();
         if (e.currentTarget === ancor) {
-            window.history.pushState({}, `Title`, ancor.id);
+            window.history.pushState({}, '', ancor.id);
             locationHandler(ancor.id);
         }
     })
 );
 
 window.onpopstate = (event) => {
-    route(event, document.location.pathname);
-    //alert(`location: ${document.location}, state: ${JSON.stringify(event.state)}`);
+    route(event, window.location.pathname);
 };

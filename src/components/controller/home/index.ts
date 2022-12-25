@@ -1,7 +1,6 @@
 import { Controller } from '../';
 import { HomeView } from '../../view/home';
 import { Model } from '../../model';
-import { route } from '../../../routing/routing';
 import { locationHandler } from '../../../routing/locationHandler';
 import { selectorChecker } from '../../../utils/selectorChecker';
 export class HomeController extends Controller {
@@ -20,7 +19,10 @@ export class HomeController extends Controller {
     }
 
     setupPage(location: string, view: HomeView, model: Model): void {
+        this.fillUrl(location);
+        view.drawHeader();
         view.drawMain(model.categories, model.brands, model.products);
+        view.drawFooter();
         this.configPage(model);
     }
 
@@ -64,13 +66,14 @@ export class HomeController extends Controller {
 
         const input: HTMLInputElement | null = document.querySelector('.search-wrapper__input');
         if (!input) throw new Error('There is no search input');
-        input.addEventListener('input', () => {
+
+        const doSearch = () => {
             const filter = input.value.toLowerCase();
             filter.length !== 0 ? (this.url.search = `search=${filter}`) : delete this.url.search;
 
             Object.keys(this.url).length !== 0
-                ? window.history.replaceState({}, '', `?${Object.values(this.url).join('&')}`)
-                : window.history.replaceState({}, '', ``);
+                ? window.history.replaceState({}, '', `/home/?${Object.values(this.url).join('&')}`)
+                : window.history.replaceState({}, '', `/home`);
 
             productCards.forEach((card) => {
                 if (
@@ -84,7 +87,16 @@ export class HomeController extends Controller {
                     this.found();
                 }
             });
+        };
+
+        window.addEventListener('load', () => {
+            if (this.url.search) {
+                input.value = this.url.search.replace('search=', '');
+                doSearch();
+            }
         });
+
+        input.addEventListener('input', doSearch);
     }
 
     filtersAndCheckboxes() {
@@ -106,6 +118,24 @@ export class HomeController extends Controller {
 
         const that = this;
 
+        if (this.url.categories || this.url.brands) {
+            if (this.url.categories) {
+                categoryCheckboxes.forEach((checkbox) => {
+                    if (this.url.categories?.includes(checkbox.id)) {
+                        checkbox.checked = true;
+                    }
+                });
+            }
+            if (this.url.brands) {
+                brandCheckboxes.forEach((checkbox) => {
+                    if (this.url.brands?.includes(checkbox.id)) {
+                        checkbox.checked = true;
+                    }
+                });
+            }
+            filtration();
+        }
+
         function filtration() {
             const activeCategories = categoryCheckboxesArr
                 .filter((checkbox) => checkbox.checked)
@@ -113,13 +143,13 @@ export class HomeController extends Controller {
             const activeBrands = brandCheckboxesArr.filter((checkbox) => checkbox.checked).map((item) => item.id);
 
             activeCategories.length !== 0
-                ? (that.url.categories = `category=${activeCategories.join('↕l')}`)
+                ? (that.url.categories = `category=${activeCategories.join('↕')}`)
                 : delete that.url.categories;
-            activeBrands.length !== 0 ? (that.url.brands = `brand=${activeBrands.join('↕l')}`) : delete that.url.brands;
+            activeBrands.length !== 0 ? (that.url.brands = `brand=${activeBrands.join('↕')}`) : delete that.url.brands;
 
             Object.keys(that.url).length !== 0
-                ? window.history.replaceState({}, '', `?${Object.values(that.url).join('&')}`)
-                : window.history.replaceState({}, '', ``);
+                ? window.history.replaceState({}, '', `/home/?${Object.values(that.url).join('&')}`)
+                : window.history.replaceState({}, '', `/home`);
 
             productCards.forEach((card) => {
                 const categoryCheckbox = categoryCheckboxesArr.find(
@@ -186,11 +216,9 @@ export class HomeController extends Controller {
             });
         });
 
-        const cardsWrapper: HTMLDivElement | null = document.querySelector('.cards-wrapper');
-        if (!cardsWrapper) throw new Error('there is no cards wrapper in DOM');
-        const sortOptions: HTMLSelectElement | null = document.querySelector('.sort-options');
-        if (!sortOptions) throw new Error('there is no sort select in DOM');
-        sortOptions.addEventListener('change', () => {
+        const cardsWrapper = selectorChecker(document, '.cards-wrapper') as HTMLDivElement;
+        const sortOptions = selectorChecker(document, '.sort-options') as HTMLOptionElement;
+        const sortProducts = () => {
             switch (sortOptions.value) {
                 case 'priceASC':
                     tempArr.sort((a, b) => a.price - b.price);
@@ -219,9 +247,15 @@ export class HomeController extends Controller {
             }
             cardsWrapper.innerHTML = '';
             tempArr.forEach((el) => cardsWrapper.append(el.el));
+
             this.url.sort = `sort=${sortOptions.value}`;
-            window.history.replaceState({}, '', `?${Object.values(this.url).join('&')}`);
-        });
+            window.history.replaceState({}, '', `/home/?${Object.values(this.url).join('&')}`);
+        };
+        if (this.url.sort) {
+            sortOptions.value = this.url.sort.replace('sort=', '');
+            sortProducts();
+        }
+        sortOptions.addEventListener('change', sortProducts);
         this.filtersAndCheckboxes();
     }
 
@@ -287,6 +321,7 @@ export class HomeController extends Controller {
             e: Event
         ) {
             const [from, to] = getParsed(fromSlider, toSlider);
+
             if (from === null || to === null) {
                 throw new Error('');
             }
@@ -299,12 +334,12 @@ export class HomeController extends Controller {
             }
             that.found();
 
-            if (e.target === priceRange1) that.url.price = `price=${[from, to].join('↕l')}`;
-            if (e.target === stockRange1) that.url.stock = `stock=${[from, to].join('↕l')}`;
+            if (e.target === priceRange1) that.url.price = `price=${[from, to].join('↕')}`;
+            if (e.target === stockRange1) that.url.stock = `stock=${[from, to].join('↕')}`;
 
             Object.keys(that.url).length !== 0
-                ? window.history.replaceState({}, '', `?${Object.values(that.url).join('&')}`)
-                : window.history.replaceState({}, '', ``);
+                ? window.history.replaceState({}, '', `/home/?${Object.values(that.url).join('&')}`)
+                : window.history.replaceState({}, '', `/home`);
         }
 
         function controlToSlider(
@@ -325,12 +360,12 @@ export class HomeController extends Controller {
             }
             that.found();
 
-            if (e.target === priceRange2) that.url.price = `price=${[from, to].join('↕l')}`;
-            if (e.target === stockRange2) that.url.stock = `stock=${[from, to].join('↕l')}`;
+            if (e.target === priceRange2) that.url.price = `price=${[from, to].join('↕')}`;
+            if (e.target === stockRange2) that.url.stock = `stock=${[from, to].join('↕')}`;
 
             Object.keys(that.url).length !== 0
-                ? window.history.replaceState({}, '', `?${Object.values(that.url).join('&')}`)
-                : window.history.replaceState({}, '', ``);
+                ? window.history.replaceState({}, '', `/home/?${Object.values(that.url).join('&')}`)
+                : window.history.replaceState({}, '', `/home`);
         }
 
         function getParsed(currentFrom: HTMLInputElement, currentTo: HTMLInputElement) {
@@ -381,7 +416,7 @@ export class HomeController extends Controller {
             }
         });
 
-        /*const addToCartButtons = document.querySelectorAll('.photo-zone__add-to-cart-button');
+        /* const addToCartButtons = document.querySelectorAll('.photo-zone__add-to-cart-button');
         const cartCount = document.querySelector('.cart-wrapper__count');
         addToCartButtons.forEach((button) => {
             button.addEventListener('click', adding);
@@ -396,13 +431,13 @@ export class HomeController extends Controller {
                     model.cart.splice(model.cart.indexOf(productInCart), 1);
                 } else {
                     button.innerHTML = 'remove';
-                    model.cart.push({product: product, amount: 1});
+                    model.cart.push({ product: product, amount: 1 });
                     product.amount -= 1;
                 }
                 if (!cartCount) throw new Error('There is no cart count');
                 cartCount.innerHTML = model.cart.length.toString();
             }
-        });*/
+        }); */
     }
 
     changeView() {
@@ -421,13 +456,19 @@ export class HomeController extends Controller {
             buttons.forEach((button) => buttonArr.push(button));
         });
 
-        view1.addEventListener('click', (e) => changeView(e));
-        view2.addEventListener('click', (e) => changeView(e));
+        view1.addEventListener('click', (e) => changeView(e.target as EventTarget));
+        view2.addEventListener('click', (e) => changeView(e.target as EventTarget));
+        if (that.url.big) {
+            if (that.url.big === 'big=true') {
+                changeView(view2);
+            } else if (that.url.big === 'big=false') {
+                changeView(view1);
+            }
+        }
 
-        function changeView(e: Event) {
+        function changeView(target: EventTarget) {
             if (!cardWrappers) throw new Error('There is no cardWrapper');
             if (!photoZones) throw new Error('There is nophotoZone');
-            const target = e.target as HTMLButtonElement;
             if (target === view1) {
                 view2?.classList.remove('toggleView');
                 cardWrappers.forEach((cardWrapper) => cardWrapper.classList.add('toggleCardWrapper'));
@@ -443,8 +484,8 @@ export class HomeController extends Controller {
             }
 
             Object.keys(that.url).length !== 0
-                ? window.history.replaceState({}, '', `?${Object.values(that.url).join('&')}`)
-                : window.history.replaceState({}, '', ``);
+                ? window.history.replaceState({}, '', `/home/?${Object.values(that.url).join('&')}`)
+                : window.history.replaceState({}, '', `/home`);
         }
     }
 
@@ -471,6 +512,33 @@ export class HomeController extends Controller {
                     target.textContent = 'Copy link';
                 }, 500);
             })().catch(() => '');
+        });
+    }
+
+    fillUrl(location: string) {
+        const queriesArr = location.split('&');
+        queriesArr.forEach((query) => {
+            if (query.startsWith('category=')) {
+                this.url.categories = query;
+            }
+            if (query.startsWith('brand=')) {
+                this.url.brands = query;
+            }
+            if (query.startsWith('search=')) {
+                this.url.search = query;
+            }
+            if (query.startsWith('price=')) {
+                this.url.price = query;
+            }
+            if (query.startsWith('stock=')) {
+                this.url.stock = query;
+            }
+            if (query.startsWith('big=')) {
+                this.url.big = query;
+            }
+            if (query.startsWith('sort=')) {
+                this.url.sort = query;
+            }
         });
     }
 }

@@ -1,10 +1,18 @@
 import { Controller } from '../';
 import { PageNotFoundView } from '../../view/404/';
 export class PageNotFoundController extends Controller {
-    url: string;
+    url: Partial<{
+        big: string;
+        sort: string;
+        search: string;
+        categories: string;
+        brands: string;
+        price: string;
+        stock: string;
+    }>;
     constructor() {
         super();
-        this.url = '';
+        this.url = {};
     }
 
     setupPage(location: string, view: PageNotFoundView): void {

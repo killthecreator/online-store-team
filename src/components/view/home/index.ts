@@ -90,7 +90,7 @@ export class HomeView extends GlobalView {
     public drawButtons = () => {
         return `
       <section class="buttons">
-        <button class="reset-filters button routing" id="/" =>Reset filters</button>
+        <button class="reset-filters button routing" id="/home" =>Reset filters</button>
         <button class="copy-link button">Copy link</button>
         <select class="sort-options">
           <option selected disabled>Sort products</option>

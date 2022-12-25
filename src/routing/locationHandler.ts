@@ -10,19 +10,20 @@ import { cartView } from '../index.js';
 import { pageNotFoundView } from '../index.js';
 
 export const locationHandler = (location: string) => {
-    //location = window.location.pathname;
+    location = window.location.pathname;
     const page =
-        location === '/'
-            ? '/'
+        location === '/home'
+            ? '/home'
             : location.startsWith('/product')
             ? '/product'
             : location.startsWith('/cart')
             ? '/cart'
             : '/404';
     switch (page) {
-        case '/':
+        case '/home':
             app.controller = homeController;
             app.view = homeView;
+            app.controller.url = {};
             break;
         case '/product':
             app.controller = productController;
@@ -32,11 +33,11 @@ export const locationHandler = (location: string) => {
             app.controller = cartController;
             app.view = cartView;
             break;
-        case '/404':
+        default:
             app.controller = pageNotFoundController;
             app.view = pageNotFoundView;
             break;
     }
-
+    app.controller.url = {};
     app.controller.setupPage(location, app.view, app.model);
 };
