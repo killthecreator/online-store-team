@@ -69,10 +69,19 @@ export class HomeController extends Controller {
                 : window.history.replaceState({}, '', `/home`);
 
             productCards.forEach((card) => {
+                const cardTitle = selectorChecker(card, '.name-zone__name');
+                const cardCategory = selectorChecker(card, '.name-zone__category');
+                const cardPrice = selectorChecker(card, '.name-zone__price');
+                const cardStock = selectorChecker(card, '.photo-zone__store');
                 if (
-                    (selectorChecker(card, '.name-zone').innerHTML.toLowerCase().indexOf(filter) > -1 &&
-                        card.style.display !== 'none') ||
-                    input.value === ''
+                    cardTitle.textContent &&
+                    cardCategory.textContent &&
+                    cardPrice.textContent &&
+                    cardStock.textContent &&
+                    (cardTitle.textContent.toLowerCase().indexOf(filter) !== -1 ||
+                        cardCategory.textContent.toLowerCase().indexOf(filter) !== -1 ||
+                        cardPrice.textContent.toLowerCase().indexOf(filter) !== -1 ||
+                        cardStock.textContent.toLowerCase().replace('Stock ', '').indexOf(filter) !== -1)
                 ) {
                     card.style.display = 'flex';
                     this.found();
