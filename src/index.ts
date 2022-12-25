@@ -36,13 +36,16 @@ export const cartView = new CartView();
 export const pageNotFoundView = new PageNotFoundView();
 
 const model = new Model();
+if (window.location.pathname === '/') {
+    window.location.href = `${window.location.origin}/home`;
+}
+
 const currentPath = window.location.href.replace(`${window.location.origin}/home/?`, '');
 
 export const app = new App(currentPath, model, homeView, homeController);
 app.controller.setupPage(app.location, app.view, app.model);
 
 const ancors = document.querySelectorAll('.routing');
-
 ancors.forEach((ancor) =>
     ancor.addEventListener('click', (e) => {
         e.preventDefault();
