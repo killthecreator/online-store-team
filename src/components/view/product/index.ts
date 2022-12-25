@@ -57,8 +57,10 @@ export class ProductView extends GlobalView {
             <div class="product__description-price">${product.price} $</div>
           </div>
           <div class="product__description-buttons">
-            <button class="product__description-add-to-cart button" id="${product.name}">Add to cart</button>
-            <button class="product__description-by-now button">Buy now</button>
+            <button class="product__description-add-to-cart button" id="${product.name}" 
+            ${product.amount === 0 ? 'disabled' : ''}>Add to cart</button>
+            <button class="product__description-by-now button" 
+            ${product.amount === 0 ? 'disabled' : ''}>Buy now</button>
           </div>
         </div>
       </section>
