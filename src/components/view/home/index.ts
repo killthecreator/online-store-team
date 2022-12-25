@@ -129,7 +129,9 @@ export class HomeView extends GlobalView {
                   <button class="photo-zone__product-button routing" id='/product/${card.name}'>details</button>
                 </div>
                 <div class="photo-zone__add-to-cart">
-                  <button class="photo-zone__add-to-cart-button" id="${card.name}">add to cart</button>
+                  <button class="photo-zone__add-to-cart-button" id="${card.name}" ${
+                    card.amount === 0 ? 'disabled' : ''
+                }>add to cart</button>
                 </div>
               </div>
             </div>

@@ -293,6 +293,7 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
                 }
                 &:disabled {
                     @include button-disabled;
+                    background: #000;
                 }
             }
             .togleBtn {
