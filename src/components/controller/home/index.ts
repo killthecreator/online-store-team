@@ -491,6 +491,11 @@ export class HomeController extends Controller {
         });
         if (!foundDiv) throw new Error('No dives found');
         foundDiv.innerHTML = `Found: ${displaingProducts}`;
+
+        const notFound = selectorChecker(document, '.no-products') as HTMLDivElement;
+        
+        if (displaingProducts === 0) notFound.style.display = 'flex';
+        if (displaingProducts > 0) notFound.style.display = 'none';
     }
 
     copyLink() {
