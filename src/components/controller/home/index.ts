@@ -397,6 +397,8 @@ export class HomeController extends Controller {
               addToCartButton.innerHTML = 'remove';
             }
 
+            const cartState = selectorChecker(document, '.cart-wrapper__state');
+
             addToCartButton.addEventListener('click', adding);
             function adding() {
                 if (!addToCartButton) throw new Error('there is no addToCartButton');
@@ -416,6 +418,8 @@ export class HomeController extends Controller {
                 cartCount.innerHTML = model.cart.length.toString();
                 if (!stockDiv) throw new Error('There is no stock div');
                 stockDiv.innerHTML = `Stock: ${product.amount}`;
+
+                cartState.innerHTML = `Cart total: ${model.cart.reduce((res, cur) => res + cur.product.price * cur.amount, 0).toString()} $`;
             }
         });
 

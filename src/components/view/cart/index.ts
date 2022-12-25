@@ -51,13 +51,13 @@ export class CartView extends GlobalView {
                 <div class="product__desc">${product.product.description}</div>
               </div>
               <div class="product__params">
-                <div class="product__stock">${product.product.amount}</div>
+                <div class="product__stock">Stock: ${product.product.amount}</div>
                 <div class="product__amount">
                   <div class="product__amount-minus"> - </div>
                   <div class="product__amount-value">${product.amount}</div>
                   <div class="product__amount-plus"> + </div>
                 </div>
-                <div class="product__price">${product.product.price}</div>
+                <div class="product__price">${product.product.price} $</div>
               </div>
             </div>
           `,

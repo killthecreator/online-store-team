@@ -42,6 +42,8 @@ export class ProductController extends Controller {
           addToCartButton.innerHTML = 'remove';
         }
 
+        const cartState = selectorChecker(document, '.cart-wrapper__state');
+
         function adding() {
           productInCart = model.cart.find((product) => product.product.name === addToCartButton.id);
           if (!product) throw new Error('there is no such product');
@@ -56,6 +58,8 @@ export class ProductController extends Controller {
             }
             if (!cartCount) throw new Error('There is no cart count');
             cartCount.innerHTML = model.cart.length.toString();
+
+            cartState.innerHTML = `Cart total: ${model.cart.reduce((res, cur) => res + cur.product.price * cur.amount, 0).toString()} $`;
         }
     }
 }

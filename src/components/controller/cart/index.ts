@@ -2,6 +2,8 @@ import { Controller } from '../';
 import { Model } from '../../model';
 import { CartView } from '../../view/cart/index';
 import { URL } from '../../../utils/urlInterface';
+import { selectorChecker } from '../../../utils/selectorChecker';
+import { route } from '../../../routing/routing';
 export class CartController extends Controller {
     url: Partial<URL>;
     constructor() {
@@ -15,12 +17,12 @@ export class CartController extends Controller {
         if (!products) throw new Error(`There is no ${locationArr[2]} among our products`);
         view.drawMain(products);
 
-        this.configPage(model);
+        this.configPage(model, view);
     }
 
-    configPage(model: Model) {
+    configPage(model: Model, view: CartView) {
         this.turnOffSearch();
-        this.productAmount(model);
+        this.productAmount(model, view);
     }
 
     turnOffSearch() {
@@ -29,7 +31,7 @@ export class CartController extends Controller {
         search.style.display = 'none';
     }
 
-    productAmount(model: Model) {
+    productAmount(model: Model, view: CartView) {
         const productAmounts = document.querySelectorAll('.product');
         productAmounts.forEach((div) => {
             const productName = div.querySelector('.product__name')?.innerHTML;
@@ -41,30 +43,47 @@ export class CartController extends Controller {
             const minus = div.querySelector('.product__amount-minus');
             if (!plus) throw new Error('There is no plus button');
             if (!minus) throw new Error('There is no minus button');
+            const amountStore = selectorChecker(div, '.product__stock');
+            const sumPrice = selectorChecker(div, '.product__price');
+            const cartState = selectorChecker(document, '.cart-wrapper__state');
+            const cartCount = selectorChecker(document, '.cart-wrapper__count');
             plus.addEventListener('click', () => {
                 if (ourProduct.product.amount > 0) {
                     ourProduct.amount += 1;
                     ourProduct.product.amount -= 1;
                     amountDiv.innerHTML = ourProduct.amount.toString();
 
-                    const cartCount = document.querySelector('.cart-wrapper__count');
-                    if (!cartCount) throw new Error('There is no cart Count');
                     let num = 0;
                     model.cart.forEach((product) => (num += product.amount));
                     cartCount.innerHTML = num.toString();
+
+                    amountStore.innerHTML = `Stock: ${ourProduct.product.amount.toString()}`;
+                    sumPrice.innerHTML = `${(ourProduct.product.price * ourProduct.amount).toString()} $`;
+
+                    cartState.innerHTML = `Cart total: ${model.cart.reduce((res, cur) => res + cur.product.price * cur.amount, 0).toString()} $`;
                 }
             });
             minus.addEventListener('click', () => {
                 if (ourProduct.amount > 0) {
                     ourProduct.amount -= 1;
+
                     ourProduct.product.amount += 1;
                     amountDiv.innerHTML = ourProduct.amount.toString();
 
-                    const cartCount = document.querySelector('.cart-wrapper__count');
-                    if (!cartCount) throw new Error('There is no cart Count');
                     let num = 0;
                     model.cart.forEach((product) => (num += product.amount));
                     cartCount.innerHTML = num.toString();
+
+                    amountStore.innerHTML = `Stock: ${ourProduct.product.amount.toString()}`;
+                    sumPrice.innerHTML = `${(ourProduct.product.price * ourProduct.amount).toString()} $`;
+                    console.log(ourProduct.amount == 0);
+                    if (ourProduct.amount == 0) {
+                      model.cart.splice(model.cart.indexOf(ourProduct), 1);
+                      view.drawMain(model.cart);
+                      this.configPage(model, view);
+                    }
+
+                    cartState.innerHTML = `Cart total: ${model.cart.reduce((res, cur) => res + cur.product.price * cur.amount, 0).toString()} $`;
                 }
             });
         });
