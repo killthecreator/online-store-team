@@ -70,7 +70,8 @@ export class HomeController extends Controller {
 
             productCards.forEach((card) => {
                 if (
-                    (card.id.toLowerCase().indexOf(filter) > -1 && card.style.display !== 'none') ||
+                    (selectorChecker(card, '.name-zone').innerHTML.toLowerCase().indexOf(filter) > -1 &&
+                        card.style.display !== 'none') ||
                     input.value === ''
                 ) {
                     card.style.display = 'flex';
