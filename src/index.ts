@@ -39,7 +39,6 @@ const model = new Model();
 if (window.location.pathname === '/') {
     window.location.href = `${window.location.origin}/home`;
 }
-
 const currentPath = window.location.href.replace(`${window.location.origin}/home/?`, '');
 
 export const app = new App(currentPath, model, homeView, homeController);

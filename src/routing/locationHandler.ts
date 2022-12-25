@@ -10,8 +10,6 @@ import { cartView } from '../index.js';
 import { pageNotFoundView } from '../index.js';
 
 export const locationHandler = (location: string) => {
-    location = window.location.pathname;
-
     const page = location.startsWith('/home')
         ? '/home'
         : location.startsWith('/product')
@@ -23,7 +21,6 @@ export const locationHandler = (location: string) => {
         case '/home':
             app.controller = homeController;
             app.view = homeView;
-            app.controller.url = {};
             break;
         case '/product':
             app.controller = productController;
@@ -38,6 +35,6 @@ export const locationHandler = (location: string) => {
             app.view = pageNotFoundView;
             break;
     }
-    app.controller.url = {};
+    if (location === '/home') app.controller.url = {};
     app.controller.setupPage(location, app.view, app.model);
 };
