@@ -3,7 +3,7 @@ import { HomeView } from '../../view/home';
 import { Model } from '../../model';
 import { locationHandler } from '../../../routing/locationHandler';
 import { selectorChecker } from '../../../utils/selectorChecker';
-import { URL } from '../../../utils/urlInterface';
+import { URL } from '../../../utils/URLInterface';
 export class HomeController extends Controller {
     url: Partial<URL>;
     constructor() {
@@ -430,14 +430,11 @@ export class HomeController extends Controller {
     }
 
     changeView() {
-        const view1: HTMLButtonElement | null = document.querySelector('.view1');
-        const view2 = document.querySelector('.view2');
-        if (!view1) throw new Error('There is no view1');
-        if (!view2) throw new Error('There is no view2');
+        const view1 = selectorChecker(document, '.view1') as HTMLButtonElement;
+        const view2 = selectorChecker(document, '.view2') as HTMLButtonElement;
 
         const cardWrappers = document.querySelectorAll('.card-wrapper');
         const photoZones = document.querySelectorAll('.photo-zone');
-        if (!photoZones) throw new Error('There is no photo zone');
         const buttonArr: HTMLButtonElement[] = [];
         photoZones.forEach((photo) => {
             const buttons = photo.querySelectorAll('button');
@@ -445,16 +442,12 @@ export class HomeController extends Controller {
         });
 
         const changeView = (target: EventTarget) => {
-            if (!cardWrappers) throw new Error('There is no cardWrapper');
-            if (!photoZones) throw new Error('There is nophotoZone');
             if (target === view1) {
-                view2?.classList.remove('toggleView');
                 cardWrappers.forEach((cardWrapper) => cardWrapper.classList.add('toggleCardWrapper'));
                 photoZones.forEach((photo) => photo.classList.add('toglePhotoZone'));
                 buttonArr.forEach((button) => button.classList.add('togleBtn'));
                 this.url.big = `big=false`;
             } else {
-                view1?.classList.remove('toggleView');
                 cardWrappers.forEach((cardWrapper) => cardWrapper.classList.remove('togleCardWrapper'));
                 photoZones.forEach((photo) => photo.classList.remove('toglePhotoZone'));
                 buttonArr.forEach((button) => button.classList.remove('togleBtn'));
@@ -465,7 +458,6 @@ export class HomeController extends Controller {
                 ? window.history.replaceState({}, '', `/home/?${Object.values(this.url).join('&')}`)
                 : window.history.replaceState({}, '', `/home`);
         };
-
         view1.addEventListener('click', (e) => changeView(e.target as EventTarget));
         view2.addEventListener('click', (e) => changeView(e.target as EventTarget));
         if (this.url.big) {

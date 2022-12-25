@@ -234,10 +234,6 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
             height: 40px;
             @include button-style;
         }
-        .togleView {
-            background: $gradient;
-            color: white;
-        }
     }
 }
 

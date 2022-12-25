@@ -1,6 +1,6 @@
 import { Controller } from '../';
 import { PageNotFoundView } from '../../view/404/';
-import { URL } from '../../../utils/urlInterface';
+import { URL } from '../../../utils/URLInterface';
 export class PageNotFoundController extends Controller {
     url: Partial<URL>;
     constructor() {
