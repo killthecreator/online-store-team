@@ -122,56 +122,48 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
 }
 
 .ranges {
-    @include flex-space-between;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-bottom: 20px;
     padding: $small-padding;
     .price-range,
     .stock-range {
-        flex-grow: 1;
         padding: 1vw 1vw 0 1vw;
-        .price-range__header,
-        .stock-range__header {
-            @include flex-space-between;
-            .price-range__min,
-            .stock-range__min,
-            .price-range__max,
-            .stock-range__max {
-                font-family: 'Normal';
-                padding: $small-padding;
-            }
-            .price-range__title,
-            .stock-range__title {
-                font-size: $basic-font-size;
-                margin: $title-margin;
-            }
+        &__header {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
         }
-        .price-range__input-wrapper,
-        .stock-range__input-wrapper {
+        &__min,
+        &__max {
+            font-family: 'Normal';
+            padding: $small-padding;
+        }
+
+        &__max {
+            justify-self: right;
+        }
+        &__title {
+            justify-self: center;
+            font-size: $basic-font-size;
+        }
+        &__input-wrapper {
             height: 25px;
             position: relative;
             width: 100%;
             @include flex-space-between;
-            .price-range__input,
-            .stock-range__input {
-                position: absolute;
-                pointer-events: none;
-                -webkit-appearance: none;
-                appearance: none;
-                background-color: $color;
-                border-radius: 5px;
-                width: 99%;
-                display: block;
-                margin: 0;
-            }
+        }
+        &__input {
+            position: absolute;
+            pointer-events: none;
+            -webkit-appearance: none;
+            appearance: none;
+            background-color: $color;
+            border-radius: 5px;
+            width: 99%;
+            display: block;
+            margin: 0;
 
-            .price-range__input-1,
-            .stock-range__input-1 {
-                height: 0;
-                margin-top: 7.5px;
-                z-index: 1;
-            }
-
-            .price-range__input::-webkit-slider-thumb,
-            .stock-range__input::-webkit-slider-thumb {
+            &::-webkit-slider-thumb {
                 pointer-events: all;
                 box-shadow: 0 0 0 1px #c6c6c6;
                 -webkit-appearance: none;
@@ -182,6 +174,11 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
                 background: $gradient;
                 pointer-events: all;
             }
+        }
+        &__input-1 {
+            height: 0;
+            margin-top: 7.5px;
+            z-index: 1;
         }
     }
 }
