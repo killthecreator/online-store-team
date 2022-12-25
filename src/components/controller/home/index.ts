@@ -386,22 +386,20 @@ export class HomeController extends Controller {
     addingToCart(model: Model) {
         const productCards /*: NodeListOf<HTMLDivElement>*/ = document.querySelectorAll('.card-wrapper');
         productCards.forEach((card) => {
-            const stockDiv = card.querySelector('.photo-zone__store');
-            const addToCartButton = card.querySelector('.photo-zone__add-to-cart-button');
-            if (!addToCartButton) throw new Error('there is no addToCartButton');
-            const cartCount = document.querySelector('.cart-wrapper__count');
+            const stockDiv = selectorChecker(card, '.photo-zone__store');
+            const addToCartButton = selectorChecker(card, '.photo-zone__add-to-cart-button');
+            const cartCount = selectorChecker(document, '.cart-wrapper__count');
 
             let productInCart = model.cart.find((product) => product.product.name === addToCartButton.id);
 
             if (productInCart) {
-              addToCartButton.innerHTML = 'remove';
+                addToCartButton.innerHTML = 'remove';
             }
 
             const cartState = selectorChecker(document, '.cart-wrapper__state');
 
             addToCartButton.addEventListener('click', adding);
             function adding() {
-                if (!addToCartButton) throw new Error('there is no addToCartButton');
                 const product = model.products.find((product) => product.name === addToCartButton.id);
                 if (!product) throw new Error('there is no such product');
                 productInCart = model.cart.find((product) => product.product.name === addToCartButton.id);
@@ -414,9 +412,8 @@ export class HomeController extends Controller {
                     model.cart.push({ product: product, amount: 1 });
                     product.amount -= 1;
                 }
-                if (!cartCount) throw new Error('There is no cart count');
+
                 cartCount.innerHTML = model.cart.length.toString();
-                if (!stockDiv) throw new Error('There is no stock div');
                 stockDiv.innerHTML = `Stock: ${product.amount}`;
 
                 cartState.innerHTML = `Cart total: ${model.cart.reduce((res, cur) => res + cur.product.price * cur.amount, 0).toString()} $`;
