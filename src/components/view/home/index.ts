@@ -123,6 +123,7 @@ export class HomeView extends GlobalView {
               <div class="photo-zone__store">
                 Stock: ${card.amount}
               </div>
+              <div class="photo-zone__empty routing" id='/product/${card.name}'></div>
               <div class="photo-zone__buttons">
                 <div class="photo-zone__product">
                   <button class="photo-zone__product-button routing" id='/product/${card.name}'>details</button>
@@ -139,7 +140,7 @@ export class HomeView extends GlobalView {
                 });">
               </div>
               <div class="name-zone__titles">
-                <h4 class="name-zone__name">${card.name}</h4>
+                <h4 class="name-zone__name routing" id='/product/${card.name}'>${card.name}</h4>
                 <p class="name-zone__category">${card.category}</p>
               </div>
               <div class="name-zone__price">
