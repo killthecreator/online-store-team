@@ -1,15 +1,12 @@
 import { Controller } from '../';
 import { Model } from '../../model';
 import { CartView } from '../../view/cart/index';
+import { URL } from '../../../utils/urlInterface';
 export class CartController extends Controller {
-    /*model: Model;
-  view: CartView;*/
-    /*url: string;*/
-    constructor(/*model: Model, productView: CartView /*url: string*/) {
+    url: Partial<URL>;
+    constructor() {
         super();
-        /* this.url = url;*/
-        /*this.model = model;
-     this.view = productView;*/
+        this.url = {};
     }
 
     setupPage(location: string, view: CartView, model: Model): void {
@@ -52,7 +49,7 @@ export class CartController extends Controller {
 
                     const cartCount = document.querySelector('.cart-wrapper__count');
                     if (!cartCount) throw new Error('There is no cart Count');
-                    let num: number = 0;
+                    let num = 0;
                     model.cart.forEach((product) => (num += product.amount));
                     cartCount.innerHTML = num.toString();
                 }
@@ -65,7 +62,7 @@ export class CartController extends Controller {
 
                     const cartCount = document.querySelector('.cart-wrapper__count');
                     if (!cartCount) throw new Error('There is no cart Count');
-                    let num: number = 0;
+                    let num = 0;
                     model.cart.forEach((product) => (num += product.amount));
                     cartCount.innerHTML = num.toString();
                 }

@@ -1,15 +1,8 @@
 import { Controller } from '../';
 import { PageNotFoundView } from '../../view/404/';
+import { URL } from '../../../utils/urlInterface';
 export class PageNotFoundController extends Controller {
-    url: Partial<{
-        big: string;
-        sort: string;
-        search: string;
-        categories: string;
-        brands: string;
-        price: string;
-        stock: string;
-    }>;
+    url: Partial<URL>;
     constructor() {
         super();
         this.url = {};

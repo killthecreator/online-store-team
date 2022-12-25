@@ -3,16 +3,9 @@ import { HomeView } from '../../view/home';
 import { Model } from '../../model';
 import { locationHandler } from '../../../routing/locationHandler';
 import { selectorChecker } from '../../../utils/selectorChecker';
+import { URL } from '../../../utils/urlInterface';
 export class HomeController extends Controller {
-    url: Partial<{
-        big: string;
-        sort: string;
-        search: string;
-        categories: string;
-        brands: string;
-        price: string;
-        stock: string;
-    }>;
+    url: Partial<URL>;
     constructor() {
         super();
         this.url = {};

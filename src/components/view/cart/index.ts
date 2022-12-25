@@ -11,7 +11,7 @@ export class CartView extends GlobalView {
         super();
     }
 
-    public drawMain = (products: {product: Product, amount: number}[]) => {
+    public drawMain = (products: { product: Product; amount: number }[]) => {
         const mainDiv = document.querySelector('.main');
         if (mainDiv === null) throw new Error('There is no #main element in the body');
         mainDiv.innerHTML = `
@@ -40,11 +40,11 @@ export class CartView extends GlobalView {
         </div>
         <div class="products__list">
           ${products.reduce(
-              (res: string, product: {product: Product, amount: number}, i: number) =>
+              (res: string, product: { product: Product; amount: number }, i: number) =>
                   res +
                   `
             <div class="product ${i}">
-              <div class="product__number">${i}</div>
+              <div class="product__number">${i + 1}</div>
               <div class="product__picture" style="background-image: url(${product.product.photos[0]});"></div>
               <div class="product__description">
                 <div class="product__name">${product.product.name}</div>
