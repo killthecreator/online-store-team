@@ -22,9 +22,9 @@ export class HomeController extends Controller {
     configPage(model: Model) {
         this.rangesHandler(model);
         this.addRouting();
-        this.turnOnSearch();
         this.filtersAndCheckboxes();
         this.sortByGo();
+        this.searchGo();
         this.addingToCart(model);
         this.changeView();
         this.found();
@@ -46,19 +46,12 @@ export class HomeController extends Controller {
         );
     }
 
-    turnOnSearch() {
-        const search: HTMLDivElement | null = document.querySelector('.search-wrapper');
-        if (!search) throw new Error('there is no search block');
+    searchGo() {
+        const search = selectorChecker(document, '.search-wrapper') as HTMLDivElement;
         search.style.display = 'flex';
 
-        this.searchGo();
-    }
-
-    searchGo() {
         const productCards: NodeListOf<HTMLDivElement> = document.querySelectorAll('.card-wrapper');
-
-        const input: HTMLInputElement | null = document.querySelector('.search-wrapper__input');
-        if (!input) throw new Error('There is no search input');
+        const input = selectorChecker(document, '.search-wrapper__input') as HTMLInputElement;
 
         const doSearch = () => {
             const filter = input.value.toLowerCase();
@@ -74,6 +67,7 @@ export class HomeController extends Controller {
                 const cardPrice = selectorChecker(card, '.name-zone__price');
                 const cardStock = selectorChecker(card, '.photo-zone__store');
                 if (
+                    /* card.classList.contains('active') && */
                     cardTitle.textContent &&
                     cardCategory.textContent &&
                     cardPrice.textContent &&
@@ -83,9 +77,11 @@ export class HomeController extends Controller {
                         cardPrice.textContent.toLowerCase().indexOf(filter) !== -1 ||
                         cardStock.textContent.toLowerCase().replace('Stock ', '').indexOf(filter) !== -1)
                 ) {
+                    /* card.classList.add('active'); */
                     card.style.display = 'flex';
                     this.found();
                 } else {
+                    /* card.classList.remove('active'); */
                     card.style.display = 'none';
                     this.found();
                 }
@@ -114,6 +110,7 @@ export class HomeController extends Controller {
         const stockRanges: NodeListOf<HTMLInputElement> = document.querySelectorAll('.stock-range__input');
 
         const filtration = () => {
+            this.searchGo();
             const activeCategories = categoryCheckboxesArr
                 .filter((checkbox) => checkbox.checked)
                 .map((item) => item.id);
@@ -149,6 +146,7 @@ export class HomeController extends Controller {
                 if (!categoryCheckbox || !brandCheckbox) throw new Error('Checkboxes were not found');
 
                 if (
+                    /* card.classList.contains('active') && */
                     (categoryCheckbox.checked || categoryCheckboxesArr.every((checkbox) => !checkbox.checked)) &&
                     (brandCheckbox.checked || brandCheckboxesArr.every((checkbox) => !checkbox.checked)) &&
                     stockAmount >= Number(stockRanges[0].value) &&
@@ -157,9 +155,12 @@ export class HomeController extends Controller {
                     price <= Number(priceRanges[1].value)
                 ) {
                     card.style.display = 'flex';
+                    /* card.classList.add('active'); */
+
                     this.found();
                 } else {
                     card.style.display = 'none';
+                    /* card.classList.remove('active'); */
                     this.found();
                 }
             });
@@ -206,7 +207,6 @@ export class HomeController extends Controller {
         products.forEach((product) => {
             const priceDiv = selectorChecker(product, '.name-zone__price');
             const priceDivHTML = priceDiv.innerHTML;
-            if (!priceDivHTML) throw new Error('there is data in element');
             const priceArr = priceDivHTML.match(/\d+/);
             if (!priceArr) throw new Error('there is data in element');
             const price = Number(priceArr[0]);
@@ -284,6 +284,21 @@ export class HomeController extends Controller {
         priceRange1.max = model.pricesRange[1].toString();
         priceRange2.max = model.pricesRange[1].toString();
 
+        if (this.url.price) {
+            const [from, to] = this.url.price.replace('price=', '').split('%E2%86%95');
+            priceRange1.value = from;
+            priceMin.textContent = from;
+            priceRange2.value = to;
+            priceMax.textContent = to;
+        }
+        if (this.url.stock) {
+            const [from, to] = this.url.stock.replace('stock=', '').split('%E2%86%95');
+            stockRange1.value = from;
+            stockMin.textContent = from;
+            stockRange2.value = to;
+            stockMax.textContent = to;
+        }
+
         const fillSlider = (
             from: HTMLInputElement,
             to: HTMLInputElement,
@@ -345,6 +360,7 @@ export class HomeController extends Controller {
             e: Event
         ) => {
             const [from, to] = getParsed(fromSlider, toSlider);
+
             fillSlider(fromSlider, toSlider, '#eee', sliderColor, toSlider);
             setToggleAccessible(toSlider, `.${toSlider.classList[1]}`);
             if (from <= to) {
@@ -400,7 +416,7 @@ export class HomeController extends Controller {
         productCards.forEach((card) => {
             const stockDiv = selectorChecker(card, '.photo-zone__store');
             const addToCartButton = selectorChecker(card, '.photo-zone__add-to-cart-button');
-            //const cartCount = selectorChecker(document, '.cart-wrapper__count');
+            const cartCount = selectorChecker(document, '.cart-wrapper__count');
 
             let productInCart = model.cart.find((product) => product.product.name === addToCartButton.id);
 
@@ -408,7 +424,7 @@ export class HomeController extends Controller {
                 addToCartButton.innerHTML = 'remove';
             }
 
-            //const cartState = selectorChecker(document, '.cart-wrapper__state');
+            const cartState = selectorChecker(document, '.cart-wrapper__state');
 
             addToCartButton.addEventListener('click', adding);
             function adding() {
@@ -428,8 +444,9 @@ export class HomeController extends Controller {
                 cartCount.innerHTML = model.cart.length.toString();
                 stockDiv.innerHTML = `Stock: ${product.amount}`;
 
-                cartState.innerHTML = `Cart total: ${model.cart.reduce((res, cur) => res + cur.product.price * cur.amount, 0).toString()} $`;
-
+                cartState.innerHTML = `Cart total: ${model.cart
+                    .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
+                    .toString()} $`;
 
                 //console.log('добавим в localStorage');
                 localStorage.setItem('cartCadence', JSON.stringify(model.cart));
