@@ -12,7 +12,7 @@ export class ProductController extends Controller {
     setupPage(location: string, view: ProductView, model: Model): void {
         const parsedLocation = location.replaceAll('%20', ' ');
         const locationArr = parsedLocation.split('/');
-        console.log(locationArr);
+        //console.log(locationArr);
         const product = model.products.find((el) => el.name === locationArr[2]);
         if (!product) throw new Error(`There is no ${locationArr[2]} among our products`);
         view.drawMain(product);
@@ -60,6 +60,9 @@ export class ProductController extends Controller {
             cartCount.innerHTML = model.cart.length.toString();
 
             cartState.innerHTML = `Cart total: ${model.cart.reduce((res, cur) => res + cur.product.price * cur.amount, 0).toString()} $`;
+
+            //console.log('добавим в localStorage');
+            localStorage.setItem('cartCadence', JSON.stringify(model.cart));
         }
     }
 }

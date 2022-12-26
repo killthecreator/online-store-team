@@ -384,11 +384,23 @@ export class HomeController extends Controller {
     }
 
     addingToCart(model: Model) {
+      const item = localStorage.getItem('cartCadence');
+      if (item) {
+        model.cart = JSON.parse(item);
+        //console.log('get info from localStorage');
+      }
+
         const productCards /*: NodeListOf<HTMLDivElement>*/ = document.querySelectorAll('.card-wrapper');
+
+        const cartCount = selectorChecker(document, '.cart-wrapper__count');
+        const cartState = selectorChecker(document, '.cart-wrapper__state');
+        cartCount.innerHTML = model.cart.length.toString();
+        cartState.innerHTML = `Cart total: ${model.cart.reduce((res, cur) => res + cur.product.price * cur.amount, 0).toString()} $`;
+
         productCards.forEach((card) => {
             const stockDiv = selectorChecker(card, '.photo-zone__store');
             const addToCartButton = selectorChecker(card, '.photo-zone__add-to-cart-button');
-            const cartCount = selectorChecker(document, '.cart-wrapper__count');
+            //const cartCount = selectorChecker(document, '.cart-wrapper__count');
 
             let productInCart = model.cart.find((product) => product.product.name === addToCartButton.id);
 
@@ -396,7 +408,7 @@ export class HomeController extends Controller {
                 addToCartButton.innerHTML = 'remove';
             }
 
-            const cartState = selectorChecker(document, '.cart-wrapper__state');
+            //const cartState = selectorChecker(document, '.cart-wrapper__state');
 
             addToCartButton.addEventListener('click', adding);
             function adding() {
@@ -417,6 +429,10 @@ export class HomeController extends Controller {
                 stockDiv.innerHTML = `Stock: ${product.amount}`;
 
                 cartState.innerHTML = `Cart total: ${model.cart.reduce((res, cur) => res + cur.product.price * cur.amount, 0).toString()} $`;
+
+
+                //console.log('добавим в localStorage');
+                localStorage.setItem('cartCadence', JSON.stringify(model.cart));
             }
         });
 
