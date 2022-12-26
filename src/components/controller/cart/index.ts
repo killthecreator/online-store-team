@@ -23,6 +23,7 @@ export class CartController extends Controller {
     configPage(model: Model, view: CartView) {
         this.turnOffSearch();
         this.productAmount(model, view);
+        this.areProductsInCart(model);
     }
 
     turnOffSearch() {
@@ -91,5 +92,16 @@ export class CartController extends Controller {
                 localStorage.setItem('cartCadence', JSON.stringify(model.cart));
             });
         });
+    }
+
+    areProductsInCart(model: Model) {
+      const noProducts = selectorChecker(document, '.no-prods-in-cart') as HTMLDivElement;
+      const productsHeader = selectorChecker(document, '.products__header') as HTMLDivElement;
+      const summary = selectorChecker(document, '.summary') as HTMLDivElement;
+
+      noProducts.style.display = model.cart.length === 0 ? 'flex': 'none';
+
+      productsHeader.style.display = model.cart.length === 0 ? 'none': 'flex';
+      summary.style.display = model.cart.length === 0 ? 'none': 'flex';
     }
 }

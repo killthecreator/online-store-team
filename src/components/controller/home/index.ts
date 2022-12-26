@@ -453,28 +453,6 @@ export class HomeController extends Controller {
             }
         });
 
-        /* const addToCartButtons = document.querySelectorAll('.photo-zone__add-to-cart-button');
-        const cartCount = document.querySelector('.cart-wrapper__count');
-        addToCartButtons.forEach((button) => {
-            button.addEventListener('click', adding);
-            function adding() {
-                if (!button) throw new Error('there is no addToCartButton');
-                const product = model.products.find((product) => product.name === button.id);
-                if (!product) throw new Error('there is no such product');
-                const productInCart = model.cart.find((product) => product.product.name === button.id);
-                if (productInCart) {
-                    button.innerHTML = 'add to cart';
-                    product.amount += 1;
-                    model.cart.splice(model.cart.indexOf(productInCart), 1);
-                } else {
-                    button.innerHTML = 'remove';
-                    model.cart.push({ product: product, amount: 1 });
-                    product.amount -= 1;
-                }
-                if (!cartCount) throw new Error('There is no cart count');
-                cartCount.innerHTML = model.cart.length.toString();
-            }
-        }); */
     }
 
     changeView() {

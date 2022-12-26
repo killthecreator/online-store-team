@@ -34,7 +34,7 @@ export class CartView extends GlobalView {
           </div>
           <div class="products__header-pages">
             <div class="products__header-pages-decrease"><</div>
-            <input class="products__header-pages-input" value="5" />
+            <input class="products__header-pages-input" />
             <div class="products__header-pages-increase">></div>
           </div>
         </div>
@@ -64,6 +64,9 @@ export class CartView extends GlobalView {
               ''
           )}
         </div>
+      </section>
+      <section class="no-prods-in-cart">
+        There is no products in cart
       </section>
     `;
     };
