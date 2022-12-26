@@ -23,6 +23,7 @@ export class CartController extends Controller {
     configPage(model: Model, view: CartView) {
         this.turnOffSearch();
         this.productAmount(model, view);
+        this.areProductsInCart(model);
     }
 
     turnOffSearch() {
@@ -62,6 +63,8 @@ export class CartController extends Controller {
 
                     cartState.innerHTML = `Cart total: ${model.cart.reduce((res, cur) => res + cur.product.price * cur.amount, 0).toString()} $`;
                 }
+                //console.log('добавим в localStorage');
+                localStorage.setItem('cartCadence', JSON.stringify(model.cart));
             });
             minus.addEventListener('click', () => {
                 if (ourProduct.amount > 0) {
@@ -76,7 +79,7 @@ export class CartController extends Controller {
 
                     amountStore.innerHTML = `Stock: ${ourProduct.product.amount.toString()}`;
                     sumPrice.innerHTML = `${(ourProduct.product.price * ourProduct.amount).toString()} $`;
-                    console.log(ourProduct.amount == 0);
+                    //console.log(ourProduct.amount == 0);
                     if (ourProduct.amount == 0) {
                       model.cart.splice(model.cart.indexOf(ourProduct), 1);
                       view.drawMain(model.cart);
@@ -85,7 +88,20 @@ export class CartController extends Controller {
 
                     cartState.innerHTML = `Cart total: ${model.cart.reduce((res, cur) => res + cur.product.price * cur.amount, 0).toString()} $`;
                 }
+                //console.log('добавим в localStorage');
+                localStorage.setItem('cartCadence', JSON.stringify(model.cart));
             });
         });
+    }
+
+    areProductsInCart(model: Model) {
+      const noProducts = selectorChecker(document, '.no-prods-in-cart') as HTMLDivElement;
+      const productsHeader = selectorChecker(document, '.products__header') as HTMLDivElement;
+      const summary = selectorChecker(document, '.summary') as HTMLDivElement;
+
+      noProducts.style.display = model.cart.length === 0 ? 'flex': 'none';
+
+      productsHeader.style.display = model.cart.length === 0 ? 'none': 'flex';
+      summary.style.display = model.cart.length === 0 ? 'none': 'flex';
     }
 }

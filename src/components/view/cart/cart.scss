@@ -7,6 +7,11 @@
   justify-content: space-between;
 }
 
+@mixin flex-centered {
+  display: flex;
+  justify-content: center;
+}
+
 @mixin flex-center {
   display: flex;
   justify-content: center;
@@ -269,4 +274,12 @@ $light-grad: linear-gradient(180deg, mistyrose 5%, transparent 80%),
       }
     }
   }
+}
+
+.no-prods-in-cart {
+  display: none;
+  @include flex-centered;
+  font-family: 'Normal';
+  font-size: $basic-font-size;
+  padding: $basic-padding;
 }

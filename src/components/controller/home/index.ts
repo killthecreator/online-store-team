@@ -400,7 +400,19 @@ export class HomeController extends Controller {
     }
 
     addingToCart(model: Model) {
+      const item = localStorage.getItem('cartCadence');
+      if (item) {
+        model.cart = JSON.parse(item);
+        //console.log('get info from localStorage');
+      }
+
         const productCards /*: NodeListOf<HTMLDivElement>*/ = document.querySelectorAll('.card-wrapper');
+
+        const cartCount = selectorChecker(document, '.cart-wrapper__count');
+        const cartState = selectorChecker(document, '.cart-wrapper__state');
+        cartCount.innerHTML = model.cart.length.toString();
+        cartState.innerHTML = `Cart total: ${model.cart.reduce((res, cur) => res + cur.product.price * cur.amount, 0).toString()} $`;
+
         productCards.forEach((card) => {
             const stockDiv = selectorChecker(card, '.photo-zone__store');
             const addToCartButton = selectorChecker(card, '.photo-zone__add-to-cart-button');
@@ -435,31 +447,12 @@ export class HomeController extends Controller {
                 cartState.innerHTML = `Cart total: ${model.cart
                     .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
                     .toString()} $`;
+
+                //console.log('добавим в localStorage');
+                localStorage.setItem('cartCadence', JSON.stringify(model.cart));
             }
         });
 
-        /* const addToCartButtons = document.querySelectorAll('.photo-zone__add-to-cart-button');
-        const cartCount = document.querySelector('.cart-wrapper__count');
-        addToCartButtons.forEach((button) => {
-            button.addEventListener('click', adding);
-            function adding() {
-                if (!button) throw new Error('there is no addToCartButton');
-                const product = model.products.find((product) => product.name === button.id);
-                if (!product) throw new Error('there is no such product');
-                const productInCart = model.cart.find((product) => product.product.name === button.id);
-                if (productInCart) {
-                    button.innerHTML = 'add to cart';
-                    product.amount += 1;
-                    model.cart.splice(model.cart.indexOf(productInCart), 1);
-                } else {
-                    button.innerHTML = 'remove';
-                    model.cart.push({ product: product, amount: 1 });
-                    product.amount -= 1;
-                }
-                if (!cartCount) throw new Error('There is no cart count');
-                cartCount.innerHTML = model.cart.length.toString();
-            }
-        }); */
     }
 
     changeView() {
