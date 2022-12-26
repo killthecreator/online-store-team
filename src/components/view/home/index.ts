@@ -18,7 +18,7 @@ export class HomeView extends GlobalView {
         super();
     }
 
-    public drawMain = (categories: Category[], brands: Brand[], products: Product[]): void => {
+    public drawMain = (categories: Category[], brands: Brand[], activeProducts: Product[]): void => {
         let main = document.querySelector('.main');
         if (!main) {
             main = document.createElement('main');
@@ -26,7 +26,10 @@ export class HomeView extends GlobalView {
             document.body.append(main);
         }
         main.innerHTML =
-            this.drawFilters(categories, brands) + this.drawRanges() + this.drawButtons() + this.drawCards(products);
+            this.drawFilters(categories, brands) +
+            this.drawRanges() +
+            this.drawButtons() +
+            this.drawCards(activeProducts);
     };
 
     public drawFilters = (categories: Category[], brands: Brand[]) => {
@@ -63,8 +66,8 @@ export class HomeView extends GlobalView {
       <section class="ranges">
         <div class="price-range">
           <div class="price-range__input-wrapper">
-            <input type="range" value="0" step="1" max="50000" class="price-range__input price-range__input-1"/>
-            <input type="range" value="20000" step="1"  max="50000" class="price-range__input price-range__input-2"/>
+            <input type="range" value="53" step="1" max="11998" class="price-range__input price-range__input-1"/>
+            <input type="range" value="11999" step="1"  max="11999" class="price-range__input price-range__input-2"/>
           </div>
           <div class="price-range__header">
             <div class="price-range__min">0</div>
@@ -75,7 +78,7 @@ export class HomeView extends GlobalView {
         <div class="stock-range">
           <div class="stock-range__input-wrapper">
             <input type="range" value="0" step="1" class="stock-range__input stock-range__input-1"/>
-            <input type="range" value="1000" step="1" class="stock-range__input stock-range__input-2"/>
+            <input type="range" value="32" step="1" class="stock-range__input stock-range__input-2"/>
           </div>
           <div class="stock-range__header">
             <div class="stock-range__min">0</div>
@@ -117,7 +120,7 @@ export class HomeView extends GlobalView {
             (res: string, card: Product) =>
                 res +
                 `
-          <div class="card-wrapper" id="${card.name}">
+          <div class="card-wrapper active" id="${card.name}">
 
             <div class="photo-zone" style="background-image: url(${card.photos[0]});">
               <div class="photo-zone__store">
