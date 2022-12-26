@@ -124,6 +124,17 @@ export class CartController extends Controller {
 
       const productsDiv: NodeListOf<HTMLDivElement> = document.querySelectorAll('.product');
 
+
+      if(Number(itemInput.value) > model.cart.length) {
+        productsDiv.forEach(el => el.style.display = 'flex');
+        pageInput.value = tempPageNumber;
+      } else {
+        pagesAmount = Math.ceil(model.cart.length / Number(itemInput.value));
+        pageInput.value = tempPageNumber;
+        productsDiv.forEach((el, i) =>  el.style.display = i < Number(itemInput.value) ? 'flex' : 'none');
+      }
+
+
       pageInput.addEventListener('input',  () => {
         if ((!pageInput.value.match(/^[1-9]$/) && pageInput.value !== '')) {
           pageInput.value = tempPageNumber;
