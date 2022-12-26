@@ -15,6 +15,7 @@ export class CartController extends Controller {
         const locationArr = location.split('/');
         const products = model.cart;
         if (!products) throw new Error(`There is no ${locationArr[2]} among our products`);
+        this.fillUrl(location);
         view.drawMain(products);
 
         this.configPage(model, view);
@@ -116,6 +117,7 @@ export class CartController extends Controller {
       const pageInput = selectorChecker(document, '.products__header-pages-input') as HTMLInputElement;
       const tempPageNumber = '1';
       pageInput.value = tempPageNumber;
+
       //if (this.url.pagesInputValue) itemInput.value = this.url.pagesInputValue;  TODO ПОЛУЧИТЬ ЗНАЧЕНИЯ ИЗ КВЕРИ ЕСЛИ ОНО ТАМ ЕСТЬ
 
       const decrease = selectorChecker(document, '.products__header-pages-decrease') as HTMLDivElement;
@@ -148,7 +150,14 @@ export class CartController extends Controller {
 
           productsDiv.forEach((el, i) =>  el.style.display = i < from ? 'none' : i >= to ? 'none' : 'flex');
 
-          // добавить в урл itemInput.value и pageInput.value
+
+          this.url.pages = `pages=${pageInput.value}`;
+          this.url.pageNumber = `pageNumber=${itemInput.value}`;
+
+          Object.keys(this.url).length !== 0
+                ? window.history.replaceState({}, '', `/cart/?${Object.values(this.url).join('&')}`)
+                : window.history.replaceState({}, '', `/cart`);
+            // добавить в урл itemInput.value и pageInput.value
         }
       )
 
@@ -166,7 +175,12 @@ export class CartController extends Controller {
           productsDiv.forEach((el, i) =>  el.style.display = i < Number(itemInput.value) ? 'flex' : 'none');
         }
 
-           // добавить в урл itemInput.value и pageInput.value
+          this.url.pages = `pages=${pageInput.value}`;
+          this.url.pageNumber = `pageNumber=${itemInput.value}`;
+
+          Object.keys(this.url).length !== 0
+                ? window.history.replaceState({}, '', `/cart/?${Object.values(this.url).join('&')}`)
+                : window.history.replaceState({}, '', `/cart`);// добавить в урл itemInput.value и pageInput.value
 
         }
       )
@@ -187,7 +201,12 @@ export class CartController extends Controller {
 
         productsDiv.forEach((el, i) =>  el.style.display = i < from ? 'none' : i >= to ? 'none' : 'flex');
 
-        // добавить в урл itemInput.value и pageInput.value
+          this.url.pages = `pages=${pageInput.value}`;
+          this.url.pageNumber = `pageNumber=${itemInput.value}`;
+
+          Object.keys(this.url).length !== 0
+                ? window.history.replaceState({}, '', `/cart/?${Object.values(this.url).join('&')}`)
+                : window.history.replaceState({}, '', `/cart`);// добавить в урл itemInput.value и pageInput.value
       });
       increase.addEventListener('click', () => {
         pageInput.value = (Number(pageInput.value) + 1).toString();
@@ -205,7 +224,25 @@ export class CartController extends Controller {
 
         productsDiv.forEach((el, i) =>  el.style.display = i < from ? 'none' : i >= to ? 'none' : 'flex');
 
-        // добавить в урл itemInput.value и pageInput.value
+          this.url.pages = `pages=${pageInput.value}`;
+          this.url.pageNumber = `pageNumber=${itemInput.value}`;
+
+          Object.keys(this.url).length !== 0
+                ? window.history.replaceState({}, '', `/cart/?${Object.values(this.url).join('&')}`)
+                : window.history.replaceState({}, '', `/cart`);// добавить в урл itemInput.value и pageInput.value
       });
     }
+
+    fillUrl(location: string) {
+      const queriesArr = location.split('&');
+      queriesArr.forEach((query) => {
+          if (query.startsWith('pages=')) {
+              this.url.pages = query;
+          }
+          if (query.startsWith('pageNumber=')) {
+              this.url.pageNumber = query;
+          }
+
+      });
+  }
 }
