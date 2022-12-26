@@ -24,6 +24,7 @@ export class CartController extends Controller {
         this.turnOffSearch();
         this.productAmount(model, view);
         this.areProductsInCart(model);
+        this.pagination(model);
     }
 
     turnOffSearch() {
@@ -103,5 +104,97 @@ export class CartController extends Controller {
 
       productsHeader.style.display = model.cart.length === 0 ? 'none': 'flex';
       summary.style.display = model.cart.length === 0 ? 'none': 'flex';
+    }
+
+    pagination(model: Model) {
+      const itemInput = selectorChecker(document, '.products__header-items-input') as HTMLInputElement;
+      const tempValue = '3';
+      itemInput.value = tempValue;
+      //if (this.url.itemInputValue) itemInput.value = this.url.itemInpulValue;  TODO ПОЛУЧИТЬ ЗНАЧЕНИЯ ИЗ КВЕРИ ЕСЛИ ОНО ТАМ ЕСТЬ
+      let pagesAmount = Math.ceil(model.cart.length / Number(itemInput.value));
+
+      const pageInput = selectorChecker(document, '.products__header-pages-input') as HTMLInputElement;
+      const tempPageNumber = '1';
+      pageInput.value = tempPageNumber;
+      //if (this.url.pagesInputValue) itemInput.value = this.url.pagesInputValue;  TODO ПОЛУЧИТЬ ЗНАЧЕНИЯ ИЗ КВЕРИ ЕСЛИ ОНО ТАМ ЕСТЬ
+
+      const decrease = selectorChecker(document, '.products__header-pages-decrease') as HTMLDivElement;
+
+      const increase = selectorChecker(document, '.products__header-pages-increase') as HTMLDivElement;
+
+      const productsDiv: NodeListOf<HTMLDivElement> = document.querySelectorAll('.product');
+
+      pageInput.addEventListener('input',  () => {
+        if ((!pageInput.value.match(/^[1-9]$/) && pageInput.value !== '')) {
+          pageInput.value = tempPageNumber;
+        }
+
+        if (Number(pageInput.value) > pagesAmount) {
+          pageInput.value = tempPageNumber;
+        }
+          let from = Number(itemInput.value) * (Number(pageInput.value) - 1);
+          let to = from + Number(itemInput.value);
+
+          productsDiv.forEach((el, i) =>  el.style.display = i < from ? 'none' : i >= to ? 'none' : 'flex');
+
+          // добавить в урл itemInput.value и pageInput.value
+        }
+      )
+
+      itemInput.addEventListener('input',  () => {
+        if (!itemInput.value.match(/^[1-9]$/) && itemInput.value !== '' ) {
+          itemInput.value = tempValue;
+        }
+
+        if(Number(itemInput.value) > model.cart.length) {
+          productsDiv.forEach(el => el.style.display = 'flex');
+          pageInput.value = tempPageNumber;
+        } else {
+          pagesAmount = Math.ceil(model.cart.length / Number(itemInput.value));
+          pageInput.value = tempPageNumber;
+          productsDiv.forEach((el, i) =>  el.style.display = i < Number(itemInput.value) ? 'flex' : 'none');
+        }
+
+           // добавить в урл itemInput.value и pageInput.value
+
+        }
+      )
+
+      decrease.addEventListener('click', () => {
+        pageInput.value = (Number(pageInput.value) -1).toString();
+
+        if ((!pageInput.value.match(/^[1-9]$/) && pageInput.value !== '')) {
+          pageInput.value = tempPageNumber;
+        }
+
+        if (Number(pageInput.value) > pagesAmount) {
+          pageInput.value = tempPageNumber;
+        }
+
+        let from = Number(itemInput.value) * (Number(pageInput.value) - 1);
+        let to = from + Number(itemInput.value);
+
+        productsDiv.forEach((el, i) =>  el.style.display = i < from ? 'none' : i >= to ? 'none' : 'flex');
+
+        // добавить в урл itemInput.value и pageInput.value
+      });
+      increase.addEventListener('click', () => {
+        pageInput.value = (Number(pageInput.value) + 1).toString();
+
+        if ((!pageInput.value.match(/^[1-9]$/) && pageInput.value !== '')) {
+          pageInput.value = tempPageNumber;
+        }
+
+        if (Number(pageInput.value) > pagesAmount) {
+          pageInput.value = (Number(pageInput.value) - 1).toString();
+        }
+
+        let from = Number(itemInput.value) * (Number(pageInput.value) - 1);
+        let to = from + Number(itemInput.value);
+
+        productsDiv.forEach((el, i) =>  el.style.display = i < from ? 'none' : i >= to ? 'none' : 'flex');
+
+        // добавить в урл itemInput.value и pageInput.value
+      });
     }
 }
