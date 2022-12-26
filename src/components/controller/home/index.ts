@@ -381,8 +381,8 @@ export class HomeController extends Controller {
         };
 
         function getParsed(currentFrom: HTMLInputElement, currentTo: HTMLInputElement) {
-            const from = parseInt(currentFrom.value, 10);
-            const to = parseInt(currentTo.value, 10);
+            const from = parseInt(currentFrom.value);
+            const to = parseInt(currentTo.value);
             return [from, to];
         }
 
@@ -507,7 +507,8 @@ export class HomeController extends Controller {
     }
 
     found() {
-        const foundDiv: Element | null = document.querySelector('.found');
+        const foundDiv = selectorChecker(document, '.found');
+
         const products: NodeListOf<HTMLDivElement> = document.querySelectorAll('.card-wrapper');
         let displaingProducts = 0;
         products.forEach((prod) => {
@@ -515,7 +516,6 @@ export class HomeController extends Controller {
                 displaingProducts += 1;
             }
         });
-        if (!foundDiv) throw new Error('No dives found');
         foundDiv.innerHTML = `Found: ${displaingProducts}`;
 
         const notFound = selectorChecker(document, '.no-products') as HTMLDivElement;
