@@ -77,11 +77,9 @@ export class HomeController extends Controller {
                         cardPrice.textContent.toLowerCase().indexOf(filter) !== -1 ||
                         cardStock.textContent.toLowerCase().replace('Stock ', '').indexOf(filter) !== -1)
                 ) {
-                    /* card.classList.add('active'); */
                     card.style.display = 'flex';
                     this.found();
                 } else {
-                    /* card.classList.remove('active'); */
                     card.style.display = 'none';
                     this.found();
                 }
@@ -107,10 +105,14 @@ export class HomeController extends Controller {
         const brandCheckboxesArr = Array.from(brandCheckboxes);
 
         const priceRanges: NodeListOf<HTMLInputElement> = document.querySelectorAll('.price-range__input');
+        const priceRange1 = document.querySelector('.price-range__min') as HTMLDivElement;
+        const priceRange2 = document.querySelector('.price-range__max') as HTMLDivElement;
+
         const stockRanges: NodeListOf<HTMLInputElement> = document.querySelectorAll('.stock-range__input');
+        const stockRange1 = document.querySelector('.stock-range__min') as HTMLDivElement;
+        const stockRange2 = document.querySelector('.stock-range__max') as HTMLDivElement;
 
         const filtration = () => {
-            this.searchGo();
             const activeCategories = categoryCheckboxesArr
                 .filter((checkbox) => checkbox.checked)
                 .map((item) => item.id);
@@ -149,10 +151,10 @@ export class HomeController extends Controller {
                     /* card.classList.contains('active') && */
                     (categoryCheckbox.checked || categoryCheckboxesArr.every((checkbox) => !checkbox.checked)) &&
                     (brandCheckbox.checked || brandCheckboxesArr.every((checkbox) => !checkbox.checked)) &&
-                    stockAmount >= Number(stockRanges[0].value) &&
-                    stockAmount <= Number(stockRanges[1].value) &&
-                    price >= Number(priceRanges[0].value) &&
-                    price <= Number(priceRanges[1].value)
+                    stockAmount >= Number(stockRange1.textContent) &&
+                    stockAmount <= Number(stockRange2.textContent) &&
+                    price >= Number(priceRange1.textContent) &&
+                    price <= Number(priceRange2.textContent)
                 ) {
                     card.style.display = 'flex';
                     /* card.classList.add('active'); */
@@ -187,8 +189,8 @@ export class HomeController extends Controller {
                     }
                 });
             }
-            filtration();
         }
+        filtration();
     }
 
     sortByGo() {
@@ -264,40 +266,25 @@ export class HomeController extends Controller {
         const sliderColor = '#cce';
         const stockRange1 = document.querySelector('.stock-range__input-1') as HTMLInputElement;
         const stockRange2 = document.querySelector('.stock-range__input-2') as HTMLInputElement;
+
         const stockMin = document.querySelector('.stock-range__min') as HTMLDivElement;
         stockMin.innerHTML = model.stockRange[0].toString();
-        stockRange1.min = model.stockRange[0].toString();
-        stockRange2.min = model.stockRange[0].toString();
+        stockRange1.min = stockRange2.min = model.stockRange[0].toString();
+
         const stockMax = document.querySelector('.stock-range__max') as HTMLDivElement;
         stockMax.innerHTML = model.stockRange[1].toString();
-        stockRange1.max = model.stockRange[1].toString();
-        stockRange2.max = model.stockRange[1].toString();
+        stockRange1.max = stockRange2.max = model.stockRange[1].toString();
 
         const priceRange1 = document.querySelector('.price-range__input-1') as HTMLInputElement;
         const priceRange2 = document.querySelector('.price-range__input-2') as HTMLInputElement;
+
         const priceMin = document.querySelector('.price-range__min') as HTMLDivElement;
         priceMin.innerHTML = model.pricesRange[0].toString();
-        priceRange1.min = model.pricesRange[0].toString();
-        priceRange2.min = model.pricesRange[0].toString();
+        priceRange1.min = priceRange2.min = model.pricesRange[0].toString();
+
         const priceMax = document.querySelector('.price-range__max') as HTMLDivElement;
         priceMax.innerHTML = model.pricesRange[1].toString();
-        priceRange1.max = model.pricesRange[1].toString();
-        priceRange2.max = model.pricesRange[1].toString();
-
-        if (this.url.price) {
-            const [from, to] = this.url.price.replace('price=', '').split('%E2%86%95');
-            priceRange1.value = from;
-            priceMin.textContent = from;
-            priceRange2.value = to;
-            priceMax.textContent = to;
-        }
-        if (this.url.stock) {
-            const [from, to] = this.url.stock.replace('stock=', '').split('%E2%86%95');
-            stockRange1.value = from;
-            stockMin.textContent = from;
-            stockRange2.value = to;
-            stockMax.textContent = to;
-        }
+        priceRange1.max = priceRange2.max = model.pricesRange[1].toString();
 
         const fillSlider = (
             from: HTMLInputElement,
@@ -319,9 +306,28 @@ export class HomeController extends Controller {
           ${sliderColor} 100%)`;
         };
 
+        if (this.url.price) {
+            const [from, to] = this.url.price.replace('price=', '').split('%E2%86%95');
+
+            priceRange1.value = from;
+            priceMin.textContent = from;
+            priceRange2.value = to;
+            priceMax.textContent = to;
+        }
+        if (this.url.stock) {
+            const [from, to] = this.url.stock.replace('stock=', '').split('%E2%86%95');
+
+            stockRange1.value = from;
+            stockMin.textContent = from;
+
+            stockRange2.value = to;
+            stockMax.textContent = to;
+        }
+
         function setToggleAccessible(currentTarget: HTMLInputElement, selector: string) {
-            const toSlider = document.querySelector(selector) as HTMLInputElement;
-            if (Number(currentTarget.value) <= Number(currentTarget.min)) {
+            const toSlider = selectorChecker(document, selector) as HTMLInputElement;
+
+            if (parseInt(currentTarget.value) <= parseInt(currentTarget.min)) {
                 toSlider.style.zIndex = '3';
             } else {
                 toSlider.style.zIndex = '0';
@@ -332,21 +338,23 @@ export class HomeController extends Controller {
             fromSlider: HTMLInputElement,
             toSlider: HTMLInputElement,
             fromInput: HTMLDivElement,
-            e: Event
+            e?: Event
         ) => {
-            const [from, to] = getParsed(fromSlider, toSlider);
+            const [from, to] = [parseInt(fromSlider.value), parseInt(toSlider.value)];
 
             fillSlider(fromSlider, toSlider, '#eee', sliderColor, toSlider);
             if (from > to) {
                 fromSlider.value = to.toString();
                 fromInput.textContent = to.toString();
             } else {
+                fromSlider.value = from.toString();
                 fromInput.textContent = from.toString();
             }
             this.found();
-
-            if (e.target === priceRange1) this.url.price = `price=${[from, to].join('↕')}`;
-            if (e.target === stockRange1) this.url.stock = `stock=${[from, to].join('↕')}`;
+            if (e) {
+                if (e.target === priceRange1) this.url.price = `price=${[from, to].join('↕')}`;
+                if (e.target === stockRange1) this.url.stock = `stock=${[from, to].join('↕')}`;
+            }
 
             Object.keys(this.url).length !== 0
                 ? window.history.replaceState({}, '', `/home/?${Object.values(this.url).join('&')}`)
@@ -357,9 +365,9 @@ export class HomeController extends Controller {
             fromSlider: HTMLInputElement,
             toSlider: HTMLInputElement,
             toInput: HTMLDivElement,
-            e: Event
+            e?: Event
         ) => {
-            const [from, to] = getParsed(fromSlider, toSlider);
+            const [from, to] = [parseInt(fromSlider.value), parseInt(toSlider.value)];
 
             fillSlider(fromSlider, toSlider, '#eee', sliderColor, toSlider);
             setToggleAccessible(toSlider, `.${toSlider.classList[1]}`);
@@ -367,51 +375,45 @@ export class HomeController extends Controller {
                 toSlider.value = to.toString();
                 toInput.textContent = to.toString();
             } else {
-                toInput.textContent = from.toString();
                 toSlider.value = from.toString();
+                toInput.textContent = from.toString();
             }
             this.found();
-
-            if (e.target === priceRange2) this.url.price = `price=${[from, to].join('↕')}`;
-            if (e.target === stockRange2) this.url.stock = `stock=${[from, to].join('↕')}`;
+            if (e) {
+                if (e.target === priceRange2) this.url.price = `price=${[from, to].join('↕')}`;
+                if (e.target === stockRange2) this.url.stock = `stock=${[from, to].join('↕')}`;
+            }
 
             Object.keys(this.url).length !== 0
                 ? window.history.replaceState({}, '', `/home/?${Object.values(this.url).join('&')}`)
                 : window.history.replaceState({}, '', `/home`);
         };
 
-        function getParsed(currentFrom: HTMLInputElement, currentTo: HTMLInputElement) {
-            const from = parseInt(currentFrom.value);
-            const to = parseInt(currentTo.value);
-            return [from, to];
-        }
-
-        fillSlider(stockRange1, stockRange2, '#eee', sliderColor, stockRange2);
-        setToggleAccessible(stockRange2, '.stock-range__input-2');
+        controlFromSlider(stockRange1, stockRange2, stockMin);
+        controlToSlider(priceRange1, priceRange2, priceMax);
 
         stockRange1.addEventListener('input', (e) => controlFromSlider(stockRange1, stockRange2, stockMin, e));
         stockRange2.addEventListener('input', (e) => controlToSlider(stockRange1, stockRange2, stockMax, e));
-
-        fillSlider(priceRange1, priceRange2, '#eee', sliderColor, priceRange2);
-        setToggleAccessible(priceRange2, '.price-range__input-2');
-
         priceRange1.addEventListener('input', (e) => controlFromSlider(priceRange1, priceRange2, priceMin, e));
         priceRange2.addEventListener('input', (e) => controlToSlider(priceRange1, priceRange2, priceMax, e));
     }
 
     addingToCart(model: Model) {
-      const item = localStorage.getItem('cartCadence');
-      if (item) {
-        model.cart = JSON.parse(item);
-        //console.log('get info from localStorage');
-      }
+        const item = localStorage.getItem('cartCadence');
+        if (item) {
+            model.cart = JSON.parse(item);
+
+            //console.log('get info from localStorage');
+        }
 
         const productCards /*: NodeListOf<HTMLDivElement>*/ = document.querySelectorAll('.card-wrapper');
 
         const cartCount = selectorChecker(document, '.cart-wrapper__count');
         const cartState = selectorChecker(document, '.cart-wrapper__state');
         cartCount.innerHTML = model.cart.length.toString();
-        cartState.innerHTML = `Cart total: ${model.cart.reduce((res, cur) => res + cur.product.price * cur.amount, 0).toString()} $`;
+        cartState.innerHTML = `Cart total: ${model.cart
+            .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
+            .toString()} $`;
 
         productCards.forEach((card) => {
             const stockDiv = selectorChecker(card, '.photo-zone__store');
@@ -452,7 +454,6 @@ export class HomeController extends Controller {
                 localStorage.setItem('cartCadence', JSON.stringify(model.cart));
             }
         });
-
     }
 
     changeView() {
