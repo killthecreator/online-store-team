@@ -4,6 +4,7 @@ import { CartView } from '../../view/cart/index';
 import { URL } from '../../../utils/urlInterface';
 import { selectorChecker } from '../../../utils/selectorChecker';
 import { route } from '../../../routing/routing';
+import { PromoCode } from '../../model/data';
 export class CartController extends Controller {
     url: Partial<URL>;
     constructor() {
@@ -26,6 +27,7 @@ export class CartController extends Controller {
         this.productAmount(model, view);
         this.areProductsInCart(model);
         this.pagination(model);
+        this.promoCodding(model);
     }
 
     turnOffSearch() {
@@ -100,11 +102,13 @@ export class CartController extends Controller {
       const noProducts = selectorChecker(document, '.no-prods-in-cart') as HTMLDivElement;
       const productsHeader = selectorChecker(document, '.products__header') as HTMLDivElement;
       const summary = selectorChecker(document, '.summary') as HTMLDivElement;
+      const promoCodeBlock = selectorChecker(document, '.promo-code') as HTMLDivElement;
 
       noProducts.style.display = model.cart.length === 0 ? 'flex': 'none';
 
       productsHeader.style.display = model.cart.length === 0 ? 'none': 'flex';
       summary.style.display = model.cart.length === 0 ? 'none': 'flex';
+      promoCodeBlock.style.display = model.cart.length === 0 ? 'none': 'flex';
     }
 
     pagination(model: Model) {
@@ -233,6 +237,91 @@ export class CartController extends Controller {
       });
     }
 
+    promoCodding(model: Model) {
+
+      const promoCodeInput = selectorChecker(document, '.summary__promo-code-input') as HTMLInputElement;
+      const promoCodeButton = selectorChecker(document, '.summary__confirm-promo-code');
+      const promoCodeList = selectorChecker(document, '.promo-code');
+      const totalPriceDiv = selectorChecker(document, '.cart-wrapper__state') as HTMLDivElement;
+      const promocodedPriceDiv = selectorChecker(document, '.cart-wrapper__poromocoded') as HTMLDivElement;
+
+      if (model.appliedPromo.length > 0) {
+        promoCodeList.innerHTML = ``;
+        model.appliedPromo.forEach(div => {
+          promoCodeList.append(div);
+        })
+      }
+
+      promoCodeButton.addEventListener('click', () => {
+        model.promoCodes.forEach((promocode, i) => {
+          const appliedPromocodes = promoCodeList.querySelectorAll('.applied-promo');
+            if (promocode.id === promoCodeInput.value) {
+              if (appliedPromocodes.length > 0) {
+                appliedPromocodes.forEach(div => {
+                  if (div.id === promocode.id) {
+                    alert('Promo code has already been applied! You cannot apply this promo code more than once');
+                    return;
+                  } else {
+                    addPromoCodeBlock(promocode);
+                    return;
+                  }
+                })
+              } else {
+                console.log('No applied promocodes');
+                addPromoCodeBlock(promocode);
+                return;
+              }
+            } /*else if (i === model.promoCodes.length - 1) {
+              alert('There is no such promocode on our website');
+            }*/
+        })
+      })
+
+      function addPromoCodeBlock(promo: PromoCode) {
+
+        const promoDiv = document.createElement('div');
+        promoDiv.classList.add('applied-promo');
+        promoDiv.id = promo.id;
+        promoDiv.innerHTML = `
+          <div class="applied-promo__name">${promo.name}</div>
+          <div class="applied-promo__percent">${promo.percent} %</div>
+          <div class="applied-promo__delete">
+            <button class="applied-promo__delete-button">drop</button>
+          </div>
+        `;
+        promoCodeList.append(promoDiv);
+        model.appliedPromo.push(promoDiv);
+        const deleteButton = selectorChecker(promoDiv, '.applied-promo__delete-button');
+        deleteButton.addEventListener('click', () => {
+          promoDiv.remove();
+
+          if (promoCodeList.innerHTML.match(/</)) {
+            recountPerCent();
+          } else {
+            totalPriceDiv.style.textDecoration = 'none';
+            promocodedPriceDiv.innerHTML = ``;
+            promocodedPriceDiv.style.display = 'none';
+          }
+        })
+
+        recountPerCent();
+
+      }
+
+      function recountPerCent() {
+        const perCentDivs = promoCodeList.querySelectorAll('.applied-promo__percent');
+        const preCentArr = Array.from(perCentDivs).map(el => Number(el.innerHTML.slice(0, -2)));
+        const perSum: number = preCentArr.reduce(( s, c ) => s + c, 0);
+
+        totalPriceDiv.style.textDecoration = 'line-through';
+        promocodedPriceDiv.innerHTML = `${Math.floor((1 - perSum / 100) * Number(totalPriceDiv.innerHTML.slice(11, -2)))} $`;
+        promocodedPriceDiv.style.display = 'flex';
+      }
+
+      const mo = new MutationObserver( recountPerCent);
+      mo.observe(totalPriceDiv, { childList: true });
+    }
+
     fillUrl(location: string) {
       const queriesArr = location.split('&');
       queriesArr.forEach((query) => {
@@ -244,5 +333,5 @@ export class CartController extends Controller {
           }
 
       });
-  }
+    }
 }

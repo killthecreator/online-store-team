@@ -1,4 +1,4 @@
-import { ProductController } from '../controller/product/index.js';
+import { PromoCode } from './data.js';
 import { Category, Brand, products, Product } from './data.js';
 
 export class Model {
@@ -11,6 +11,8 @@ export class Model {
     cartState: number;
     pricesRange: [number, number];
     stockRange: [0, number];
+    promoCodes: PromoCode[];
+    appliedPromo: HTMLDivElement[];
 
     constructor() {
         this.categories = ['guitars', 'basses', 'drums', 'keyboards', 'microphones'];
@@ -48,5 +50,28 @@ export class Model {
         ];
         this.stockRange = [0, Math.max(...this.products.map((item) => item.amount))];
         this.cart = [];
+        this.promoCodes = [
+          {
+            name: 'Rolling Scopes School',
+            id: 'RS',
+            percent: 10
+          },
+          {
+            name: 'Cadence Musical Instruments',
+            id: 'CADENCE',
+            percent: 20
+          },
+          {
+            name: 'Happy New Year',
+            id: 'NEW YEAR',
+            percent: 5
+          },
+          {
+            name: 'Black Friday Sale',
+            id: 'BLACK FRIDAY',
+            percent: 15
+          }
+        ],
+        this.appliedPromo = []
     }
 }

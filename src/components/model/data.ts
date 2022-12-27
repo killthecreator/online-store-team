@@ -34,6 +34,12 @@ export type Brand =
 
 export type Category = 'guitars' | 'basses' | 'drums' | 'keyboards' | 'microphones';
 
+export interface PromoCode {
+  name: string;
+  id: string;
+  percent: number;
+}
+
 export const products: Product[] = [
     {
         name: 'Fender Player Stratocaster',

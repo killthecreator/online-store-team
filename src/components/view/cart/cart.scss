@@ -283,3 +283,30 @@ $light-grad: linear-gradient(180deg, mistyrose 5%, transparent 80%),
   font-size: $basic-font-size;
   padding: $basic-padding;
 }
+
+.promo-code {
+  padding: $medium-padding;
+  @include flex-col;
+  .applied-promo {
+    margin-bottom: 1vw;
+    @include flex-space-between;
+    align-items: center;
+    .applied-promo__name {
+      flex: 1;
+      font-family: "Bold";
+      font-size: $basic-font-size;
+    }
+    .applied-promo__percent {
+      text-align: center;
+      width: 80px;
+      font-family: "Bold";
+      font-size: $basic-font-size;
+    }
+    .applied-promo__delete {
+      .applied-promo__delete-button {
+        width: 100px;
+        @include button-style;
+      }
+    }
+  }
+}
