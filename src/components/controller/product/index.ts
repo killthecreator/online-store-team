@@ -9,9 +9,8 @@ export class ProductController extends Controller {
         super();
         this.url = {};
     }
-    setupPage(location: string, view: ProductView, model: Model): void {
+    setupPage(view: ProductView, model: Model, location: string): void {
         const productName = location.replaceAll('%20', ' ');
-
         const product = model.products.find((el) => el.name === productName);
         if (!product) throw new Error(`There is no ${productName} among our products`);
         view.drawMain(product);

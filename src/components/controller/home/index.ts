@@ -11,11 +11,9 @@ export class HomeController extends Controller {
         this.url = {};
     }
 
-    setupPage(location: string, view: HomeView, model: Model): void {
+    setupPage(view: HomeView, model: Model, location: string): void {
         this.fillUrl(location);
-        view.drawHeader();
         view.drawMain(model.categories, model.brands, model.products);
-        view.drawFooter();
         this.configPage(model);
     }
 

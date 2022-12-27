@@ -1,6 +1,6 @@
 import { Controller } from '../';
 import { PageNotFoundView } from '../../view/404/';
-import { URL } from '../../../utils/URLInterface';
+import { URL } from '../../../utils/urlInterface';
 export class PageNotFoundController extends Controller {
     url: Partial<URL>;
     constructor() {
@@ -8,8 +8,10 @@ export class PageNotFoundController extends Controller {
         this.url = {};
     }
 
-    setupPage(location: string, view: PageNotFoundView): void {
+    setupPage(view: PageNotFoundView): void {
+        view.drawHeader();
         view.drawMain();
+        view.drawFooter();
     }
 
     configPage() {

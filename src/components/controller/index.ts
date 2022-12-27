@@ -4,5 +4,5 @@ import { URL } from '../../utils/urlInterface';
 
 export abstract class Controller {
     abstract url: Partial<URL>;
-    abstract setupPage(location: string, view: GlobalView, model?: Model): void;
+    abstract setupPage(view: GlobalView, model?: Model, location?: string): void;
 }
