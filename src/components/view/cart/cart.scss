@@ -283,6 +283,84 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
     padding: $basic-padding;
 }
 
+.popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8);/*linear-gradient(rgba(255,105,180,0.5) 5%, transparent 80%), linear-gradient(90deg, rgba(153, 50, 204, 0.5) 5%, transparent 80%), linear-gradient(-90deg, rgba(238,130,238, 0.5) 5%, transparent 80%), rgba(0, 0, 0, 0.7);*/
+  height: 100vh;
+  width: 100vw;
+  @include flex-center;
+  .form {
+    background: white;
+    padding: 30px 50px;
+    border-radius: 5px;
+    width: 500px;
+    height: 500px;
+    .personal-details {
+      .personal-details__title {
+        font-family: "Bold";
+        font-size: $basic-font-size;
+        @include flex-col;
+      }
+      label {
+        font-family: "Normal";
+        font-size: 1rem;
+        margin: 15px 0;
+        flex-grow: 1;
+        display: flex;
+        input {
+          margin: 0 10px;
+          flex-grow: 1;
+          border-radius: 2px;
+          border-style: solid;
+          border-color: $color;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    .credit-card-details {
+      margin-top: 50px;
+      .credit-card-details__title {
+        font-family: "Bold";
+        font-size: $basic-font-size;
+        @include flex-col;
+      }
+      label {
+        font-family: "Normal";
+        font-size: 1rem;
+        margin: 10px 0;
+        flex-grow: 1;
+        display: flex;
+        input {
+          font-size: 1rem;
+          margin: 0 10px;
+          flex-grow: 1;
+          border-radius: 2px;
+          border-style: solid;
+          border-color: $color;
+          &:hover {
+            cursor: pointer;
+          }
+          &:focuss {
+            border-color: darkmagenta;
+          }
+        }
+      }
+    }
+    .form__send {
+      @include flex-centered;
+      margin-top: 55px;
+      .form__send-button {
+        @include button-style;
+        width: 100px;
+      }
+    }
+  }
+}
+
 .promo-code {
     padding: $medium-padding;
     @include flex-col;

@@ -69,30 +69,28 @@ export class CartView extends GlobalView {
     `;
     };
 
-    /*drawModalWindow = () => {
+    drawModalWindow = () => {
         return `
-      <div class="popup">
       <form class="form">
         <div class="personal-details">
           <h3 class="personal-details__title">Personal details</h3>
-            <label class="personal-details__name-label label">Name<input class="personal-details__name-input input"/></label>
-            <label class="personal-details__phone-label label">Phone Number<input class="personal-details__phone-input input"/></label>
-            <label class="personal-details__address-label label">Delivery Address<input class="personal-details__address-input input/></label>
-            <label class="personal-details__email-label label">Email<input class="personal-details__email-input input"/></label>
-          </div>
+          <label class="personal-details__name-label label">Name<input class="personal-details__name-input input"/></label>
+          <label class="personal-details__phone-label label">Phone Number<input class="personal-details__phone-input input"/></label>
+          <label class="personal-details__address-label label">Delivery Address<input class="personal-details__address-input input"/></label>
+          <label class="personal-details__email-label label">Email<input class="personal-details__email-input input"/></label>
+        </div>
 
-          <div class="credit-card-details">
+        <div class="credit-card-details">
           <h3 class="credit-card-details__title">Credit card details</h3>
-            <label class="credit-card-details__card-number-label label">Name<input class="credit-card-details__card-number-input input"/></label>
-            <label class="credit-card-details__valid-label label">Phone Number<input class="credit-card-details__valid-input input"/></label>
-            <label class="credit-card-details__cvv-label label">Delivery Address<input class="credit-card-details__cvv-input input/></label>
-          </div>
+          <label class="credit-card-details__card-number-label label">Name<input class="credit-card-details__card-number-input input"/></label>
+          <label class="credit-card-details__valid-label label">Phone Number<input class="credit-card-details__valid-input input"/></label>
+          <label class="credit-card-details__cvv-label label">Delivery Address<input class="credit-card-details__cvv-input input"/></label>
+        </div>
 
-          <div>
-            <button class="form__send">Ok</button>
-          </div>
+        <div class="form__send">
+          <button class="form__send-button">Ok</button>
+        </div>
         </form>
-      </div>
     `;
-    };*/
+    };
 }
