@@ -11,7 +11,6 @@ import {
 } from '../';
 
 export const locationHandler = (location: string) => {
-    console.log(location);
     const page = location.startsWith('/home')
         ? '/home'
         : location.startsWith('/product')
@@ -39,6 +38,6 @@ export const locationHandler = (location: string) => {
     }
     if (location === '/home') app.controller.url = {};
 
-    app.controller.setupPage(app.location, app.view, app.model);
+    app.controller.setupPage(location, app.view, app.model);
     app.location = location;
 };
