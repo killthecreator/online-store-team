@@ -87,10 +87,10 @@ body {
                 margin: 0 1vw;
             }
             .cart-wrapper__poromocoded {
-              font-size: $basic-font-size;
-              margin: 0 1vw;
-              color: violet;
-              display: none;
+                font-size: $basic-font-size;
+                margin: 0 1vw;
+                color: violet;
+                display: none;
             }
             .cart-wrapper__image {
                 @include flex-space-between;

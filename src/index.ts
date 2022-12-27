@@ -43,11 +43,15 @@ if (window.location.pathname === '/') {
 const currentPath = window.location.href.replace(`${window.location.origin}/home/?`, '');
 
 export const app = new App(currentPath, model, homeView, homeController);
-app.controller.setupPage(app.location, app.view, app.model);
 
 window.addEventListener('DOMContentLoaded', (event) => {
     route(event, window.location.pathname);
 });
+
+//app.controller.setupPage(app.location, app.view, app.model);
+app.view.drawHeader();
+app.view.drawMain(app.model.categories, app.model.brands, app.model.products);
+app.view.drawFooter();
 
 const ancors = document.querySelectorAll('.routing');
 ancors.forEach((ancor) =>
