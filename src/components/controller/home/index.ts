@@ -21,7 +21,7 @@ export class HomeController extends Controller {
 
     configPage(model: Model) {
         this.rangesHandler(model);
-        this.addRouting();
+        /* this.addRouting(); */
         this.filtersAndCheckboxes();
         this.sortByGo();
         this.searchGo();
@@ -31,7 +31,7 @@ export class HomeController extends Controller {
         this.copyLink();
     }
 
-    addRouting() {
+    /*     addRouting() {
         const main = document.querySelector('.main');
         if (!main) throw new Error('There is no main element');
         const ancors = main.querySelectorAll('.routing');
@@ -44,7 +44,7 @@ export class HomeController extends Controller {
                 }
             })
         );
-    }
+    } */
 
     searchGo() {
         const search = selectorChecker(document, '.search-wrapper') as HTMLDivElement;

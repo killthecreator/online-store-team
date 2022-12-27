@@ -30,11 +30,12 @@ export const locationHandler = (location: string) => {
             app.controller = cartController;
             app.view = cartView;
             break;
-        default:
+        case '/404':
             app.controller = pageNotFoundController;
             app.view = pageNotFoundView;
             break;
     }
     if (location === '/home') app.controller.url = {};
+    console.log(app.controller);
     app.controller.setupPage(location, app.view, app.model);
 };

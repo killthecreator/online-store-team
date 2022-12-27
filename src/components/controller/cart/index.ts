@@ -16,7 +16,6 @@ export class CartController extends Controller {
         const products = model.cart;
         if (!products) throw new Error(`There is no ${locationArr[2]} among our products`);
         view.drawMain(products);
-
         this.configPage(model, view);
     }
 
@@ -61,7 +60,9 @@ export class CartController extends Controller {
                     amountStore.innerHTML = `Stock: ${ourProduct.product.amount.toString()}`;
                     sumPrice.innerHTML = `${(ourProduct.product.price * ourProduct.amount).toString()} $`;
 
-                    cartState.innerHTML = `Cart total: ${model.cart.reduce((res, cur) => res + cur.product.price * cur.amount, 0).toString()} $`;
+                    cartState.innerHTML = `Cart total: ${model.cart
+                        .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
+                        .toString()} $`;
                 }
                 //console.log('добавим в localStorage');
                 localStorage.setItem('cartCadence', JSON.stringify(model.cart));
@@ -81,12 +82,14 @@ export class CartController extends Controller {
                     sumPrice.innerHTML = `${(ourProduct.product.price * ourProduct.amount).toString()} $`;
                     //console.log(ourProduct.amount == 0);
                     if (ourProduct.amount == 0) {
-                      model.cart.splice(model.cart.indexOf(ourProduct), 1);
-                      view.drawMain(model.cart);
-                      this.configPage(model, view);
+                        model.cart.splice(model.cart.indexOf(ourProduct), 1);
+                        view.drawMain(model.cart);
+                        this.configPage(model, view);
                     }
 
-                    cartState.innerHTML = `Cart total: ${model.cart.reduce((res, cur) => res + cur.product.price * cur.amount, 0).toString()} $`;
+                    cartState.innerHTML = `Cart total: ${model.cart
+                        .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
+                        .toString()} $`;
                 }
                 //console.log('добавим в localStorage');
                 localStorage.setItem('cartCadence', JSON.stringify(model.cart));
@@ -95,13 +98,13 @@ export class CartController extends Controller {
     }
 
     areProductsInCart(model: Model) {
-      const noProducts = selectorChecker(document, '.no-prods-in-cart') as HTMLDivElement;
-      const productsHeader = selectorChecker(document, '.products__header') as HTMLDivElement;
-      const summary = selectorChecker(document, '.summary') as HTMLDivElement;
+        const noProducts = selectorChecker(document, '.no-prods-in-cart') as HTMLDivElement;
+        const productsHeader = selectorChecker(document, '.products__header') as HTMLDivElement;
+        const summary = selectorChecker(document, '.summary') as HTMLDivElement;
 
-      noProducts.style.display = model.cart.length === 0 ? 'flex': 'none';
+        noProducts.style.display = model.cart.length === 0 ? 'flex' : 'none';
 
-      productsHeader.style.display = model.cart.length === 0 ? 'none': 'flex';
-      summary.style.display = model.cart.length === 0 ? 'none': 'flex';
+        productsHeader.style.display = model.cart.length === 0 ? 'none' : 'flex';
+        summary.style.display = model.cart.length === 0 ? 'none' : 'flex';
     }
 }

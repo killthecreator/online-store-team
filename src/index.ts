@@ -43,7 +43,6 @@ if (window.location.pathname === '/') {
 const currentPath = window.location.href.replace(`${window.location.origin}/home/?`, '');
 
 export const app = new App(currentPath, model, homeView, homeController);
-app.controller.setupPage(app.location, app.view, app.model);
 
 window.addEventListener('DOMContentLoaded', (event) => {
     route(event, window.location.pathname);
