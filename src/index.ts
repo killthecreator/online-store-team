@@ -40,12 +40,12 @@ const model = new Model();
 if (window.location.pathname === '/') {
     window.location.href = `${window.location.origin}/home`;
 }
-const currentPath = window.location.href.replace(`${window.location.origin}/home/?`, '');
+const currentPath = window.location.href.replace(window.location.origin, '');
 
 export const app = new App(currentPath, model, homeView, homeController);
 
 window.addEventListener('DOMContentLoaded', (event) => {
-    route(event, window.location.pathname);
+    route(event, currentPath);
 });
 
 app.view.drawHeader();
