@@ -48,6 +48,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
     route(event, window.location.pathname);
 });
 
+//app.controller.setupPage(app.location, app.view, app.model);
+app.view.drawHeader();
+app.view.drawMain(app.model.categories, app.model.brands, app.model.products);
+app.view.drawFooter();
+
 const ancors = document.querySelectorAll('.routing');
 ancors.forEach((ancor) =>
     ancor.addEventListener('click', (e) => {

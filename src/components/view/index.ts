@@ -33,6 +33,7 @@ export class GlobalView {
       <div class="cart-wrapper__state">
         Cart total: 0 $
       </div>
+      <div class="cart-wrapper__poromocoded">1</div>
       <div class="cart-wrapper__image">
         <a href="/cart"><img class="routing" id="/cart" src="${ShoppingCartImg}"/></a>
         <div class="cart-wrapper__count"></div>

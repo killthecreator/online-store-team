@@ -2,10 +2,6 @@ import './cart.scss';
 import { Product } from '../../model/data';
 import { GlobalView } from '../index';
 
-// TODO CartController.productsInCart() returns how many products in cart now
-// TODO CartController.productsTotal() return price of all the products in cart
-// TODO CartController.howManyInCart(product.name) returns how many is this product in cart
-
 export class CartView extends GlobalView {
     constructor() {
         super();
@@ -17,20 +13,22 @@ export class CartView extends GlobalView {
         mainDiv.innerHTML = `
       <section class="summary">
         <div class="summary__title">Summary: </div>
-        <div class="summary__products">Products: ${5 /*CartController.productsInCart()*/}</div>
-        <div class="summary__total">Total: ${6 /*CartController.productsTotal()*/}</div>
+        <!--div class="summary__products">Products: </div-->
+        <!--div class="summary__total">Total: </div-->
         <div class="summary__promo-code">
           <input class="summary__promo-code-input"/>
         </div>
         <button class="summary__confirm-promo-code">Confirm</button>
         <button class="summary__buy-now">Buy now</button>
       </section>
+      <section class="promo-code">
+      </section>
       <section class="products">
         <div class="products__header">
           <div class="products__header-title">Products in cart</div>
           <div class="products__header-items">
             <div class="products__header-items-title">Items</div>
-            <input class="products__header-items-input" value="0">
+            <input class="products__header-items-input" min="1" type="text" value="0">
           </div>
           <div class="products__header-pages">
             <div class="products__header-pages-decrease"><</div>

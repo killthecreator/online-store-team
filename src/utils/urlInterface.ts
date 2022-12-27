@@ -6,4 +6,7 @@ export interface URL {
     brands: string;
     price: string;
     stock: string;
+
+    pages: string;
+    pageNumber: string;
 }
