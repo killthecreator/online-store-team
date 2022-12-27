@@ -352,8 +352,16 @@ export class CartController extends Controller {
       const popup = document.querySelector('.popup');
       if (!popup) {
         const modalWindow = document.createElement('div');
+        modalWindow.classList.add('popup');
         modalWindow.innerHTML = view.drawModalWindow();
         document.body.append(modalWindow);
+        document.body.style.overflow = 'hidden';
+        modalWindow.addEventListener('click', (e) => {
+          if (e.target === modalWindow) {
+            modalWindow.remove();
+            document.body.style.overflow = 'scroll';
+          }
+        })
       }
     }
 
