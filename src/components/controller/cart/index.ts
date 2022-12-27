@@ -28,6 +28,7 @@ export class CartController extends Controller {
         this.areProductsInCart(model);
         this.pagination(model);
         this.promoCodding(model);
+        this.modalWindowConfig(view);
     }
 
     turnOffSearch() {
@@ -334,4 +335,9 @@ export class CartController extends Controller {
 
       });
     }
+
+    modalWindowConfig(view: CartView) {
+
+    }
+
 }
