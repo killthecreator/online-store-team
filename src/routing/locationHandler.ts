@@ -38,5 +38,7 @@ export const locationHandler = (location: string) => {
             break;
     }
     if (location === '/home') app.controller.url = {};
+
     app.controller.setupPage(app.location, app.view, app.model);
+    app.location = location;
 };
