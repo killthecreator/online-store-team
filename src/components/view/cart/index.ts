@@ -69,7 +69,7 @@ export class CartView extends GlobalView {
     `;
     };
 
-    /*drawModalWindow = () => {
+    drawModalWindow = () => {
         return `
       <div class="popup">
       <form class="form">
@@ -94,5 +94,5 @@ export class CartView extends GlobalView {
         </form>
       </div>
     `;
-    };*/
+    };
 }

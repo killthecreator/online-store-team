@@ -103,6 +103,19 @@ export class CartController extends Controller {
     }
 
     areProductsInCart(model: Model) {
+      const item = localStorage.getItem('cartCadence');
+      if (item) {
+        model.cart = JSON.parse(item);
+      }
+
+      const cartCount = selectorChecker(document, '.cart-wrapper__count');
+      const cartState = selectorChecker(document, '.cart-wrapper__state');
+      cartCount.innerHTML = model.cart.length.toString();
+      cartState.innerHTML = `Cart total: ${model.cart
+        .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
+        .toString()} $`;
+
+
         const noProducts = selectorChecker(document, '.no-prods-in-cart') as HTMLDivElement;
         const productsHeader = selectorChecker(document, '.products__header') as HTMLDivElement;
         const summary = selectorChecker(document, '.summary') as HTMLDivElement;
@@ -310,11 +323,13 @@ export class CartController extends Controller {
             const preCentArr = Array.from(perCentDivs).map((el) => Number(el.innerHTML.slice(0, -2)));
             const perSum: number = preCentArr.reduce((s, c) => s + c, 0);
 
-            totalPriceDiv.style.textDecoration = 'line-through';
-            promocodedPriceDiv.innerHTML = `${Math.floor(
-                (1 - perSum / 100) * Number(totalPriceDiv.innerHTML.slice(11, -2))
-            )} $`;
-            promocodedPriceDiv.style.display = 'flex';
+            if (model.appliedPromo.length > 0) {
+              totalPriceDiv.style.textDecoration = 'line-through';
+              promocodedPriceDiv.innerHTML = `${Math.floor(
+                  (1 - perSum / 100) * Number(totalPriceDiv.innerHTML.slice(11, -2))
+              )} $`;
+              promocodedPriceDiv.style.display = 'flex';
+            }
         }
 
         const mo = new MutationObserver(recountPerCent);
@@ -333,8 +348,19 @@ export class CartController extends Controller {
         });
     }
 
-    modalWindowConfig(view: CartView) {
+    openModalWindow(view: CartView) {
+      const popup = document.querySelector('.popup');
+      if (!popup) {
+        const modalWindow = document.createElement('div');
+        modalWindow.innerHTML = view.drawModalWindow();
+        document.body.append(modalWindow);
+      }
+    }
 
+    modalWindowConfig(view: CartView) {
+      const buyNowButton = selectorChecker(document, '.summary__buy-now');
+
+      buyNowButton.addEventListener('click', this.openModalWindow.bind(this, view));
     }
 
 }
