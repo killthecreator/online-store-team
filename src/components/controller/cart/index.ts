@@ -394,24 +394,38 @@ export class CartController extends Controller {
           phone.value += '-';
         }
       })
-  
+
       form.addEventListener('submit', (e) => {
         e.preventDefault();
 
         removeValidation();
 
         // check name
-        if (!name.value) {
+        if (! name.value) {
           createError('Cannot be blank', name);
         } else if (!name.value.match(/^[a-z]{3,} [a-z]{3,}\s*$/i)) {
           createError('Invalid name', name);
         }
 
         // check phone number
-        if (!phone.value) {
+        if (! phone.value) {
           createError('Cannot be blank', phone);
         } else if (!phone.value.match(/^\+[0-9]{3} \([0-9]{2}\) [0-9]{3}\-[0-9]{2}\-[0-9]{2}\s*$/)) {
           createError('Invalid phone', phone);
+        }
+
+        // check address
+        if (! address.value) {
+          createError('Cannot be blank',  address);
+        } else if (!address.value.match(/^([0-9a-z]{5,} ){2}[0-9a-z]{5,}/i)) {
+          createError('Invalid address',  address);
+        }
+
+        // check email
+        if (! email.value) {
+          createError('Cannot be blank',  email);
+        } else if (!email.value.match(/^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$/i)) {
+          createError('Invalid email',  email);
         }
       })
 
