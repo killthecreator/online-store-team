@@ -5,6 +5,10 @@ import { URL } from '../../../utils/urlInterface';
 import { selectorChecker } from '../../../utils/selectorChecker';
 import { Product } from '../../model/data';
 import { PromoCode } from '../../model/data';
+import MasterCard from '../../../assets/logos/cards/MasterCard.png';
+import Visa from '../../../assets/logos/cards/Visa.png';
+import AmericanExpress from '../../../assets/logos/cards/AmericanExpress.png';
+
 export class CartController extends Controller {
     url: Partial<URL>;
     constructor() {
@@ -374,10 +378,9 @@ export class CartController extends Controller {
       const email = selectorChecker(form, '.personal-details__email-input') as HTMLInputElement;
 
       const card = selectorChecker(form, '.credit-card-details__card-number-input') as HTMLInputElement;
+      const cardLogo = selectorChecker(form, '.credit-card-details__logo') as HTMLDivElement;
       const valid = selectorChecker(form, '.credit-card-details__valid-input') as HTMLInputElement;
       const cvv = selectorChecker(form, '.credit-card-details__cvv-input') as HTMLInputElement;
-
-      const formInputs: NodeListOf<HTMLInputElement> = form.querySelectorAll('.input');
 
       //insert proper marks in phone number while input
       phone.addEventListener('input', () => {
@@ -398,6 +401,26 @@ export class CartController extends Controller {
       })
 
       card.addEventListener('input', () => {
+        if (card.value.startsWith('5')
+        || card.value.startsWith('4')
+        || card.value.startsWith('3')) {
+          cardLogo.style.width = '30px';
+          cardLogo.style.height = '18px';
+          cardLogo.style.backgroundSize = '30px';
+          cardLogo.style.backgroundRepeat = 'no-repeat';
+          cardLogo.style.marginLeft = '10px';
+          cardLogo.style.alignSelf = 'center';
+          cardLogo.style.backgroundPositionY = 'center';
+          cardLogo.style.backgroundImage = card.value.startsWith('5')
+          ? `url('${MasterCard}')`
+          : card.value.startsWith('4')
+          ? `url('${Visa}')`
+          : `url('${AmericanExpress}')`;
+        } else {
+          cardLogo.style.width = '0px';
+          cardLogo.style.marginLeft = '0px';
+        }
+
         if (card.value.length > 19) card.value = card.value.slice(0, card.value.length - 1);
 
         if(card.value.match(/^[0-9]{4}$/)
