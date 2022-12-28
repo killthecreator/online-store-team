@@ -430,6 +430,17 @@ export class CartController extends Controller {
         }
       });
 
+      valid.addEventListener('input', () => {
+        if (valid.value.length > 5
+          || valid.value.match(/[a-z]+/i)) valid.value = valid.value.slice(0, valid.value.length - 1);
+
+        if(valid.value.length === 1 && valid.value.match(/[a-z]+/i)) valid.value = '';
+
+        if(valid.value.match(/^[0-9]{2}$/)) {
+          valid.value += '/';
+        }
+      });
+
       form.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -468,6 +479,14 @@ export class CartController extends Controller {
           createError('Cannot be blank', card);
         } else if (!card.value.match(/^([0-9]{4} ){3}[0-9]{4}$/)) {
           createError('Invalid card number', card);
+        }
+
+        //valid check
+        if (! valid.value) {
+          createError('Cannot be blank', valid);
+        } else if (!valid.value.match(/^[0-9]{2}\/[0-9]{2}$/)
+          || Number(valid.value.slice(0,2)) > 12) {
+          createError('Invalid date', valid);
         }
       })
 
