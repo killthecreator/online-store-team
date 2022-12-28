@@ -4,7 +4,6 @@ import RsschoolLogo from './../../assets/logos/rs_school_js.svg';
 import ShoppingCartImg from '../../assets/logos/shopping-cart.svg';
 import SearchIcon from '../../assets/logos/seach-icon.svg';
 import Logo from '../../assets/logos/site-logo.jpg';
-import { Product } from '../model/data';
 
 export class GlobalView {
     public drawHeader = (): void => {

@@ -1,17 +1,6 @@
 import './home.scss';
 import { Product, Category, Brand } from '../../model/data';
 import { GlobalView } from '../index';
-//TODO написать функции которые
-//     -  находят и возвращают
-//         findMinPrice() -- минимальную цену которая только есть cреди товаров
-//         findMaxPrice() -- максимальную цену
-//         findMinStock() -- минимальное колічество товаров на складе
-//         findMaxStock() -- максимальное количество товаров на складе
-//         found()        -- сколько товаров в данный момент отбражается на странице
-//         addToCart()    -- добавляет товар в корзину
-//         brandLogo(brandName) получает название бренда и возвращает ссылку на его лого
-
-// создать в контроллере лисенеры на клик по кнопкам reset-filters, copy-link, селекту sort-options, кнопки изменения виду view1 и view2
 
 export class HomeView extends GlobalView {
     constructor() {

@@ -2,6 +2,9 @@ import { Controller } from '../';
 import { ProductView } from '../../view/product/index';
 import { Model } from '../../model/index';
 import { selectorChecker } from '../../../utils/selectorChecker';
+import { locationHandler } from '../../../routing/locationHandler';
+import { cartController } from '../../../index';
+import { cartView } from '../../../index';
 
 export class ProductController extends Controller {
     url: Partial<URL>;
@@ -38,6 +41,32 @@ export class ProductController extends Controller {
         if (productInCart) {
             addToCartButton.innerHTML = 'remove';
         }
+
+        //buy now
+        const buyNow = selectorChecker(document, '.product__description-buy-now');
+        console.log(buyNow);
+        buyNow.addEventListener('click', () => {
+          productInCart = model.cart.find((product) => product.product.name === addToCartButton.id);
+          if (!product) throw new Error('there is no such product');
+          if (productInCart) {
+          } else {
+            model.cart.push({ product: product, amount: 1 });
+            product.amount -= 1;
+          }
+          if (!cartCount) throw new Error('There is no cart count');
+            cartCount.innerHTML = model.cart.length.toString();
+
+            cartState.innerHTML = `Cart total: ${model.cart
+                .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
+                .toString()} $`;
+
+            localStorage.setItem('cartCadence', JSON.stringify(model.cart));
+
+            locationHandler('/cart');
+            cartController.openModalWindow(cartView);
+
+        });
+        //ends buy now
 
         const cartState = selectorChecker(document, '.cart-wrapper__state');
 
