@@ -266,6 +266,7 @@ export class CartController extends Controller {
         }
 
         promoCodeButton.addEventListener('click', () => {
+            console.log(model.appliedPromo);
             model.promoCodes.forEach((promocode) => {
                 const appliedPromocodes = promoCodeList.querySelectorAll('.applied-promo');
                 if (promocode.id === promoCodeInput.value) {
@@ -308,6 +309,12 @@ export class CartController extends Controller {
             const deleteButton = selectorChecker(promoDiv, '.applied-promo__delete-button');
             deleteButton.addEventListener('click', () => {
                 promoDiv.remove();
+                model.appliedPromo.forEach((appliedPromo, i) => {
+                  if (appliedPromo === promoDiv) {
+                    model.appliedPromo.splice(i, 1);
+                  }
+                })
+                //удалить этот промокод из model applied Promo
 
                 if (promoCodeList.innerHTML.match(/</)) {
                     recountPerCent();
