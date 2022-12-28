@@ -86,9 +86,9 @@ export class CartView extends GlobalView {
 
         <div class="credit-card-details">
           <h3 class="credit-card-details__title">Credit card details</h3>
-          <label class="credit-card-details__card-number-label label">Name<input class="credit-card-details__card-number-input input"/></label>
-          <label class="credit-card-details__valid-label label">Phone Number<input class="credit-card-details__valid-input input"/></label>
-          <label class="credit-card-details__cvv-label label">Delivery Address<input class="credit-card-details__cvv-input input"/></label>
+          <label class="credit-card-details__card-number-label label">Card Number<div class="credit-card-details__logo"></div><input class="credit-card-details__card-number-input input"/></label>
+          <label class="credit-card-details__valid-label label">Valid<input class="credit-card-details__valid-input input"/></label>
+          <label class="credit-card-details__cvv-label label">CVV<input class="credit-card-details__cvv-input input"/></label>
         </div>
 
         <div class="form__send">

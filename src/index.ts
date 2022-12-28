@@ -51,7 +51,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     route(event, currentPath);
 });
 app.view.drawHeader();
-app.view.drawMain(app.model.categories, app.model.brands, app.model.products);
+//app.view.drawMain(app.model.categories, app.model.brands, app.model.products); нужна ли нам эта строка? может удалим?
 app.view.drawFooter();
 
 const ancors = document.querySelectorAll('.routing');
