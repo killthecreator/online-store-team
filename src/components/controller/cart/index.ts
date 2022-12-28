@@ -314,7 +314,6 @@ export class CartController extends Controller {
                     model.appliedPromo.splice(i, 1);
                   }
                 })
-                //удалить этот промокод из model applied Promo
 
                 if (promoCodeList.innerHTML.match(/</)) {
                     recountPerCent();
