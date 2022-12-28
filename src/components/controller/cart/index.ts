@@ -363,6 +363,66 @@ export class CartController extends Controller {
           }
         })
       }
+
+      // --  F O R M    V A L I D A T I O N  -- //
+      const form = selectorChecker(document, '.form') as HTMLFormElement;
+
+      const validateBtn = selectorChecker(form, '.form__send-button') as HTMLButtonElement;
+
+      const name = selectorChecker(form, '.personal-details__name-input') as HTMLInputElement;
+      const phone = selectorChecker(form, '.personal-details__phone-input')as HTMLInputElement;
+      const address = selectorChecker(form, '.personal-details__address-input') as HTMLInputElement;
+      const email = selectorChecker(form, '.personal-details__email-input') as HTMLInputElement;
+
+      const card = selectorChecker(form, '.credit-card-details__card-number-input') as HTMLInputElement;
+      const valid = selectorChecker(form, '.credit-card-details__valid-input') as HTMLInputElement;
+      const cvv = selectorChecker(form, '.credit-card-details__cvv-input') as HTMLInputElement;
+
+      const formInputs: NodeListOf<HTMLInputElement> = form.querySelectorAll('.input');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        removeValidation();
+
+        // check name
+        if (!name.value) {
+          createError('Cannot be blank', name);
+        } else if (!name.value.match(/[a-z]{3,} [a-z]{3,}/i)) {
+          createError('Invalid name', name);
+        }
+
+        // check phone number
+        
+      })
+
+      function removeValidation() {
+        const errors = form.querySelectorAll('.error')
+        errors.forEach(error => error.remove());
+      }
+
+      function createError(message: string, el: HTMLInputElement) {
+        const error = document.createElement('div')
+        error.className='error';
+        error.style.color = 'violet';
+        error.innerHTML = message;
+        if(!el.parentElement) throw new Error('there is no From!');
+        el.parentElement.append(error);
+      }
+
+      /*function fieldsEmptyCheck() {
+        formInputs.forEach(input => {
+          if (!input.value) {
+            console.log('field is blank', input);
+            const error = document.createElement('div')
+            error.className='error';
+            error.style.color = 'violet';
+            error.innerHTML = 'Cannot be blank';
+            if(!input.parentElement) throw new Error('there is no From!');
+            input.parentElement.insertBefore(error, input);
+          }
+        })
+      }*/
     }
 
     modalWindowConfig(view: CartView) {

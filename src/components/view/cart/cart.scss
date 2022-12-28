@@ -318,6 +318,9 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
           &:hover {
             cursor: pointer;
           }
+          &:focus {
+            border-color: darkmagenta;
+          }
         }
       }
     }
@@ -344,7 +347,7 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
           &:hover {
             cursor: pointer;
           }
-          &:focuss {
+          &:focus {
             border-color: darkmagenta;
           }
         }
