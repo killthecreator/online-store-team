@@ -379,6 +379,22 @@ export class CartController extends Controller {
 
       const formInputs: NodeListOf<HTMLInputElement> = form.querySelectorAll('.input');
 
+      //insert proper marks in phone number while input
+      phone.addEventListener('input', () => {
+        if(phone.value.match(/^\+[0-9]{3}$/)) {
+          phone.value += ' (';
+        }
+        if(phone.value.match(/^\+[0-9]{3} \([0-9]{2}$/)) {
+          phone.value += ') ';
+        }
+        if(phone.value.match(/^\+[0-9]{3} \([0-9]{2}\) [0-9]{3}$/)) {
+          phone.value += '-';
+        }
+        if(phone.value.match(/^\+[0-9]{3} \([0-9]{2}\) [0-9]{3}\-[0-9]{2}$/)) {
+          phone.value += '-';
+        }
+      })
+  
       form.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -387,12 +403,16 @@ export class CartController extends Controller {
         // check name
         if (!name.value) {
           createError('Cannot be blank', name);
-        } else if (!name.value.match(/[a-z]{3,} [a-z]{3,}/i)) {
+        } else if (!name.value.match(/^[a-z]{3,} [a-z]{3,}\s*$/i)) {
           createError('Invalid name', name);
         }
 
         // check phone number
-
+        if (!phone.value) {
+          createError('Cannot be blank', phone);
+        } else if (!phone.value.match(/^\+[0-9]{3} \([0-9]{2}\) [0-9]{3}\-[0-9]{2}\-[0-9]{2}\s*$/)) {
+          createError('Invalid phone', phone);
+        }
       })
 
       function removeValidation() {
