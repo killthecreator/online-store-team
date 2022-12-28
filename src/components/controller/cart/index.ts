@@ -384,7 +384,10 @@ export class CartController extends Controller {
 
       //insert proper marks in phone number while input
       phone.addEventListener('input', () => {
-        if (phone.value.length > '+375 (29) 111-11-11'.length) phone.value = phone.value.slice(0, phone.value.length - 1);
+        if (phone.value.length > '+375 (29) 111-11-11'.length
+        || phone.value.match(/[a-z]+/i)) phone.value = phone.value.slice(0, phone.value.length - 1);
+
+        if(phone.value.length === 1 && phone.value.match(/[a-z]+/i)) phone.value = '';
 
         if(phone.value.match(/^\+[0-9]{3}$/)) {
           phone.value += ' (';
@@ -421,7 +424,10 @@ export class CartController extends Controller {
           cardLogo.style.marginLeft = '0px';
         }
 
-        if (card.value.length > 19) card.value = card.value.slice(0, card.value.length - 1);
+        if (card.value.length > 19
+        || card.value.match(/[a-z]+/i)) card.value = card.value.slice(0, card.value.length - 1);
+
+        if(card.value.length === 1 && card.value.match(/[a-z]+/i)) card.value = '';
 
         if(card.value.match(/^[0-9]{4}$/)
         || card.value.match(/^[0-9]{4} [0-9]{4}$/)
@@ -439,6 +445,13 @@ export class CartController extends Controller {
         if(valid.value.match(/^[0-9]{2}$/)) {
           valid.value += '/';
         }
+      });
+
+      cvv.addEventListener('input', () => {
+        if (cvv.value.length > 3
+          || cvv.value.match(/[a-z]+/i)) cvv.value = cvv.value.slice(0, cvv.value.length - 1);
+
+        if(cvv.value.length === 1 && cvv.value.match(/[a-z]+/i)) valid.value = '';
       });
 
       form.addEventListener('submit', (e) => {
@@ -486,6 +499,13 @@ export class CartController extends Controller {
           createError('Cannot be blank', valid);
         } else if (!valid.value.match(/^[0-9]{2}\/[0-9]{2}$/)
           || Number(valid.value.slice(0,2)) > 12) {
+          createError('Invalid date', valid);
+        }
+
+        //cvv check
+        if (! cvv.value) {
+          createError('Cannot be blank', valid);
+        } else if (!cvv.value.match(/^[0-9]{3}$/)) {
           createError('Invalid date', valid);
         }
       })
