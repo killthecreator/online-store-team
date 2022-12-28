@@ -271,25 +271,19 @@ export class CartController extends Controller {
                 const appliedPromocodes = promoCodeList.querySelectorAll('.applied-promo');
                 if (promocode.id === promoCodeInput.value) {
                     if (appliedPromocodes.length > 0) {
-                        appliedPromocodes.forEach((div) => {
-                            if (div.id === promocode.id) {
-                                alert(
-                                    'Promo code has already been applied! You cannot apply this promo code more than once'
-                                );
-                                return;
-                            } else {
-                                addPromoCodeBlock(promocode);
-                                return;
-                            }
-                        });
-                    } else {
+                        for (let i = 0; i < appliedPromocodes.length; i++) {
+                          if (appliedPromocodes[i].id === promocode.id) {
+                            alert(
+                                'Promo code has already been applied! You cannot apply this promo code more than once'
+                            );
+                            return;
+                          }
+                        }
+                    }
                         console.log('No applied promocodes');
                         addPromoCodeBlock(promocode);
                         return;
-                    }
-                } /*else if (i === model.promoCodes.length - 1) {
-              alert('There is no such promocode on our website');
-            }*/
+                }
             });
         });
 
