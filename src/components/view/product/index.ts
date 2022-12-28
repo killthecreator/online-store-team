@@ -3,8 +3,7 @@ import { GlobalView } from '../index';
 import { Product } from './../../model/data';
 import { ProductController } from './../../controller/product';
 import basicImage from '../../../assets/default-product-image.jpg';
-
-//TODO ProductController.brandLogo(product.brand)
+import { selectorChecker } from '../../../utils/selectorChecker';
 
 export class ProductView extends GlobalView {
     constructor() {
@@ -13,10 +12,11 @@ export class ProductView extends GlobalView {
 
     public drawMain = (product: Product) => {
         let main = document.querySelector('.main');
+        let footer = selectorChecker(document, '.footer');
         if (!main) {
             main = document.createElement('main');
             main.classList.add('main');
-            document.body.append(main);
+            document.body.insertBefore(main, footer);
         }
         main.innerHTML = `
       <section class="bread-crumbs">

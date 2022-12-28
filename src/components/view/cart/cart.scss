@@ -390,3 +390,87 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
         }
     }
 }
+
+@media (max-width: 780px) {
+  body {
+    .main {
+      .summary {
+        padding: 0 3vw;
+        flex-wrap: wrap;
+        * {
+          margin: 1vw;
+        }
+      }
+      .products {
+        justify-content: center;
+        .products__header {
+          padding: 0 3vw;
+          flex-wrap: wrap;
+          * {
+            margin: 1vw;
+          }
+        }
+        .products__list {
+          width: 90vw;
+          margin: 2vw 2vw;
+          justify-content: space-between;
+          .product {
+            width: 90vw;
+              .product__number {
+                text-align: center;
+                width: 5vw;
+              }
+              .product__picture {
+                  width: 100px;
+                  min-width: 100px;
+                  height: 100px;
+                  background-size: 100px;
+              }
+              .product__description {
+                  min-width: 100px;
+                  width: 10vw;
+                  flex-grow: 1;
+                  .product__name {
+                  }
+                  .product__desc {
+                      display: none;
+                  }
+              }
+              .product__params {
+                  width: 110px;
+                  .product__stock {
+                  }
+                  .product__amount {
+                  }
+                  .product__price {
+                  }
+              }
+          }
+      }
+        /*.products__list {
+          .product {
+            width: 90vw;
+            .product__number {
+
+            }
+            .product__pictire {
+              width: 100px;
+              height: 100px;
+              background-size: 100vw;
+            }
+            .product__description {
+              flex: 1;
+              width: 10vw;
+              .product__desc {
+                display: none;
+              }
+            }
+            .product__params {
+              width: 110px;
+            }
+          }
+        }*/
+      }
+    }
+  }
+}

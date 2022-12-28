@@ -342,3 +342,26 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
     font-family: 'Normal';
     font-size: $basic-font-size;
 }
+
+@media (max-width: 780px) {
+  body {
+    .main {
+      .filters {
+        margin: 3vw;
+      }
+      .ranges {
+        grid-template-columns: repeat(1, 1fr);
+      }
+      .buttons {
+        padding: 0 3vw;
+        flex-wrap: wrap;
+        select {
+          height: 40px;
+        }
+        * {
+          margin: 1vw 1vw;
+        }
+      }
+    }
+  }
+}
