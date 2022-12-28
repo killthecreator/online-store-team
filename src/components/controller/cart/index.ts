@@ -3,7 +3,7 @@ import { Model } from '../../model';
 import { CartView } from '../../view/cart/index';
 import { URL } from '../../../utils/urlInterface';
 import { selectorChecker } from '../../../utils/selectorChecker';
-import { route } from '../../../routing/routing';
+import { Product } from '../../model/data';
 import { PromoCode } from '../../model/data';
 export class CartController extends Controller {
     url: Partial<URL>;
@@ -12,7 +12,7 @@ export class CartController extends Controller {
         this.url = {};
     }
 
-    setupPage(location: string, view: CartView, model: Model): void {
+    setupPage(view: CartView, model: Model, location: string): void {
         const locationArr = location.split('/');
         const products = model.cart;
         if (!products) throw new Error(`There is no ${locationArr[2]} among our products`);
@@ -103,18 +103,17 @@ export class CartController extends Controller {
     }
 
     areProductsInCart(model: Model) {
-      const item = localStorage.getItem('cartCadence');
-      if (item) {
-        model.cart = JSON.parse(item);
-      }
+        const item = localStorage.getItem('cartCadence');
+        if (item) {
+            model.cart = JSON.parse(item) as { product: Product; amount: 1 }[];
+        }
 
-      const cartCount = selectorChecker(document, '.cart-wrapper__count');
-      const cartState = selectorChecker(document, '.cart-wrapper__state');
-      cartCount.innerHTML = model.cart.length.toString();
-      cartState.innerHTML = `Cart total: ${model.cart
-        .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
-        .toString()} $`;
-
+        const cartCount = selectorChecker(document, '.cart-wrapper__count');
+        const cartState = selectorChecker(document, '.cart-wrapper__state');
+        cartCount.innerHTML = model.cart.length.toString();
+        cartState.innerHTML = `Cart total: ${model.cart
+            .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
+            .toString()} $`;
 
         const noProducts = selectorChecker(document, '.no-prods-in-cart') as HTMLDivElement;
         const productsHeader = selectorChecker(document, '.products__header') as HTMLDivElement;
@@ -164,8 +163,8 @@ export class CartController extends Controller {
             if (Number(pageInput.value) > pagesAmount) {
                 pageInput.value = tempPageNumber;
             }
-            let from = Number(itemInput.value) * (Number(pageInput.value) - 1);
-            let to = from + Number(itemInput.value);
+            const from = Number(itemInput.value) * (Number(pageInput.value) - 1);
+            const to = from + Number(itemInput.value);
 
             productsDiv.forEach((el, i) => (el.style.display = i < from ? 'none' : i >= to ? 'none' : 'flex'));
 
@@ -211,8 +210,8 @@ export class CartController extends Controller {
                 pageInput.value = tempPageNumber;
             }
 
-            let from = Number(itemInput.value) * (Number(pageInput.value) - 1);
-            let to = from + Number(itemInput.value);
+            const from = Number(itemInput.value) * (Number(pageInput.value) - 1);
+            const to = from + Number(itemInput.value);
 
             productsDiv.forEach((el, i) => (el.style.display = i < from ? 'none' : i >= to ? 'none' : 'flex'));
 
@@ -234,8 +233,8 @@ export class CartController extends Controller {
                 pageInput.value = (Number(pageInput.value) - 1).toString();
             }
 
-            let from = Number(itemInput.value) * (Number(pageInput.value) - 1);
-            let to = from + Number(itemInput.value);
+            const from = Number(itemInput.value) * (Number(pageInput.value) - 1);
+            const to = from + Number(itemInput.value);
 
             productsDiv.forEach((el, i) => (el.style.display = i < from ? 'none' : i >= to ? 'none' : 'flex'));
 
@@ -263,7 +262,7 @@ export class CartController extends Controller {
         }
 
         promoCodeButton.addEventListener('click', () => {
-            model.promoCodes.forEach((promocode, i) => {
+            model.promoCodes.forEach((promocode) => {
                 const appliedPromocodes = promoCodeList.querySelectorAll('.applied-promo');
                 if (promocode.id === promoCodeInput.value) {
                     if (appliedPromocodes.length > 0) {
@@ -324,11 +323,11 @@ export class CartController extends Controller {
             const perSum: number = preCentArr.reduce((s, c) => s + c, 0);
 
             if (model.appliedPromo.length > 0) {
-              totalPriceDiv.style.textDecoration = 'line-through';
-              promocodedPriceDiv.innerHTML = `${Math.floor(
-                  (1 - perSum / 100) * Number(totalPriceDiv.innerHTML.slice(11, -2))
-              )} $`;
-              promocodedPriceDiv.style.display = 'flex';
+                totalPriceDiv.style.textDecoration = 'line-through';
+                promocodedPriceDiv.innerHTML = `${Math.floor(
+                    (1 - perSum / 100) * Number(totalPriceDiv.innerHTML.slice(11, -2))
+                )} $`;
+                promocodedPriceDiv.style.display = 'flex';
             }
         }
 
@@ -349,20 +348,20 @@ export class CartController extends Controller {
     }
 
     openModalWindow(view: CartView) {
-      const popup = document.querySelector('.popup');
-      if (!popup) {
-        const modalWindow = document.createElement('div');
-        modalWindow.classList.add('popup');
-        modalWindow.innerHTML = view.drawModalWindow();
-        document.body.append(modalWindow);
-        document.body.style.overflow = 'hidden';
-        modalWindow.addEventListener('click', (e) => {
-          if (e.target === modalWindow) {
-            modalWindow.remove();
-            document.body.style.overflow = 'scroll';
-          }
-        })
-      }
+        const popup = document.querySelector('.popup');
+        if (!popup) {
+            const modalWindow = document.createElement('div');
+            modalWindow.classList.add('popup');
+            modalWindow.innerHTML = view.drawModalWindow();
+            document.body.append(modalWindow);
+            document.body.style.overflow = 'hidden';
+            modalWindow.addEventListener('click', (e) => {
+                if (e.target === modalWindow) {
+                    modalWindow.remove();
+                    document.body.style.overflow = 'scroll';
+                }
+            });
+        }
 
       // --  F O R M    V A L I D A T I O N  -- //
       const form = selectorChecker(document, '.form') as HTMLFormElement;
@@ -393,7 +392,7 @@ export class CartController extends Controller {
         }
 
         // check phone number
-        
+
       })
 
       function removeValidation() {
@@ -426,9 +425,8 @@ export class CartController extends Controller {
     }
 
     modalWindowConfig(view: CartView) {
-      const buyNowButton = selectorChecker(document, '.summary__buy-now');
+        const buyNowButton = selectorChecker(document, '.summary__buy-now');
 
-      buyNowButton.addEventListener('click', this.openModalWindow.bind(this, view));
+        buyNowButton.addEventListener('click', this.openModalWindow.bind(this, view));
     }
-
 }

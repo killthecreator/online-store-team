@@ -8,9 +8,13 @@ export class CartView extends GlobalView {
     }
 
     public drawMain = (products: { product: Product; amount: number }[]) => {
-        const mainDiv = document.querySelector('.main');
-        if (mainDiv === null) throw new Error('There is no #main element in the body');
-        mainDiv.innerHTML = `
+        let main = document.querySelector('.main');
+        if (!main) {
+            main = document.createElement('main');
+            main.classList.add('main');
+            document.body.append(main);
+        }
+        main.innerHTML = `
       <section class="summary">
         <div class="summary__title">Summary: </div>
         <!--div class="summary__products">Products: </div-->
