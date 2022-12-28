@@ -408,6 +408,10 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
           flex-wrap: wrap;
           * {
             margin: 1vw;
+            align-items: center;
+            * {
+              text-align: center;
+            }
           }
         }
         .products__list {
