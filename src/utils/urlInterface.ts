@@ -8,5 +8,5 @@ export interface URL {
     stock: string;
 
     pages: string;
-    pageNumber: string;
+    pagenumber: string;
 }
