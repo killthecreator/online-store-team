@@ -381,6 +381,8 @@ export class CartController extends Controller {
 
       //insert proper marks in phone number while input
       phone.addEventListener('input', () => {
+        if (phone.value.length > '+375 (29) 111-11-11'.length) phone.value = phone.value.slice(0, phone.value.length - 1);
+
         if(phone.value.match(/^\+[0-9]{3}$/)) {
           phone.value += ' (';
         }
@@ -394,6 +396,16 @@ export class CartController extends Controller {
           phone.value += '-';
         }
       })
+
+      card.addEventListener('input', () => {
+        if (card.value.length > 19) card.value = card.value.slice(0, card.value.length - 1);
+
+        if(card.value.match(/^[0-9]{4}$/)
+        || card.value.match(/^[0-9]{4} [0-9]{4}$/)
+        || card.value.match(/^([0-9]{4} ){2}[0-9]{4}$/)) {
+          card.value += ' ';
+        }
+      });
 
       form.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -426,6 +438,13 @@ export class CartController extends Controller {
           createError('Cannot be blank',  email);
         } else if (!email.value.match(/^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$/i)) {
           createError('Invalid email',  email);
+        }
+
+        //card number check
+        if (! card.value) {
+          createError('Cannot be blank', card);
+        } else if (!card.value.match(/^([0-9]{4} ){3}[0-9]{4}$/)) {
+          createError('Invalid card number', card);
         }
       })
 
