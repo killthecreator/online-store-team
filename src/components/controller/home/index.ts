@@ -25,10 +25,8 @@ export class HomeController extends Controller {
         this.searchGo();
         this.filtersAndCheckboxes();
         this.sortByGo();
-
         this.addingToCart();
         this.changeView();
-        this.found();
         this.copyLink();
     }
 
@@ -58,8 +56,6 @@ export class HomeController extends Controller {
                 }
                 return false;
             });
-
-            this.view.drawMain(this.model.categories, this.model.brands, this.model.activeProducts);
             this.found();
         };
 
@@ -75,7 +71,6 @@ export class HomeController extends Controller {
 
     filtersAndCheckboxes() {
         const productCards: NodeListOf<HTMLDivElement> = document.querySelectorAll('.card-wrapper');
-
         const brandCheckboxes: NodeListOf<HTMLInputElement> = document.querySelectorAll('.brand-form__checkbox');
         const categoryCheckboxes: NodeListOf<HTMLInputElement> = document.querySelectorAll('.category-form__checkbox');
         const categoryCheckboxesArr = Array.from(categoryCheckboxes);
@@ -90,11 +85,11 @@ export class HomeController extends Controller {
         const stockRange2 = document.querySelector('.stock-range__max') as HTMLDivElement;
 
         const filtration = () => {
+            this.model.activeProducts = this.model.products;
             const activeCategories = categoryCheckboxesArr
                 .filter((checkbox) => checkbox.checked)
                 .map((item) => item.id);
             const activeBrands = brandCheckboxesArr.filter((checkbox) => checkbox.checked).map((item) => item.id);
-
             activeCategories.length !== 0
                 ? (this.url.categories = `category=${activeCategories.join('↕')}`)
                 : delete this.url.categories;
@@ -104,40 +99,31 @@ export class HomeController extends Controller {
                 ? window.history.replaceState({}, '', `/home/?${Object.values(this.url).join('&')}`)
                 : window.history.replaceState({}, '', `/home`);
 
-            productCards.forEach((card) => {
+            /*  */
+            this.model.activeProducts = this.model.activeProducts.filter((product) => {
                 const categoryCheckbox = categoryCheckboxesArr.find(
-                    (checkbox) => card.innerHTML.indexOf(checkbox.id) !== -1
-                );
-                const brandCheckbox = brandCheckboxesArr.find((checkbox) => card.innerHTML.indexOf(checkbox.id) !== -1);
+                    (checkbox) => product.category.indexOf(checkbox.id) !== -1
+                ) as HTMLInputElement;
 
-                const stockDiv = selectorChecker(card, '.photo-zone__store');
-                const stockDivHTML = stockDiv.innerHTML;
-                const stockArr = stockDivHTML.match(/\d+/);
-                if (!stockArr) throw new Error('there is data in element');
-                const stockAmount = Number(stockArr[0]);
-
-                const priceDiv = selectorChecker(card, '.name-zone__price');
-                const priceDivHTML = priceDiv.innerHTML;
-                const priceArr = priceDivHTML.match(/\d+/);
-                if (!priceArr) throw new Error('there is data in element');
-                const price = Number(priceArr[0]);
-
-                if (!categoryCheckbox || !brandCheckbox) throw new Error('Checkboxes were not found');
+                const brandCheckbox = brandCheckboxesArr.find(
+                    (checkbox) => product.brand.indexOf(checkbox.id) !== -1
+                ) as HTMLInputElement;
 
                 if (
                     (categoryCheckbox.checked || categoryCheckboxesArr.every((checkbox) => !checkbox.checked)) &&
                     (brandCheckbox.checked || brandCheckboxesArr.every((checkbox) => !checkbox.checked)) &&
-                    stockAmount >= Number(stockRange1.textContent) &&
-                    stockAmount <= Number(stockRange2.textContent) &&
-                    price >= Number(priceRange1.textContent) &&
-                    price <= Number(priceRange2.textContent)
-                ) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
-                this.found();
+                    product.amount >= Number(stockRange1.textContent) &&
+                    product.amount <= Number(stockRange2.textContent) &&
+                    product.price >= Number(priceRange1.textContent) &&
+                    product.price <= Number(priceRange2.textContent)
+                )
+                    return true;
+                return false;
             });
+
+            this.searchGo();
+            this.sortByGo();
+            this.found();
         };
 
         priceRanges.forEach((range) => range.addEventListener('input', filtration));
@@ -166,43 +152,17 @@ export class HomeController extends Controller {
     }
 
     sortByGo() {
-        const productCards: NodeListOf<HTMLDivElement> = document.querySelectorAll('.card-wrapper');
-
-        const products = Array.from(productCards);
-
-        type tempOb = {
-            el: HTMLDivElement;
-            price: number;
-            name: string;
-        };
-
-        const tempArr: tempOb[] = [];
-
-        products.forEach((product) => {
-            const priceDiv = selectorChecker(product, '.name-zone__price');
-            const priceDivHTML = priceDiv.innerHTML;
-            const priceArr = priceDivHTML.match(/\d+/);
-            if (!priceArr) throw new Error('there is data in element');
-            const price = Number(priceArr[0]);
-            tempArr.push({
-                el: product,
-                price: price,
-                name: product.id,
-            });
-        });
-
-        const cardsWrapper = selectorChecker(document, '.cards-wrapper') as HTMLDivElement;
         const sortOptions = selectorChecker(document, '.sort-options') as HTMLOptionElement;
         const sortProducts = () => {
             switch (sortOptions.value) {
                 case 'priceASC':
-                    tempArr.sort((a, b) => a.price - b.price);
+                    this.model.activeProducts.sort((a, b) => a.price - b.price);
                     break;
                 case 'priceDESC':
-                    tempArr.sort((a, b) => b.price - a.price);
+                    this.model.activeProducts.sort((a, b) => -(a.price - b.price));
                     break;
                 case 'nameASC':
-                    tempArr.sort((a, b) => {
+                    this.model.activeProducts.sort((a, b) => {
                         const nameA = a.name.toLowerCase();
                         const nameB = b.name.toLowerCase();
                         if (nameA < nameB) return -1;
@@ -211,7 +171,7 @@ export class HomeController extends Controller {
                     });
                     break;
                 case 'nameDESC':
-                    tempArr.sort((a, b) => {
+                    this.model.activeProducts.sort((a, b) => {
                         const nameA = a.name.toLowerCase();
                         const nameB = b.name.toLowerCase();
                         if (nameA < nameB) return 1;
@@ -220,9 +180,7 @@ export class HomeController extends Controller {
                     });
                     break;
             }
-            cardsWrapper.innerHTML = '';
-            tempArr.forEach((el) => cardsWrapper.append(el.el));
-
+            this.found();
             this.url.sort = `sort=${sortOptions.value}`;
             window.history.replaceState({}, '', `/home/?${Object.values(this.url).join('&')}`);
         };
@@ -231,7 +189,6 @@ export class HomeController extends Controller {
             sortProducts();
         }
         sortOptions.addEventListener('change', sortProducts);
-        this.filtersAndCheckboxes();
     }
 
     public rangesHandler() {
@@ -431,6 +388,7 @@ export class HomeController extends Controller {
     changeView() {
         const view1 = selectorChecker(document, '.view1') as HTMLButtonElement;
         const view2 = selectorChecker(document, '.view2') as HTMLButtonElement;
+        console.log(1);
 
         const cardWrappers = document.querySelectorAll('.card-wrapper');
         const photoZones = document.querySelectorAll('.photo-zone');
@@ -473,21 +431,20 @@ export class HomeController extends Controller {
     }
 
     found() {
+        let activeCards: Element;
+        try {
+            activeCards = selectorChecker(document, '.cards-wrapper');
+        } catch {
+            activeCards = selectorChecker(document, '.no-products');
+        }
         const foundDiv = selectorChecker(document, '.found');
+        foundDiv.innerHTML = `Found: ${this.model.activeProducts.length}`;
 
-        const products: NodeListOf<HTMLDivElement> = document.querySelectorAll('.card-wrapper');
-        let displaingProducts = 0;
-        products.forEach((prod) => {
-            if (prod.style.display === '' || prod.style.display === 'flex') {
-                displaingProducts += 1;
-            }
-        });
-        foundDiv.innerHTML = `Found: ${displaingProducts}`;
-
-        const notFound = selectorChecker(document, '.no-products') as HTMLDivElement;
-
-        if (displaingProducts === 0) notFound.style.display = 'flex';
-        if (displaingProducts > 0) notFound.style.display = 'none';
+        if (this.model.activeProducts.length === 0) {
+            activeCards.outerHTML = `<section class="no-products">No products were found for your request</section>`;
+        } else {
+            activeCards.outerHTML = this.view.drawCards(this.model.activeProducts);
+        }
     }
 
     copyLink() {

@@ -53,7 +53,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 });
 
 app.view.drawHeader();
-app.view.drawMain(app.model.categories, app.model.brands, app.model.activeProducts);
+//app.view.drawMain(app.model.categories, app.model.brands, app.model.activeProducts);
 app.view.drawFooter();
 
 const ancors = document.querySelectorAll('.routing');

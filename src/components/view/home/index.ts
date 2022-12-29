@@ -10,12 +10,11 @@ export class HomeView extends GlobalView {
 
     public drawMain = (categories: Category[], brands: Brand[], activeProducts: Product[]): void => {
         let main = document.querySelector('.main');
-        let footer = selectorChecker(document, '.footer');
+        const footer = selectorChecker(document, '.footer');
         if (!main) {
             main = document.createElement('main');
             main.classList.add('main');
             document.body.insertBefore(main, footer);
-            //document.body.append(main);
         }
         main.innerHTML =
             this.drawFilters(categories, brands) +
@@ -152,7 +151,6 @@ export class HomeView extends GlobalView {
         )}
 
       </section>
-      <section class="no-products">No products were found for your request</section>
     `;
     };
 }
