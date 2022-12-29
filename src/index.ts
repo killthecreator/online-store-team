@@ -28,10 +28,6 @@ class App {
         this.controller = controller;
     }
 }
-export const homeController = new HomeController();
-export const productController = new ProductController();
-export const cartController = new CartController();
-export const pageNotFoundController = new PageNotFoundController();
 
 export const homeView = new HomeView();
 export const productView = new ProductView();
@@ -39,6 +35,11 @@ export const cartView = new CartView();
 export const pageNotFoundView = new PageNotFoundView();
 
 const model = new Model();
+
+export const homeController = new HomeController(homeView, model);
+export const productController = new ProductController(productView, model);
+export const cartController = new CartController(cartView, model);
+export const pageNotFoundController = new PageNotFoundController(pageNotFoundView, model);
 
 if (window.location.pathname === '/') {
     window.location.href = `${window.location.origin}/home`;
@@ -50,8 +51,9 @@ export const app = new App(currentPath, model, homeView, homeController);
 window.addEventListener('DOMContentLoaded', (event) => {
     route(event, currentPath);
 });
+
 app.view.drawHeader();
-//app.view.drawMain(app.model.categories, app.model.brands, app.model.products); нужна ли нам эта строка? может удалим?
+app.view.drawMain(app.model.categories, app.model.brands, app.model.activeProducts);
 app.view.drawFooter();
 
 const ancors = document.querySelectorAll('.routing');

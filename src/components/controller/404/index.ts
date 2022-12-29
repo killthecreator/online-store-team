@@ -1,17 +1,22 @@
 import { Controller } from '../';
 import { PageNotFoundView } from '../../view/404/';
 import { URL } from '../../../utils/urlInterface';
+import { Model } from '../../model/index';
 export class PageNotFoundController extends Controller {
     url: Partial<URL>;
-    constructor() {
+    view: PageNotFoundView;
+    model: Model;
+    constructor(view: PageNotFoundView, model: Model) {
         super();
         this.url = {};
+        this.view = view;
+        this.model = model;
     }
 
-    setupPage(view: PageNotFoundView): void {
-        view.drawHeader();
-        view.drawMain();
-        view.drawFooter();
+    setupPage(): void {
+        this.view.drawHeader();
+        this.view.drawMain();
+        this.view.drawFooter();
     }
 
     configPage() {

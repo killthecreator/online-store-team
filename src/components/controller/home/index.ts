@@ -1,54 +1,41 @@
 import { Controller } from '../';
 import { HomeView } from '../../view/home';
 import { Model } from '../../model';
-import { locationHandler } from '../../../routing/locationHandler';
 import { selectorChecker } from '../../../utils/selectorChecker';
 import { URL } from '../../../utils/urlInterface';
 export class HomeController extends Controller {
     url: Partial<URL>;
-    constructor() {
+    view: HomeView;
+    model: Model;
+    constructor(view: HomeView, model: Model) {
         super();
         this.url = {};
+        this.view = view;
+        this.model = model;
     }
 
-    setupPage(view: HomeView, model: Model, location: string): void {
+    setupPage(location: string): void {
         this.fillUrl(location);
-        view.drawMain(model.categories, model.brands, model.products);
-        this.configPage(model);
+        this.view.drawMain(this.model.categories, this.model.brands, this.model.activeProducts);
+        this.configPage();
     }
 
-    configPage(model: Model) {
-        this.rangesHandler(model);
-        this.addRouting();
+    configPage() {
+        this.rangesHandler();
+        this.searchGo();
         this.filtersAndCheckboxes();
         this.sortByGo();
-        this.searchGo();
-        this.addingToCart(model);
+
+        this.addingToCart();
         this.changeView();
         this.found();
         this.copyLink();
     }
 
-    addRouting() {
-        const main = document.querySelector('.main');
-        if (!main) throw new Error('There is no main element');
-        const ancors = main.querySelectorAll('.routing');
-        ancors.forEach((ancor) =>
-            ancor.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (e.currentTarget === ancor) {
-                    window.history.pushState({}, ``, ancor.id);
-                    locationHandler(ancor.id);
-                }
-            })
-        );
-    }
-
     searchGo() {
         const search = selectorChecker(document, '.search-wrapper') as HTMLDivElement;
         search.style.display = 'flex';
-
-        const productCards: NodeListOf<HTMLDivElement> = document.querySelectorAll('.card-wrapper');
+        const activeProducts = this.model.activeProducts;
         const input = selectorChecker(document, '.search-wrapper__input') as HTMLInputElement;
 
         const doSearch = () => {
@@ -59,29 +46,21 @@ export class HomeController extends Controller {
                 ? window.history.replaceState({}, '', `/home/?${Object.values(this.url).join('&')}`)
                 : window.history.replaceState({}, '', `/home`);
 
-            productCards.forEach((card) => {
-                const cardTitle = selectorChecker(card, '.name-zone__name');
-                const cardCategory = selectorChecker(card, '.name-zone__category');
-                const cardPrice = selectorChecker(card, '.name-zone__price');
-                const cardStock = selectorChecker(card, '.photo-zone__store');
+            this.model.activeProducts = activeProducts.filter((product) => {
                 if (
-                    /* card.classList.contains('active') && */
-                    cardTitle.textContent &&
-                    cardCategory.textContent &&
-                    cardPrice.textContent &&
-                    cardStock.textContent &&
-                    (cardTitle.textContent.toLowerCase().indexOf(filter) !== -1 ||
-                        cardCategory.textContent.toLowerCase().indexOf(filter) !== -1 ||
-                        cardPrice.textContent.toLowerCase().indexOf(filter) !== -1 ||
-                        cardStock.textContent.toLowerCase().replace('Stock ', '').indexOf(filter) !== -1)
+                    product.name.toLowerCase().includes(filter) ||
+                    product.brand.toLowerCase().includes(filter) ||
+                    product.category.toLowerCase().includes(filter) ||
+                    product.amount.toString().includes(filter) ||
+                    product.price.toString().includes(filter)
                 ) {
-                    card.style.display = 'flex';
-                    this.found();
-                } else {
-                    card.style.display = 'none';
-                    this.found();
+                    return true;
                 }
+                return false;
             });
+
+            this.view.drawMain(this.model.categories, this.model.brands, this.model.activeProducts);
+            this.found();
         };
 
         window.addEventListener('load', () => {
@@ -146,7 +125,6 @@ export class HomeController extends Controller {
                 if (!categoryCheckbox || !brandCheckbox) throw new Error('Checkboxes were not found');
 
                 if (
-                    /* card.classList.contains('active') && */
                     (categoryCheckbox.checked || categoryCheckboxesArr.every((checkbox) => !checkbox.checked)) &&
                     (brandCheckbox.checked || brandCheckboxesArr.every((checkbox) => !checkbox.checked)) &&
                     stockAmount >= Number(stockRange1.textContent) &&
@@ -155,14 +133,10 @@ export class HomeController extends Controller {
                     price <= Number(priceRange2.textContent)
                 ) {
                     card.style.display = 'flex';
-                    /* card.classList.add('active'); */
-
-                    this.found();
                 } else {
                     card.style.display = 'none';
-                    /* card.classList.remove('active'); */
-                    this.found();
                 }
+                this.found();
             });
         };
 
@@ -260,29 +234,29 @@ export class HomeController extends Controller {
         this.filtersAndCheckboxes();
     }
 
-    public rangesHandler(model: Model) {
+    public rangesHandler() {
         const sliderColor = '#cce';
         const stockRange1 = document.querySelector('.stock-range__input-1') as HTMLInputElement;
         const stockRange2 = document.querySelector('.stock-range__input-2') as HTMLInputElement;
 
         const stockMin = document.querySelector('.stock-range__min') as HTMLDivElement;
-        stockMin.innerHTML = model.stockRange[0].toString();
-        stockRange1.min = stockRange2.min = model.stockRange[0].toString();
+        stockMin.innerHTML = this.model.stockRange[0].toString();
+        stockRange1.min = stockRange2.min = this.model.stockRange[0].toString();
 
         const stockMax = document.querySelector('.stock-range__max') as HTMLDivElement;
-        stockMax.innerHTML = model.stockRange[1].toString();
-        stockRange1.max = stockRange2.max = model.stockRange[1].toString();
+        stockMax.innerHTML = this.model.stockRange[1].toString();
+        stockRange1.max = stockRange2.max = this.model.stockRange[1].toString();
 
         const priceRange1 = document.querySelector('.price-range__input-1') as HTMLInputElement;
         const priceRange2 = document.querySelector('.price-range__input-2') as HTMLInputElement;
 
         const priceMin = document.querySelector('.price-range__min') as HTMLDivElement;
-        priceMin.innerHTML = model.pricesRange[0].toString();
-        priceRange1.min = priceRange2.min = model.pricesRange[0].toString();
+        priceMin.innerHTML = this.model.pricesRange[0].toString();
+        priceRange1.min = priceRange2.min = this.model.pricesRange[0].toString();
 
         const priceMax = document.querySelector('.price-range__max') as HTMLDivElement;
-        priceMax.innerHTML = model.pricesRange[1].toString();
-        priceRange1.max = priceRange2.max = model.pricesRange[1].toString();
+        priceMax.innerHTML = this.model.pricesRange[1].toString();
+        priceRange1.max = priceRange2.max = this.model.pricesRange[1].toString();
 
         const fillSlider = (
             from: HTMLInputElement,
@@ -396,10 +370,10 @@ export class HomeController extends Controller {
         priceRange2.addEventListener('input', (e) => controlToSlider(priceRange1, priceRange2, priceMax, e));
     }
 
-    addingToCart(model: Model) {
+    addingToCart() {
         const item = localStorage.getItem('cartCadence');
         if (item) {
-            model.cart = JSON.parse(item);
+            this.model.cart = JSON.parse(item);
 
             //console.log('get info from localStorage');
         }
@@ -408,8 +382,8 @@ export class HomeController extends Controller {
 
         const cartCount = selectorChecker(document, '.cart-wrapper__count');
         const cartState = selectorChecker(document, '.cart-wrapper__state');
-        cartCount.innerHTML = model.cart.length.toString();
-        cartState.innerHTML = `Cart total: ${model.cart
+        cartCount.innerHTML = this.model.cart.length.toString();
+        cartState.innerHTML = `Cart total: ${this.model.cart
             .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
             .toString()} $`;
 
@@ -418,39 +392,39 @@ export class HomeController extends Controller {
             const addToCartButton = selectorChecker(card, '.photo-zone__add-to-cart-button');
             const cartCount = selectorChecker(document, '.cart-wrapper__count');
 
-            let productInCart = model.cart.find((product) => product.product.name === addToCartButton.id);
+            let productInCart = this.model.cart.find((product) => product.product.name === addToCartButton.id);
 
             if (productInCart) {
                 addToCartButton.innerHTML = 'remove';
             }
 
             const cartState = selectorChecker(document, '.cart-wrapper__state');
-
-            addToCartButton.addEventListener('click', adding);
-            function adding() {
-                const product = model.products.find((product) => product.name === addToCartButton.id);
+            const adding = () => {
+                const product = this.model.products.find((product) => product.name === addToCartButton.id);
                 if (!product) throw new Error('there is no such product');
-                productInCart = model.cart.find((product) => product.product.name === addToCartButton.id);
+                productInCart = this.model.cart.find((product) => product.product.name === addToCartButton.id);
                 if (productInCart) {
                     addToCartButton.innerHTML = 'add to cart';
                     product.amount += 1;
-                    model.cart.splice(model.cart.indexOf(productInCart), 1);
+                    this.model.cart.splice(this.model.cart.indexOf(productInCart), 1);
                 } else {
                     addToCartButton.innerHTML = 'remove';
-                    model.cart.push({ product: product, amount: 1 });
+                    this.model.cart.push({ product: product, amount: 1 });
                     product.amount -= 1;
                 }
 
-                cartCount.innerHTML = model.cart.length.toString();
+                cartCount.innerHTML = this.model.cart.length.toString();
                 stockDiv.innerHTML = `Stock: ${product.amount}`;
 
-                cartState.innerHTML = `Cart total: ${model.cart
+                cartState.innerHTML = `Cart total: ${this.model.cart
                     .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
                     .toString()} $`;
 
                 //console.log('добавим в localStorage');
-                localStorage.setItem('cartCadence', JSON.stringify(model.cart));
-            }
+                localStorage.setItem('cartCadence', JSON.stringify(this.model.cart));
+            };
+
+            addToCartButton.addEventListener('click', adding);
         });
     }
 

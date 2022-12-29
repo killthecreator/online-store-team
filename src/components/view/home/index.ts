@@ -102,10 +102,10 @@ export class HomeView extends GlobalView {
     `;
     };
 
-    public drawCards = (cards: Product[]) => {
+    public drawCards = (activeProducts: Product[]) => {
         return `
       <section class="cards-wrapper">
-        ${cards.reduce(
+        ${activeProducts.reduce(
             (res: string, card: Product) =>
                 res +
                 `

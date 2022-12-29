@@ -8,21 +8,25 @@ import { cartView } from '../../../index';
 
 export class ProductController extends Controller {
     url: Partial<URL>;
-    constructor() {
+    view: ProductView;
+    model: Model;
+    constructor(view: ProductView, model: Model) {
         super();
         this.url = {};
+        this.view = view;
+        this.model = model;
     }
-    setupPage(view: ProductView, model: Model, location: string): void {
+    setupPage(location: string): void {
         const productName = location.replaceAll('%20', ' ');
-        const product = model.products.find((el) => el.name === productName);
+        const product = this.model.products.find((el) => el.name === productName);
         if (!product) throw new Error(`There is no ${productName} among our products`);
-        view.drawMain(product);
-        this.configPage(model);
+        this.view.drawMain(product);
+        this.configPage();
     }
 
-    configPage(model: Model) {
+    configPage() {
         this.turnOffSearch();
-        this.addingToCart(model);
+        this.addingToCart();
     }
 
     turnOffSearch() {
@@ -31,12 +35,12 @@ export class ProductController extends Controller {
         search.style.display = 'none';
     }
 
-    addingToCart(model: Model) {
+    addingToCart() {
         const addToCartButton = selectorChecker(document, '.product__description-add-to-cart');
         const cartCount = selectorChecker(document, '.cart-wrapper__count');
         addToCartButton.addEventListener('click', adding);
-        const product = model.products.find((product) => product.name === addToCartButton.id);
-        let productInCart = model.cart.find((product) => product.product.name === addToCartButton.id);
+        const product = this.model.products.find((product) => product.name === addToCartButton.id);
+        let productInCart = this.model.cart.find((product) => product.product.name === addToCartButton.id);
 
         if (productInCart) {
             addToCartButton.innerHTML = 'remove';
@@ -46,51 +50,49 @@ export class ProductController extends Controller {
         const buyNow = selectorChecker(document, '.product__description-buy-now');
         console.log(buyNow);
         buyNow.addEventListener('click', () => {
-          productInCart = model.cart.find((product) => product.product.name === addToCartButton.id);
-          if (!product) throw new Error('there is no such product');
-          if (productInCart) {
-          } else {
-            model.cart.push({ product: product, amount: 1 });
-            product.amount -= 1;
-          }
-          if (!cartCount) throw new Error('There is no cart count');
-            cartCount.innerHTML = model.cart.length.toString();
+            productInCart = this.model.cart.find((product) => product.product.name === addToCartButton.id);
+            if (!product) throw new Error('there is no such product');
+            if (!productInCart) {
+                this.model.cart.push({ product: product, amount: 1 });
+                product.amount -= 1;
+            }
+            if (!cartCount) throw new Error('There is no cart count');
+            cartCount.innerHTML = this.model.cart.length.toString();
 
-            cartState.innerHTML = `Cart total: ${model.cart
+            cartState.innerHTML = `Cart total: ${this.model.cart
                 .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
                 .toString()} $`;
 
-            localStorage.setItem('cartCadence', JSON.stringify(model.cart));
+            localStorage.setItem('cartCadence', JSON.stringify(this.model.cart));
 
             locationHandler('/cart');
             cartController.openModalWindow(cartView);
-
         });
         //ends buy now
 
         const cartState = selectorChecker(document, '.cart-wrapper__state');
 
         function adding() {
-            productInCart = model.cart.find((product) => product.product.name === addToCartButton.id);
+            productInCart = this.model.cart.find((product) => product.product.name === addToCartButton.id);
             if (!product) throw new Error('there is no such product');
             if (productInCart) {
                 addToCartButton.innerHTML = 'add to cart';
                 product.amount += 1;
-                model.cart.splice(model.cart.indexOf(productInCart), 1);
+                this.model.cart.splice(this.model.cart.indexOf(productInCart), 1);
             } else {
                 addToCartButton.innerHTML = 'remove';
-                model.cart.push({ product: product, amount: 1 });
+                this.model.cart.push({ product: product, amount: 1 });
                 product.amount -= 1;
             }
             if (!cartCount) throw new Error('There is no cart count');
-            cartCount.innerHTML = model.cart.length.toString();
+            cartCount.innerHTML = this.model.cart.length.toString();
 
-            cartState.innerHTML = `Cart total: ${model.cart
+            cartState.innerHTML = `Cart total: ${this.model.cart
                 .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
                 .toString()} $`;
 
             //console.log('добавим в localStorage');
-            localStorage.setItem('cartCadence', JSON.stringify(model.cart));
+            localStorage.setItem('cartCadence', JSON.stringify(this.model.cart));
         }
     }
 }

@@ -11,27 +11,31 @@ import AmericanExpress from '../../../assets/logos/cards/AmericanExpress.png';
 
 export class CartController extends Controller {
     url: Partial<URL>;
-    constructor() {
+    view: CartView;
+    model: Model;
+    constructor(view: CartView, model: Model) {
         super();
         this.url = {};
+        this.view = view;
+        this.model = model;
     }
 
-    setupPage(view: CartView, model: Model, location: string): void {
+    setupPage(location: string): void {
         const locationArr = location.split('/');
-        const products = model.cart;
+        const products = this.model.cart;
         if (!products) throw new Error(`There is no ${locationArr[2]} among our products`);
         this.fillUrl(location);
-        view.drawMain(products);
-        this.configPage(model, view);
+        this.view.drawMain(products);
+        this.configPage();
     }
 
-    configPage(model: Model, view: CartView) {
+    configPage() {
         this.turnOffSearch();
-        this.productAmount(model, view);
-        this.areProductsInCart(model);
-        this.pagination(model);
-        this.promoCodding(model);
-        this.modalWindowConfig(view);
+        this.productAmount();
+        this.areProductsInCart();
+        this.pagination();
+        this.promoCodding();
+        this.modalWindowConfig();
     }
 
     turnOffSearch() {
@@ -40,12 +44,12 @@ export class CartController extends Controller {
         search.style.display = 'none';
     }
 
-    productAmount(model: Model, view: CartView) {
+    productAmount() {
         const productAmounts = document.querySelectorAll('.product');
         productAmounts.forEach((div) => {
             const productName = div.querySelector('.product__name')?.innerHTML;
             const amountDiv = div.querySelector('.product__amount-value');
-            const ourProduct = model.cart.find((prodObj) => prodObj.product.name === productName);
+            const ourProduct = this.model.cart.find((prodObj) => prodObj.product.name === productName);
             if (!ourProduct) throw new Error('There is no our Product');
             if (!amountDiv) throw new Error('There is no amount div');
             const plus = div.querySelector('.product__amount-plus');
@@ -63,18 +67,18 @@ export class CartController extends Controller {
                     amountDiv.innerHTML = ourProduct.amount.toString();
 
                     let num = 0;
-                    model.cart.forEach((product) => (num += product.amount));
+                    this.model.cart.forEach((product) => (num += product.amount));
                     cartCount.innerHTML = num.toString();
 
                     amountStore.innerHTML = `Stock: ${ourProduct.product.amount.toString()}`;
                     sumPrice.innerHTML = `${(ourProduct.product.price * ourProduct.amount).toString()} $`;
 
-                    cartState.innerHTML = `Cart total: ${model.cart
+                    cartState.innerHTML = `Cart total: ${this.model.cart
                         .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
                         .toString()} $`;
                 }
                 //console.log('добавим в localStorage');
-                localStorage.setItem('cartCadence', JSON.stringify(model.cart));
+                localStorage.setItem('cartCadence', JSON.stringify(this.model.cart));
             });
             minus.addEventListener('click', () => {
                 if (ourProduct.amount > 0) {
@@ -84,38 +88,38 @@ export class CartController extends Controller {
                     amountDiv.innerHTML = ourProduct.amount.toString();
 
                     let num = 0;
-                    model.cart.forEach((product) => (num += product.amount));
+                    this.model.cart.forEach((product) => (num += product.amount));
                     cartCount.innerHTML = num.toString();
 
                     amountStore.innerHTML = `Stock: ${ourProduct.product.amount.toString()}`;
                     sumPrice.innerHTML = `${(ourProduct.product.price * ourProduct.amount).toString()} $`;
                     //console.log(ourProduct.amount == 0);
                     if (ourProduct.amount == 0) {
-                        model.cart.splice(model.cart.indexOf(ourProduct), 1);
-                        view.drawMain(model.cart);
-                        this.configPage(model, view);
+                        this.model.cart.splice(this.model.cart.indexOf(ourProduct), 1);
+                        this.view.drawMain(this.model.cart);
+                        this.configPage();
                     }
 
-                    cartState.innerHTML = `Cart total: ${model.cart
+                    cartState.innerHTML = `Cart total: ${this.model.cart
                         .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
                         .toString()} $`;
                 }
                 //console.log('добавим в localStorage');
-                localStorage.setItem('cartCadence', JSON.stringify(model.cart));
+                localStorage.setItem('cartCadence', JSON.stringify(this.model.cart));
             });
         });
     }
 
-    areProductsInCart(model: Model) {
+    areProductsInCart() {
         const item = localStorage.getItem('cartCadence');
         if (item) {
-            model.cart = JSON.parse(item) as { product: Product; amount: 1 }[];
+            this.model.cart = JSON.parse(item) as { product: Product; amount: 1 }[];
         }
 
         const cartCount = selectorChecker(document, '.cart-wrapper__count');
         const cartState = selectorChecker(document, '.cart-wrapper__state');
-        cartCount.innerHTML = model.cart.length.toString();
-        cartState.innerHTML = `Cart total: ${model.cart
+        cartCount.innerHTML = this.model.cart.length.toString();
+        cartState.innerHTML = `Cart total: ${this.model.cart
             .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
             .toString()} $`;
 
@@ -124,19 +128,19 @@ export class CartController extends Controller {
         const summary = selectorChecker(document, '.summary') as HTMLDivElement;
         const promoCodeBlock = selectorChecker(document, '.promo-code') as HTMLDivElement;
 
-        noProducts.style.display = model.cart.length === 0 ? 'flex' : 'none';
+        noProducts.style.display = this.model.cart.length === 0 ? 'flex' : 'none';
 
-        productsHeader.style.display = model.cart.length === 0 ? 'none' : 'flex';
-        summary.style.display = model.cart.length === 0 ? 'none' : 'flex';
-        promoCodeBlock.style.display = model.cart.length === 0 ? 'none' : 'flex';
+        productsHeader.style.display = this.model.cart.length === 0 ? 'none' : 'flex';
+        summary.style.display = this.model.cart.length === 0 ? 'none' : 'flex';
+        promoCodeBlock.style.display = this.model.cart.length === 0 ? 'none' : 'flex';
     }
 
-    pagination(model: Model) {
+    pagination() {
         const itemInput = selectorChecker(document, '.products__header-items-input') as HTMLInputElement;
         const tempValue = '3';
         itemInput.value = tempValue;
         //if (this.url.itemInputValue) itemInput.value = this.url.itemInpulValue;  TODO ПОЛУЧИТЬ ЗНАЧЕНИЯ ИЗ КВЕРИ ЕСЛИ ОНО ТАМ ЕСТЬ
-        let pagesAmount = Math.ceil(model.cart.length / Number(itemInput.value));
+        let pagesAmount = Math.ceil(this.model.cart.length / Number(itemInput.value));
 
         const pageInput = selectorChecker(document, '.products__header-pages-input') as HTMLInputElement;
         const tempPageNumber = '1';
@@ -150,11 +154,11 @@ export class CartController extends Controller {
 
         const productsDiv: NodeListOf<HTMLDivElement> = document.querySelectorAll('.product');
 
-        if (Number(itemInput.value) > model.cart.length) {
+        if (Number(itemInput.value) > this.model.cart.length) {
             productsDiv.forEach((el) => (el.style.display = 'flex'));
             pageInput.value = tempPageNumber;
         } else {
-            pagesAmount = Math.ceil(model.cart.length / Number(itemInput.value));
+            pagesAmount = Math.ceil(this.model.cart.length / Number(itemInput.value));
             pageInput.value = tempPageNumber;
             productsDiv.forEach((el, i) => (el.style.display = i < Number(itemInput.value) ? 'flex' : 'none'));
         }
@@ -186,11 +190,11 @@ export class CartController extends Controller {
                 itemInput.value = tempValue;
             }
 
-            if (Number(itemInput.value) > model.cart.length) {
+            if (Number(itemInput.value) > this.model.cart.length) {
                 productsDiv.forEach((el) => (el.style.display = 'flex'));
                 pageInput.value = tempPageNumber;
             } else {
-                pagesAmount = Math.ceil(model.cart.length / Number(itemInput.value));
+                pagesAmount = Math.ceil(this.model.cart.length / Number(itemInput.value));
                 pageInput.value = tempPageNumber;
                 productsDiv.forEach((el, i) => (el.style.display = i < Number(itemInput.value) ? 'flex' : 'none'));
             }
@@ -251,23 +255,23 @@ export class CartController extends Controller {
         });
     }
 
-    promoCodding(model: Model) {
+    promoCodding() {
         const promoCodeInput = selectorChecker(document, '.summary__promo-code-input') as HTMLInputElement;
         const promoCodeButton = selectorChecker(document, '.summary__confirm-promo-code');
         const promoCodeList = selectorChecker(document, '.promo-code');
         const totalPriceDiv = selectorChecker(document, '.cart-wrapper__state') as HTMLDivElement;
         const promocodedPriceDiv = selectorChecker(document, '.cart-wrapper__poromocoded') as HTMLDivElement;
 
-        if (model.appliedPromo.length > 0) {
+        if (this.model.appliedPromo.length > 0) {
             promoCodeList.innerHTML = ``;
-            model.appliedPromo.forEach((div) => {
+            this.model.appliedPromo.forEach((div) => {
                 promoCodeList.append(div);
             });
         }
 
         promoCodeButton.addEventListener('click', () => {
-            console.log(model.appliedPromo);
-            model.promoCodes.forEach((promocode) => {
+            console.log(this.model.appliedPromo);
+            this.model.promoCodes.forEach((promocode) => {
                 const appliedPromocodes = promoCodeList.querySelectorAll('.applied-promo');
                 if (promocode.id === promoCodeInput.value) {
                     if (appliedPromocodes.length > 0) {
@@ -293,7 +297,7 @@ export class CartController extends Controller {
             });
         });
 
-        function addPromoCodeBlock(promo: PromoCode) {
+        const addPromoCodeBlock = (promo: PromoCode) => {
             const promoDiv = document.createElement('div');
             promoDiv.classList.add('applied-promo');
             promoDiv.id = promo.id;
@@ -305,15 +309,15 @@ export class CartController extends Controller {
           </div>
         `;
             promoCodeList.append(promoDiv);
-            model.appliedPromo.push(promoDiv);
+            this.model.appliedPromo.push(promoDiv);
             const deleteButton = selectorChecker(promoDiv, '.applied-promo__delete-button');
             deleteButton.addEventListener('click', () => {
                 promoDiv.remove();
-                model.appliedPromo.forEach((appliedPromo, i) => {
-                  if (appliedPromo === promoDiv) {
-                    model.appliedPromo.splice(i, 1);
-                  }
-                })
+                this.model.appliedPromo.forEach((appliedPromo, i) => {
+                    if (appliedPromo === promoDiv) {
+                        this.model.appliedPromo.splice(i, 1);
+                    }
+                });
                 //удалить этот промокод из model applied Promo
 
                 if (promoCodeList.innerHTML.match(/</)) {
@@ -326,21 +330,21 @@ export class CartController extends Controller {
             });
 
             recountPerCent();
-        }
+        };
 
-        function recountPerCent() {
+        const recountPerCent = () => {
             const perCentDivs = promoCodeList.querySelectorAll('.applied-promo__percent');
             const preCentArr = Array.from(perCentDivs).map((el) => Number(el.innerHTML.slice(0, -2)));
             const perSum: number = preCentArr.reduce((s, c) => s + c, 0);
 
-            if (model.appliedPromo.length > 0) {
+            if (this.model.appliedPromo.length > 0) {
                 totalPriceDiv.style.textDecoration = 'line-through';
                 promocodedPriceDiv.innerHTML = `${Math.floor(
                     (1 - perSum / 100) * Number(totalPriceDiv.innerHTML.slice(11, -2))
                 )} $`;
                 promocodedPriceDiv.style.display = 'flex';
             }
-        }
+        };
 
         const mo = new MutationObserver(recountPerCent);
         mo.observe(totalPriceDiv, { childList: true });
@@ -358,12 +362,12 @@ export class CartController extends Controller {
         });
     }
 
-    openModalWindow(view: CartView) {
+    openModalWindow() {
         const popup = document.querySelector('.popup');
         if (!popup) {
             const modalWindow = document.createElement('div');
             modalWindow.classList.add('popup');
-            modalWindow.innerHTML = view.drawModalWindow();
+            modalWindow.innerHTML = this.view.drawModalWindow();
             document.body.append(modalWindow);
             document.body.style.overflow = 'hidden';
             modalWindow.addEventListener('click', (e) => {
@@ -374,164 +378,167 @@ export class CartController extends Controller {
             });
         }
 
-      // --  F O R M    V A L I D A T I O N  -- //
-      const form = selectorChecker(document, '.form') as HTMLFormElement;
+        // --  F O R M    V A L I D A T I O N  -- //
+        const form = selectorChecker(document, '.form') as HTMLFormElement;
 
-      const validateBtn = selectorChecker(form, '.form__send-button') as HTMLButtonElement;
+        const validateBtn = selectorChecker(form, '.form__send-button') as HTMLButtonElement;
 
-      const name = selectorChecker(form, '.personal-details__name-input') as HTMLInputElement;
-      const phone = selectorChecker(form, '.personal-details__phone-input')as HTMLInputElement;
-      const address = selectorChecker(form, '.personal-details__address-input') as HTMLInputElement;
-      const email = selectorChecker(form, '.personal-details__email-input') as HTMLInputElement;
+        const name = selectorChecker(form, '.personal-details__name-input') as HTMLInputElement;
+        const phone = selectorChecker(form, '.personal-details__phone-input') as HTMLInputElement;
+        const address = selectorChecker(form, '.personal-details__address-input') as HTMLInputElement;
+        const email = selectorChecker(form, '.personal-details__email-input') as HTMLInputElement;
 
-      const card = selectorChecker(form, '.credit-card-details__card-number-input') as HTMLInputElement;
-      const cardLogo = selectorChecker(form, '.credit-card-details__logo') as HTMLDivElement;
-      const valid = selectorChecker(form, '.credit-card-details__valid-input') as HTMLInputElement;
-      const cvv = selectorChecker(form, '.credit-card-details__cvv-input') as HTMLInputElement;
+        const card = selectorChecker(form, '.credit-card-details__card-number-input') as HTMLInputElement;
+        const cardLogo = selectorChecker(form, '.credit-card-details__logo') as HTMLDivElement;
+        const valid = selectorChecker(form, '.credit-card-details__valid-input') as HTMLInputElement;
+        const cvv = selectorChecker(form, '.credit-card-details__cvv-input') as HTMLInputElement;
 
-      //insert proper marks in phone number while input
-      phone.addEventListener('input', () => {
-        if (phone.value.length > '+375 (29) 111-11-11'.length
-        || phone.value.match(/[a-z]+/i)) phone.value = phone.value.slice(0, phone.value.length - 1);
+        //insert proper marks in phone number while input
+        phone.addEventListener('input', () => {
+            if (phone.value.length > '+375 (29) 111-11-11'.length || phone.value.match(/[a-z]+/i))
+                phone.value = phone.value.slice(0, phone.value.length - 1);
 
-        if(phone.value.length === 1 && phone.value.match(/[a-z]+/i)) phone.value = '';
+            if (phone.value.length === 1 && phone.value.match(/[a-z]+/i)) phone.value = '';
 
-        if(phone.value.match(/^\+[0-9]{3}$/)) {
-          phone.value += ' (';
+            if (phone.value.match(/^\+[0-9]{3}$/)) {
+                phone.value += ' (';
+            }
+            if (phone.value.match(/^\+[0-9]{3} \([0-9]{2}$/)) {
+                phone.value += ') ';
+            }
+            if (phone.value.match(/^\+[0-9]{3} \([0-9]{2}\) [0-9]{3}$/)) {
+                phone.value += '-';
+            }
+            if (phone.value.match(/^\+[0-9]{3} \([0-9]{2}\) [0-9]{3}\-[0-9]{2}$/)) {
+                phone.value += '-';
+            }
+        });
+
+        card.addEventListener('input', () => {
+            if (card.value.startsWith('5') || card.value.startsWith('4') || card.value.startsWith('3')) {
+                cardLogo.style.width = '30px';
+                cardLogo.style.height = '18px';
+                cardLogo.style.backgroundSize = '30px';
+                cardLogo.style.backgroundRepeat = 'no-repeat';
+                cardLogo.style.marginLeft = '10px';
+                cardLogo.style.alignSelf = 'center';
+                cardLogo.style.backgroundPositionY = 'center';
+                cardLogo.style.backgroundImage = card.value.startsWith('5')
+                    ? `url('${MasterCard}')`
+                    : card.value.startsWith('4')
+                    ? `url('${Visa}')`
+                    : `url('${AmericanExpress}')`;
+            } else {
+                cardLogo.style.width = '0px';
+                cardLogo.style.marginLeft = '0px';
+            }
+
+            if (card.value.length > 19 || card.value.match(/[a-z]+/i))
+                card.value = card.value.slice(0, card.value.length - 1);
+
+            if (card.value.length === 1 && card.value.match(/[a-z]+/i)) card.value = '';
+
+            if (
+                card.value.match(/^[0-9]{4}$/) ||
+                card.value.match(/^[0-9]{4} [0-9]{4}$/) ||
+                card.value.match(/^([0-9]{4} ){2}[0-9]{4}$/)
+            ) {
+                card.value += ' ';
+            }
+        });
+
+        valid.addEventListener('input', () => {
+            if (valid.value.length > 5 || valid.value.match(/[a-z]+/i))
+                valid.value = valid.value.slice(0, valid.value.length - 1);
+
+            if (valid.value.length === 1 && valid.value.match(/[a-z]+/i)) valid.value = '';
+
+            if (valid.value.match(/^[0-9]{2}$/)) {
+                valid.value += '/';
+            }
+        });
+
+        cvv.addEventListener('input', () => {
+            if (cvv.value.length > 3 || cvv.value.match(/[a-z]+/i))
+                cvv.value = cvv.value.slice(0, cvv.value.length - 1);
+
+            if (cvv.value.length === 1 && cvv.value.match(/[a-z]+/i)) valid.value = '';
+        });
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            removeValidation();
+
+            // check name
+            if (!name.value) {
+                createError('Cannot be blank', name);
+            } else if (!name.value.match(/^[a-z]{3,} [a-z]{3,}\s*$/i)) {
+                createError('Invalid name', name);
+            }
+
+            // check phone number
+            if (!phone.value) {
+                createError('Cannot be blank', phone);
+            } else if (!phone.value.match(/^\+[0-9]{3} \([0-9]{2}\) [0-9]{3}\-[0-9]{2}\-[0-9]{2}\s*$/)) {
+                createError('Invalid phone', phone);
+            }
+
+            // check address
+            if (!address.value) {
+                createError('Cannot be blank', address);
+            } else if (!address.value.match(/^([0-9a-z]{5,} ){2}[0-9a-z]{5,}/i)) {
+                createError('Invalid address', address);
+            }
+
+            // check email
+            if (!email.value) {
+                createError('Cannot be blank', email);
+            } else if (
+                !email.value.match(
+                    /^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$/i
+                )
+            ) {
+                createError('Invalid email', email);
+            }
+
+            //card number check
+            if (!card.value) {
+                createError('Cannot be blank', card);
+            } else if (!card.value.match(/^([0-9]{4} ){3}[0-9]{4}$/)) {
+                createError('Invalid card number', card);
+            }
+
+            //valid check
+            if (!valid.value) {
+                createError('Cannot be blank', valid);
+            } else if (!valid.value.match(/^[0-9]{2}\/[0-9]{2}$/) || Number(valid.value.slice(0, 2)) > 12) {
+                createError('Invalid date', valid);
+            }
+
+            //cvv check
+            if (!cvv.value) {
+                createError('Cannot be blank', valid);
+            } else if (!cvv.value.match(/^[0-9]{3}$/)) {
+                createError('Invalid date', valid);
+            }
+        });
+
+        function removeValidation() {
+            const errors = form.querySelectorAll('.error');
+            errors.forEach((error) => error.remove());
         }
-        if(phone.value.match(/^\+[0-9]{3} \([0-9]{2}$/)) {
-          phone.value += ') ';
-        }
-        if(phone.value.match(/^\+[0-9]{3} \([0-9]{2}\) [0-9]{3}$/)) {
-          phone.value += '-';
-        }
-        if(phone.value.match(/^\+[0-9]{3} \([0-9]{2}\) [0-9]{3}\-[0-9]{2}$/)) {
-          phone.value += '-';
-        }
-      })
 
-      card.addEventListener('input', () => {
-        if (card.value.startsWith('5')
-        || card.value.startsWith('4')
-        || card.value.startsWith('3')) {
-          cardLogo.style.width = '30px';
-          cardLogo.style.height = '18px';
-          cardLogo.style.backgroundSize = '30px';
-          cardLogo.style.backgroundRepeat = 'no-repeat';
-          cardLogo.style.marginLeft = '10px';
-          cardLogo.style.alignSelf = 'center';
-          cardLogo.style.backgroundPositionY = 'center';
-          cardLogo.style.backgroundImage = card.value.startsWith('5')
-          ? `url('${MasterCard}')`
-          : card.value.startsWith('4')
-          ? `url('${Visa}')`
-          : `url('${AmericanExpress}')`;
-        } else {
-          cardLogo.style.width = '0px';
-          cardLogo.style.marginLeft = '0px';
+        function createError(message: string, el: HTMLInputElement) {
+            const error = document.createElement('div');
+            error.className = 'error';
+            error.style.color = 'violet';
+            error.innerHTML = message;
+            if (!el.parentElement) throw new Error('there is no From!');
+            el.parentElement.append(error);
         }
 
-        if (card.value.length > 19
-        || card.value.match(/[a-z]+/i)) card.value = card.value.slice(0, card.value.length - 1);
-
-        if(card.value.length === 1 && card.value.match(/[a-z]+/i)) card.value = '';
-
-        if(card.value.match(/^[0-9]{4}$/)
-        || card.value.match(/^[0-9]{4} [0-9]{4}$/)
-        || card.value.match(/^([0-9]{4} ){2}[0-9]{4}$/)) {
-          card.value += ' ';
-        }
-      });
-
-      valid.addEventListener('input', () => {
-        if (valid.value.length > 5
-          || valid.value.match(/[a-z]+/i)) valid.value = valid.value.slice(0, valid.value.length - 1);
-
-        if(valid.value.length === 1 && valid.value.match(/[a-z]+/i)) valid.value = '';
-
-        if(valid.value.match(/^[0-9]{2}$/)) {
-          valid.value += '/';
-        }
-      });
-
-      cvv.addEventListener('input', () => {
-        if (cvv.value.length > 3
-          || cvv.value.match(/[a-z]+/i)) cvv.value = cvv.value.slice(0, cvv.value.length - 1);
-
-        if(cvv.value.length === 1 && cvv.value.match(/[a-z]+/i)) valid.value = '';
-      });
-
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        removeValidation();
-
-        // check name
-        if (! name.value) {
-          createError('Cannot be blank', name);
-        } else if (!name.value.match(/^[a-z]{3,} [a-z]{3,}\s*$/i)) {
-          createError('Invalid name', name);
-        }
-
-        // check phone number
-        if (! phone.value) {
-          createError('Cannot be blank', phone);
-        } else if (!phone.value.match(/^\+[0-9]{3} \([0-9]{2}\) [0-9]{3}\-[0-9]{2}\-[0-9]{2}\s*$/)) {
-          createError('Invalid phone', phone);
-        }
-
-        // check address
-        if (! address.value) {
-          createError('Cannot be blank',  address);
-        } else if (!address.value.match(/^([0-9a-z]{5,} ){2}[0-9a-z]{5,}/i)) {
-          createError('Invalid address',  address);
-        }
-
-        // check email
-        if (! email.value) {
-          createError('Cannot be blank',  email);
-        } else if (!email.value.match(/^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$/i)) {
-          createError('Invalid email',  email);
-        }
-
-        //card number check
-        if (! card.value) {
-          createError('Cannot be blank', card);
-        } else if (!card.value.match(/^([0-9]{4} ){3}[0-9]{4}$/)) {
-          createError('Invalid card number', card);
-        }
-
-        //valid check
-        if (! valid.value) {
-          createError('Cannot be blank', valid);
-        } else if (!valid.value.match(/^[0-9]{2}\/[0-9]{2}$/)
-          || Number(valid.value.slice(0,2)) > 12) {
-          createError('Invalid date', valid);
-        }
-
-        //cvv check
-        if (! cvv.value) {
-          createError('Cannot be blank', valid);
-        } else if (!cvv.value.match(/^[0-9]{3}$/)) {
-          createError('Invalid date', valid);
-        }
-      })
-
-      function removeValidation() {
-        const errors = form.querySelectorAll('.error')
-        errors.forEach(error => error.remove());
-      }
-
-      function createError(message: string, el: HTMLInputElement) {
-        const error = document.createElement('div')
-        error.className='error';
-        error.style.color = 'violet';
-        error.innerHTML = message;
-        if(!el.parentElement) throw new Error('there is no From!');
-        el.parentElement.append(error);
-      }
-
-      /*function fieldsEmptyCheck() {
+        /*function fieldsEmptyCheck() {
         formInputs.forEach(input => {
           if (!input.value) {
             console.log('field is blank', input);
@@ -546,9 +553,9 @@ export class CartController extends Controller {
       }*/
     }
 
-    modalWindowConfig(view: CartView) {
+    modalWindowConfig() {
         const buyNowButton = selectorChecker(document, '.summary__buy-now');
 
-        buyNowButton.addEventListener('click', this.openModalWindow.bind(this, view));
+        buyNowButton.addEventListener('click', this.openModalWindow.bind(this, this.view));
     }
 }
