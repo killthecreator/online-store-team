@@ -1,6 +1,7 @@
 import './home.scss';
 import { Product, Category, Brand } from '../../model/data';
 import { GlobalView } from '../index';
+import { selectorChecker } from '../../../utils/selectorChecker';
 
 export class HomeView extends GlobalView {
     constructor() {
@@ -9,10 +10,12 @@ export class HomeView extends GlobalView {
 
     public drawMain = (categories: Category[], brands: Brand[], activeProducts: Product[]): void => {
         let main = document.querySelector('.main');
+        let footer = selectorChecker(document, '.footer');
         if (!main) {
             main = document.createElement('main');
             main.classList.add('main');
-            document.body.append(main);
+            document.body.insertBefore(main, footer);
+            //document.body.append(main);
         }
         main.innerHTML =
             this.drawFilters(categories, brands) +

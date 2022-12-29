@@ -1,6 +1,7 @@
 import './cart.scss';
 import { Product } from '../../model/data';
 import { GlobalView } from '../index';
+import { selectorChecker } from '../../../utils/selectorChecker';
 
 export class CartView extends GlobalView {
     constructor() {
@@ -8,11 +9,13 @@ export class CartView extends GlobalView {
     }
 
     public drawMain = (products: { product: Product; amount: number }[]) => {
+        window.scrollTo(0, 0);
         let main = document.querySelector('.main');
+        let footer = selectorChecker(document, '.footer');
         if (!main) {
             main = document.createElement('main');
             main.classList.add('main');
-            document.body.append(main);
+            document.body.insertBefore(main, footer);
         }
         main.innerHTML = `
       <section class="summary">

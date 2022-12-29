@@ -180,3 +180,41 @@ body {
     font-family: 'Normal';
     src: url('./../../assets/fonts/Montserrat/Montserrat-Medium.woff') format('woff');
 }
+
+@media (max-width: 780px) {
+  body{
+    align-items: center;
+    .header{
+      width: 90vw;
+      flex-direction: column;
+      flex-wrap: wrap;
+      .logo-wrapper {
+        width: 90vw;
+        //margin: 2vw 5vw;
+      }
+      .search-wrapper {
+        width: 90vw;
+        //margin: 0vw 5vw;
+      }
+      .cart-wrapper {
+        margin: 1vw 0;
+        width: 90vw;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+    .footer {
+      width: 90vw;
+      .github {
+        .github__img {
+          width: 10vw;
+        }
+      }
+      .rs-school {
+        .rs-school__img {
+          width: 25vw;
+        }
+      }
+    }
+  }
+}

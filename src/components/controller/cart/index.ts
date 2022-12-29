@@ -139,14 +139,14 @@ export class CartController extends Controller {
         const itemInput = selectorChecker(document, '.products__header-items-input') as HTMLInputElement;
         const tempValue = '3';
         itemInput.value = tempValue;
-        //if (this.url.itemInputValue) itemInput.value = this.url.itemInpulValue;  TODO ПОЛУЧИТЬ ЗНАЧЕНИЯ ИЗ КВЕРИ ЕСЛИ ОНО ТАМ ЕСТЬ
+        //if (this.url.pagenumber) itemInput.value = this.url.pagenumber;  //TODO ПОЛУЧИТЬ ЗНАЧЕНИЯ ИЗ КВЕРИ ЕСЛИ ОНО ТАМ ЕСТЬ
         let pagesAmount = Math.ceil(this.model.cart.length / Number(itemInput.value));
 
         const pageInput = selectorChecker(document, '.products__header-pages-input') as HTMLInputElement;
         const tempPageNumber = '1';
         pageInput.value = tempPageNumber;
 
-        //if (this.url.pagesInputValue) itemInput.value = this.url.pagesInputValue;  TODO ПОЛУЧИТЬ ЗНАЧЕНИЯ ИЗ КВЕРИ ЕСЛИ ОНО ТАМ ЕСТЬ
+        //if (this.url.pages) pageInput.value = this.url.pages;  //TODO ПОЛУЧИТЬ ЗНАЧЕНИЯ ИЗ КВЕРИ ЕСЛИ ОНО ТАМ ЕСТЬ
 
         const decrease = selectorChecker(document, '.products__header-pages-decrease') as HTMLDivElement;
 
@@ -163,6 +163,11 @@ export class CartController extends Controller {
             productsDiv.forEach((el, i) => (el.style.display = i < Number(itemInput.value) ? 'flex' : 'none'));
         }
 
+        //query
+        if (this.url.pagenumber) itemInput.value = this.url.pagenumber.slice(11);
+        if (this.url.pages) pageInput.value = this.url.pages.slice(6);
+        //query end
+
         pageInput.addEventListener('input', () => {
             if (!pageInput.value.match(/^[1-9]$/) && pageInput.value !== '') {
                 pageInput.value = tempPageNumber;
@@ -177,7 +182,7 @@ export class CartController extends Controller {
             productsDiv.forEach((el, i) => (el.style.display = i < from ? 'none' : i >= to ? 'none' : 'flex'));
 
             this.url.pages = `pages=${pageInput.value}`;
-            this.url.pageNumber = `pageNumber=${itemInput.value}`;
+            this.url.pagenumber = `pagenumber=${itemInput.value}`;
 
             Object.keys(this.url).length !== 0
                 ? window.history.replaceState({}, '', `/cart/?${Object.values(this.url).join('&')}`)
@@ -200,7 +205,7 @@ export class CartController extends Controller {
             }
 
             this.url.pages = `pages=${pageInput.value}`;
-            this.url.pageNumber = `pageNumber=${itemInput.value}`;
+            this.url.pagenumber = `pagenumber=${itemInput.value}`;
 
             Object.keys(this.url).length !== 0
                 ? window.history.replaceState({}, '', `/cart/?${Object.values(this.url).join('&')}`)
@@ -224,7 +229,7 @@ export class CartController extends Controller {
             productsDiv.forEach((el, i) => (el.style.display = i < from ? 'none' : i >= to ? 'none' : 'flex'));
 
             this.url.pages = `pages=${pageInput.value}`;
-            this.url.pageNumber = `pageNumber=${itemInput.value}`;
+            this.url.pagenumber = `pagenumber=${itemInput.value}`;
 
             Object.keys(this.url).length !== 0
                 ? window.history.replaceState({}, '', `/cart/?${Object.values(this.url).join('&')}`)
@@ -247,7 +252,7 @@ export class CartController extends Controller {
             productsDiv.forEach((el, i) => (el.style.display = i < from ? 'none' : i >= to ? 'none' : 'flex'));
 
             this.url.pages = `pages=${pageInput.value}`;
-            this.url.pageNumber = `pageNumber=${itemInput.value}`;
+            this.url.pagenumber = `pagenumber=${itemInput.value}`;
 
             Object.keys(this.url).length !== 0
                 ? window.history.replaceState({}, '', `/cart/?${Object.values(this.url).join('&')}`)
@@ -275,25 +280,19 @@ export class CartController extends Controller {
                 const appliedPromocodes = promoCodeList.querySelectorAll('.applied-promo');
                 if (promocode.id === promoCodeInput.value) {
                     if (appliedPromocodes.length > 0) {
-                        appliedPromocodes.forEach((div) => {
-                            if (div.id === promocode.id) {
+                        for (let i = 0; i < appliedPromocodes.length; i++) {
+                            if (appliedPromocodes[i].id === promocode.id) {
                                 alert(
                                     'Promo code has already been applied! You cannot apply this promo code more than once'
                                 );
                                 return;
-                            } else {
-                                addPromoCodeBlock(promocode);
-                                return;
                             }
-                        });
-                    } else {
-                        console.log('No applied promocodes');
-                        addPromoCodeBlock(promocode);
-                        return;
+                        }
                     }
-                } /*else if (i === model.promoCodes.length - 1) {
-              alert('There is no such promocode on our website');
-            }*/
+                    console.log('No applied promocodes');
+                    addPromoCodeBlock(promocode);
+                    return;
+                }
             });
         });
 
@@ -318,7 +317,6 @@ export class CartController extends Controller {
                         this.model.appliedPromo.splice(i, 1);
                     }
                 });
-                //удалить этот промокод из model applied Promo
 
                 if (promoCodeList.innerHTML.match(/</)) {
                     recountPerCent();
@@ -351,13 +349,13 @@ export class CartController extends Controller {
     }
 
     fillUrl(location: string) {
-        const queriesArr = location.split('&');
+        const queriesArr = location.slice(7).split('&');
         queriesArr.forEach((query) => {
             if (query.startsWith('pages=')) {
                 this.url.pages = query;
             }
-            if (query.startsWith('pageNumber=')) {
-                this.url.pageNumber = query;
+            if (query.startsWith('pagenumber=')) {
+                this.url.pagenumber = query;
             }
         });
     }
@@ -381,7 +379,7 @@ export class CartController extends Controller {
         // --  F O R M    V A L I D A T I O N  -- //
         const form = selectorChecker(document, '.form') as HTMLFormElement;
 
-        const validateBtn = selectorChecker(form, '.form__send-button') as HTMLButtonElement;
+        //const validateBtn = selectorChecker(form, '.form__send-button') as HTMLButtonElement;
 
         const name = selectorChecker(form, '.personal-details__name-input') as HTMLInputElement;
         const phone = selectorChecker(form, '.personal-details__phone-input') as HTMLInputElement;
