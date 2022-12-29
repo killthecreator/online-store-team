@@ -2,6 +2,7 @@ import { Controller } from '../';
 import { HomeView } from '../../view/home';
 import { Model } from '../../model';
 import { selectorChecker } from '../../../utils/selectorChecker';
+import { route } from '../../../routing/routing';
 import { URL } from '../../../utils/urlInterface';
 export class HomeController extends Controller {
     url: Partial<URL>;
@@ -28,6 +29,17 @@ export class HomeController extends Controller {
         this.addingToCart();
         this.changeView();
         this.copyLink();
+    }
+
+    addRouting() {
+        const ancors = document.querySelectorAll('.routing');
+        ancors.forEach((ancor) =>
+            ancor.addEventListener('click', (e) => {
+                e.preventDefault();
+                /* document.location.href = ancor.id; */
+                route(e, ancor.id);
+            })
+        );
     }
 
     searchGo() {
@@ -388,7 +400,6 @@ export class HomeController extends Controller {
     changeView() {
         const view1 = selectorChecker(document, '.view1') as HTMLButtonElement;
         const view2 = selectorChecker(document, '.view2') as HTMLButtonElement;
-        console.log(1);
 
         const cardWrappers = document.querySelectorAll('.card-wrapper');
         const photoZones = document.querySelectorAll('.photo-zone');
@@ -444,6 +455,7 @@ export class HomeController extends Controller {
             activeCards.outerHTML = `<section class="no-products">No products were found for your request</section>`;
         } else {
             activeCards.outerHTML = this.view.drawCards(this.model.activeProducts);
+            this.addRouting();
         }
     }
 
