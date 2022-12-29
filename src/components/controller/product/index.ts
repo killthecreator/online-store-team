@@ -36,6 +36,28 @@ export class ProductController extends Controller {
     }
 
     addingToCart() {
+        const adding = () => {
+            productInCart = this.model.cart.find((product) => product.product.name === addToCartButton.id);
+            if (!product) throw new Error('there is no such product');
+            if (productInCart) {
+                addToCartButton.innerHTML = 'add to cart';
+                product.amount += 1;
+                this.model.cart.splice(this.model.cart.indexOf(productInCart), 1);
+            } else {
+                addToCartButton.innerHTML = 'remove';
+                this.model.cart.push({ product: product, amount: 1 });
+                product.amount -= 1;
+            }
+            if (!cartCount) throw new Error('There is no cart count');
+            cartCount.innerHTML = this.model.cart.length.toString();
+
+            cartState.innerHTML = `Cart total: ${this.model.cart
+                .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
+                .toString()} $`;
+
+            //console.log('добавим в localStorage');
+            localStorage.setItem('cartCadence', JSON.stringify(this.model.cart));
+        };
         const addToCartButton = selectorChecker(document, '.product__description-add-to-cart');
         const cartCount = selectorChecker(document, '.cart-wrapper__count');
         addToCartButton.addEventListener('click', adding);
@@ -66,33 +88,10 @@ export class ProductController extends Controller {
             localStorage.setItem('cartCadence', JSON.stringify(this.model.cart));
 
             locationHandler('/cart');
-            cartController.openModalWindow(cartView);
+            cartController.openModalWindow();
         });
         //ends buy now
 
         const cartState = selectorChecker(document, '.cart-wrapper__state');
-
-        function adding() {
-            productInCart = this.model.cart.find((product) => product.product.name === addToCartButton.id);
-            if (!product) throw new Error('there is no such product');
-            if (productInCart) {
-                addToCartButton.innerHTML = 'add to cart';
-                product.amount += 1;
-                this.model.cart.splice(this.model.cart.indexOf(productInCart), 1);
-            } else {
-                addToCartButton.innerHTML = 'remove';
-                this.model.cart.push({ product: product, amount: 1 });
-                product.amount -= 1;
-            }
-            if (!cartCount) throw new Error('There is no cart count');
-            cartCount.innerHTML = this.model.cart.length.toString();
-
-            cartState.innerHTML = `Cart total: ${this.model.cart
-                .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
-                .toString()} $`;
-
-            //console.log('добавим в localStorage');
-            localStorage.setItem('cartCadence', JSON.stringify(this.model.cart));
-        }
     }
 }
