@@ -32,7 +32,8 @@ export class HomeController extends Controller {
     }
 
     addRouting() {
-        const ancors = document.querySelectorAll('.routing');
+        const cards = selectorChecker(document, 'main');
+        const ancors = cards.querySelectorAll('.routing');
         ancors.forEach((ancor) =>
             ancor.addEventListener('click', (e) => {
                 e.preventDefault();
