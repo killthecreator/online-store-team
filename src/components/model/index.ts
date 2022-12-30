@@ -2,13 +2,13 @@ import { PromoCode } from './data.js';
 import { Category, Brand, products, Product } from './data.js';
 
 export class Model {
-    cart: { product: Product; amount: 1 }[];
+    cart: { product: Product; amount: number }[];
     categories: Category[];
     brands: Brand[];
     products: Product[];
     cartState: number;
     pricesRange: [number, number];
-    stockRange: [0, number];
+    stockRange: [number, number];
     promoCodes: PromoCode[];
     appliedPromo: HTMLDivElement[];
     activeProducts: Product[];

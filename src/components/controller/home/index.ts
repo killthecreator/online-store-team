@@ -4,6 +4,7 @@ import { Model } from '../../model';
 import { selectorChecker } from '../../../utils/selectorChecker';
 import { route } from '../../../routing/routing';
 import { URL } from '../../../utils/urlInterface';
+import { Product } from '../../model/data';
 
 import akg from '../../../assets/logos/brands/akg.svg';
 import bcrich from '../../../assets/logos/brands/b.c.rich.svg';
@@ -57,79 +58,79 @@ export class HomeController extends Controller {
     }
 
     addLogos() {
-      const productBrands: NodeListOf<HTMLDivElement> = document.body.querySelectorAll('.photo-zone__brand');
-      productBrands.forEach(div => {
-        switch  (div.id) {
-          case 'Novation':
-            div.style.backgroundImage = `url(${novation})`;
-            break;
-          case 'Moog':
-            div.style.backgroundImage = `url(${moog})`;
-            break;
-          case 'Korg':
-            div.style.backgroundImage = `url(${korg})`;
-            break;
-          case 'Roland':
-            div.style.backgroundImage = `url(${roland})`;
-            break;
-          case 'Yamaha':
-            div.style.backgroundImage = `url(${yamaha})`;
-            break;
-          case 'DW':
-            div.style.backgroundImage = `url(${dw})`;
-            break;
-          case 'Tama':
-            div.style.backgroundImage = `url(${tama})`;
-            break;
-          case 'Ludwig':
-            div.style.backgroundImage = `url(${ludwig})`;
-            break;
-          case 'Pearl':
-            div.style.backgroundImage = `url(${pearl})`;
-            break;
-          case 'Mapex':
-            div.style.backgroundImage = `url(${mapex})`;
-            break;
-          case 'Schecter':
-            div.style.backgroundImage = `url(${schecter})`;
-            break;
-          case 'Jackson':
-            div.style.backgroundImage = `url(${jackson})`;
-            break;
-          case 'Fender':
-            div.style.backgroundImage = `url(${fender})`;
-            break;
-          case 'Gibson':
-            div.style.backgroundImage = `url(${gibson})`;
-            break;
-          case 'Ibanez':
-            div.style.backgroundImage = `url(${ibanez})`;
-            break;
-          case 'B.C.Rich':
-            div.style.backgroundImage = `url(${bcrich})`;
-            break;
-          case 'Epiphone':
-            div.style.backgroundImage = `url(${ephipone})`;
-            break;
-          case 'AKG':
-            div.style.backgroundImage = `url(${akg})`;
-            break;
-          case 'Shure':
-            div.style.backgroundImage = `url(${shure})`;
-            break;
-          case 'Rode':
-            div.style.backgroundImage = `url(${rode})`;
-            break;
-          case 'Sennheiser':
-            div.style.backgroundImage = `url(${sennheiser})`;
-            break;
-          case 'Neumann':
-            div.style.backgroundImage = `url(${neumann})`;
-            break;
-          default:
-            alert( "Нет таких значений" );
-        }
-      })
+        const productBrands: NodeListOf<HTMLDivElement> = document.body.querySelectorAll('.photo-zone__brand');
+        productBrands.forEach((div) => {
+            switch (div.id) {
+                case 'Novation':
+                    div.style.backgroundImage = `url(${novation})`;
+                    break;
+                case 'Moog':
+                    div.style.backgroundImage = `url(${moog})`;
+                    break;
+                case 'Korg':
+                    div.style.backgroundImage = `url(${korg})`;
+                    break;
+                case 'Roland':
+                    div.style.backgroundImage = `url(${roland})`;
+                    break;
+                case 'Yamaha':
+                    div.style.backgroundImage = `url(${yamaha})`;
+                    break;
+                case 'DW':
+                    div.style.backgroundImage = `url(${dw})`;
+                    break;
+                case 'Tama':
+                    div.style.backgroundImage = `url(${tama})`;
+                    break;
+                case 'Ludwig':
+                    div.style.backgroundImage = `url(${ludwig})`;
+                    break;
+                case 'Pearl':
+                    div.style.backgroundImage = `url(${pearl})`;
+                    break;
+                case 'Mapex':
+                    div.style.backgroundImage = `url(${mapex})`;
+                    break;
+                case 'Schecter':
+                    div.style.backgroundImage = `url(${schecter})`;
+                    break;
+                case 'Jackson':
+                    div.style.backgroundImage = `url(${jackson})`;
+                    break;
+                case 'Fender':
+                    div.style.backgroundImage = `url(${fender})`;
+                    break;
+                case 'Gibson':
+                    div.style.backgroundImage = `url(${gibson})`;
+                    break;
+                case 'Ibanez':
+                    div.style.backgroundImage = `url(${ibanez})`;
+                    break;
+                case 'B.C.Rich':
+                    div.style.backgroundImage = `url(${bcrich})`;
+                    break;
+                case 'Epiphone':
+                    div.style.backgroundImage = `url(${ephipone})`;
+                    break;
+                case 'AKG':
+                    div.style.backgroundImage = `url(${akg})`;
+                    break;
+                case 'Shure':
+                    div.style.backgroundImage = `url(${shure})`;
+                    break;
+                case 'Rode':
+                    div.style.backgroundImage = `url(${rode})`;
+                    break;
+                case 'Sennheiser':
+                    div.style.backgroundImage = `url(${sennheiser})`;
+                    break;
+                case 'Neumann':
+                    div.style.backgroundImage = `url(${neumann})`;
+                    break;
+                default:
+                    alert('Нет таких значений');
+            }
+        });
     }
 
     addRouting() {
@@ -483,9 +484,7 @@ export class HomeController extends Controller {
     addingToCart() {
         const item = localStorage.getItem('cartCadence');
         if (item) {
-            this.model.cart = JSON.parse(item);
-
-            //console.log('get info from localStorage');
+            this.model.cart = JSON.parse(item) as { product: Product; amount: number }[];
         }
 
         const productCards: NodeListOf<HTMLDivElement> = document.querySelectorAll('.card-wrapper');
@@ -598,7 +597,7 @@ export class HomeController extends Controller {
         const foundDiv = selectorChecker(document, '.found');
         foundDiv.innerHTML = `Found: ${activeCards.length}`;
 
-                 if (activeCards.length === 0) {
+        if (activeCards.length === 0) {
             cardsWrapper.innerHTML = `<section class="no-products">No products were found for your request</section>`;
         }
     }

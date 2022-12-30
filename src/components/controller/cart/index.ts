@@ -407,7 +407,7 @@ export class CartController extends Controller {
             if (phone.value.match(/^\+[0-9]{3} \([0-9]{2}\) [0-9]{3}$/)) {
                 phone.value += '-';
             }
-            if (phone.value.match(/^\+[0-9]{3} \([0-9]{2}\) [0-9]{3}\-[0-9]{2}$/)) {
+            if (phone.value.match(/^\+[0-9]{3} \([0-9]{2}\) [0-9]{3}-[0-9]{2}$/)) {
                 phone.value += '-';
             }
         });
@@ -478,7 +478,7 @@ export class CartController extends Controller {
             // check phone number
             if (!phone.value) {
                 createError('Cannot be blank', phone);
-            } else if (!phone.value.match(/^\+[0-9]{3} \([0-9]{2}\) [0-9]{3}\-[0-9]{2}\-[0-9]{2}\s*$/)) {
+            } else if (!phone.value.match(/^\+[0-9]{3} \([0-9]{2}\) [0-9]{3}-[0-9]{2}-[0-9]{2}\s*$/)) {
                 createError('Invalid phone', phone);
             }
 

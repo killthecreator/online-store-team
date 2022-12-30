@@ -4,7 +4,6 @@ import { Model } from '../../model/index';
 import { selectorChecker } from '../../../utils/selectorChecker';
 import { locationHandler } from '../../../routing/locationHandler';
 import { cartController } from '../../../index';
-import { cartView } from '../../../index';
 
 export class ProductController extends Controller {
     url: Partial<URL>;
