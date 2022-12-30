@@ -1,7 +1,6 @@
 import './product.scss';
 import { GlobalView } from '../index';
 import { Product } from './../../model/data';
-import { ProductController } from './../../controller/product';
 import basicImage from '../../../assets/default-product-image.jpg';
 import { selectorChecker } from '../../../utils/selectorChecker';
 
@@ -12,7 +11,7 @@ export class ProductView extends GlobalView {
 
     public drawMain = (product: Product) => {
         let main = document.querySelector('.main');
-        let footer = selectorChecker(document, '.footer');
+        const footer = selectorChecker(document, '.footer');
         if (!main) {
             main = document.createElement('main');
             main.classList.add('main');
