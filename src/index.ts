@@ -13,8 +13,6 @@ import { ProductController } from './components/controller/product/index.js';
 import { PageNotFoundController } from './components/controller/404/index.js';
 import { CartController } from './components/controller/cart/index.js';
 
-import { locationHandler } from './routing/locationHandler.js';
-
 class App {
     location: string;
     model: Model;
@@ -29,12 +27,12 @@ class App {
     }
 }
 
+const model = new Model();
+
 export const homeView = new HomeView();
 export const productView = new ProductView();
 export const cartView = new CartView();
 export const pageNotFoundView = new PageNotFoundView();
-
-const model = new Model();
 
 export const homeController = new HomeController(homeView, model);
 export const productController = new ProductController(productView, model);
@@ -47,26 +45,21 @@ if (window.location.pathname === '/') {
 const currentPath = window.location.href.replace(window.location.origin, '');
 
 export const app = new App(currentPath, model, homeView, homeController);
-
-window.addEventListener('DOMContentLoaded', (event) => {
-    route(event, currentPath);
-});
-
 app.view.drawHeader();
-//app.view.drawMain(app.model.categories, app.model.brands, app.model.activeProducts);
 app.view.drawFooter();
 
 const ancors = document.querySelectorAll('.routing');
 ancors.forEach((ancor) =>
     ancor.addEventListener('click', (e) => {
-        e.preventDefault();
-        if (e.currentTarget === ancor) {
-            window.history.pushState({}, '', ancor.id);
-            locationHandler(ancor.id);
-        }
+        const curTarget = e.currentTarget as HTMLElement;
+        window.history.pushState({}, '', curTarget.id);
+        route(e, curTarget.id);
     })
 );
 
-window.onpopstate = (event) => {
-    route(event, window.location.pathname);
+window.addEventListener('DOMContentLoaded', (e) => {
+    route(e, currentPath);
+});
+window.onpopstate = (e) => {
+    route(e, window.location.pathname);
 };

@@ -36,9 +36,9 @@ export class HomeController extends Controller {
         const ancors = cards.querySelectorAll('.routing');
         ancors.forEach((ancor) =>
             ancor.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (ancor.id.startsWith('/product')) window.history.pushState({}, '', ancor.id);
-                route(e, ancor.id);
+                const curTarget = e.currentTarget as HTMLElement;
+                if (curTarget.id.startsWith('/product')) window.history.pushState({}, '', curTarget.id);
+                route(e, curTarget.id);
             })
         );
     }
