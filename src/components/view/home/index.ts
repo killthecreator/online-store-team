@@ -27,7 +27,7 @@ export class HomeView extends GlobalView {
         return `
       <section class="filters">
         <form class="category-form">
-          <div class="category-form__title">Category filters</div>
+          <div class="category-form__title">Categories</div>
           <div class="category-form__content">
             ${categories.reduce(
                 (res: string, category: Category) =>
@@ -38,7 +38,7 @@ export class HomeView extends GlobalView {
           </div>
         </form>
         <form class="brand-form">
-        <div class="brand-form__title">Brand filters</div>
+        <div class="brand-form__title">Brands</div>
           <div class="brand-form__content">
             ${brands.reduce(
                 (res: string, brand: Brand) =>
