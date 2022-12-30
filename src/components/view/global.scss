@@ -116,6 +116,7 @@ body {
 
     .main {
         flex-grow: 1;
+
         .filters,
         .ranges {
             .category-form__title,
@@ -205,12 +206,12 @@ body {
             width: 90vw;
             .github {
                 .github__img {
-                    width: 10vw;
+                    width: 7vw;
                 }
             }
             .rs-school {
                 .rs-school__img {
-                    width: 25vw;
+                    width: 18vw;
                 }
             }
         }

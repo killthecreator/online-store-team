@@ -11,7 +11,7 @@ import {
 } from '../';
 
 export const locationHandler = (e: Event, location: string) => {
-    e.preventDefault();
+    //e.preventDefault();
     const page = location.startsWith('/home')
         ? '/home'
         : location.startsWith('/product')
@@ -19,6 +19,7 @@ export const locationHandler = (e: Event, location: string) => {
         : location.startsWith('/cart')
         ? '/cart'
         : '/404';
+
     switch (page) {
         case '/home':
             app.controller = homeController;

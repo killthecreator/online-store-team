@@ -618,7 +618,8 @@ export class HomeController extends Controller {
     }
 
     fillUrl(location: string) {
-        const queriesArr = location.split('&');
+        const queriesArr = location.replace('/home?', '').split('&');
+        console.log(queriesArr);
         queriesArr.forEach((query) => {
             if (query.startsWith('category=')) {
                 this.url.categories = query;
@@ -642,5 +643,11 @@ export class HomeController extends Controller {
                 this.url.sort = query;
             }
         });
+
+        if (Object.keys(this.url).length !== 0) return;
+
+        if (queriesArr[0] !== '/home' && queriesArr[0] !== '/home/') {
+            window.location.pathname = '404';
+        }
     }
 }
