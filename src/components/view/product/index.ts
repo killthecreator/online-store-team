@@ -1,7 +1,6 @@
 import './product.scss';
 import { GlobalView } from '../index';
 import { Product } from './../../model/data';
-import { ProductController } from './../../controller/product';
 import basicImage from '../../../assets/default-product-image.jpg';
 import { selectorChecker } from '../../../utils/selectorChecker';
 
