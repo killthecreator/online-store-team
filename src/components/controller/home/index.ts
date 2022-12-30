@@ -22,8 +22,8 @@ export class HomeController extends Controller {
     }
 
     configPage() {
-        this.rangesHandler();
-        this.filtersAndCheckboxes();
+        this.configRanges();
+        this.configFilters();
         this.configSearch();
         this.sortByGo();
         this.configView();
@@ -37,7 +37,7 @@ export class HomeController extends Controller {
         ancors.forEach((ancor) =>
             ancor.addEventListener('click', (e) => {
                 e.preventDefault();
-                if (ancor.id.startsWith('/product')) window.location.href = ancor.id;
+                //if (ancor.id.startsWith('/product')) window.location.href = ancor.id;
                 route(e, ancor.id);
             })
         );
@@ -47,14 +47,6 @@ export class HomeController extends Controller {
         const search = selectorChecker(document, '.search-wrapper') as HTMLDivElement;
         search.style.display = 'flex';
         const input = selectorChecker(document, '.search-wrapper__input') as HTMLInputElement;
-
-        window.addEventListener('load', () => {
-            if (this.url.search) {
-                input.value = this.url.search.replace('search=', '');
-                this.doSearch();
-            }
-        });
-
         input.addEventListener('input', () => this.doSearch());
     }
 
@@ -62,6 +54,7 @@ export class HomeController extends Controller {
         const input = selectorChecker(document, '.search-wrapper__input') as HTMLInputElement;
         const productCards: NodeListOf<HTMLDivElement> = document.body.querySelectorAll('.card-wrapper');
         const filter = input.value.toLowerCase();
+
         filter.length !== 0 ? (this.url.search = `search=${filter}`) : delete this.url.search;
 
         Object.keys(this.url).length !== 0
@@ -91,71 +84,20 @@ export class HomeController extends Controller {
         this.found();
     }
 
-    filtersAndCheckboxes() {
-        const productCards: NodeListOf<HTMLDivElement> = document.querySelectorAll('.card-wrapper');
+    configFilters() {
         const brandCheckboxes: NodeListOf<HTMLInputElement> = document.querySelectorAll('.brand-form__checkbox');
         const categoryCheckboxes: NodeListOf<HTMLInputElement> = document.querySelectorAll('.category-form__checkbox');
-        const categoryCheckboxesArr = Array.from(categoryCheckboxes);
-        const brandCheckboxesArr = Array.from(brandCheckboxes);
 
         const priceRanges: NodeListOf<HTMLInputElement> = document.querySelectorAll('.price-range__input');
-        const priceRange1 = document.querySelector('.price-range__min') as HTMLDivElement;
-        const priceRange2 = document.querySelector('.price-range__max') as HTMLDivElement;
-
         const stockRanges: NodeListOf<HTMLInputElement> = document.querySelectorAll('.stock-range__input');
-        const stockRange1 = document.querySelector('.stock-range__min') as HTMLDivElement;
-        const stockRange2 = document.querySelector('.stock-range__max') as HTMLDivElement;
 
-        const filtration = () => {
-            const activeCards = selectorChecker(document, '.cards-wrapper');
-            this.model.activeProducts = this.model.products;
-            const activeCategories = categoryCheckboxesArr
-                .filter((checkbox) => checkbox.checked)
-                .map((item) => item.id);
-            const activeBrands = brandCheckboxesArr.filter((checkbox) => checkbox.checked).map((item) => item.id);
-            activeCategories.length !== 0
-                ? (this.url.categories = `category=${activeCategories.join('↕')}`)
-                : delete this.url.categories;
-            activeBrands.length !== 0 ? (this.url.brands = `brand=${activeBrands.join('↕')}`) : delete this.url.brands;
+        priceRanges.forEach((range) => range.addEventListener('input', () => this.filtration()));
+        stockRanges.forEach((range) => range.addEventListener('input', () => this.filtration()));
 
-            Object.keys(this.url).length !== 0
-                ? window.history.replaceState({}, '', `/home/?${Object.values(this.url).join('&')}`)
-                : window.history.replaceState({}, '', `/home`);
-
-            /*  */
-            this.model.activeProducts = this.model.activeProducts.filter((product) => {
-                const categoryCheckbox = categoryCheckboxesArr.find(
-                    (checkbox) => product.category.indexOf(checkbox.id) !== -1
-                ) as HTMLInputElement;
-
-                const brandCheckbox = brandCheckboxesArr.find(
-                    (checkbox) => product.brand.indexOf(checkbox.id) !== -1
-                ) as HTMLInputElement;
-
-                if (
-                    (categoryCheckbox.checked || categoryCheckboxesArr.every((checkbox) => !checkbox.checked)) &&
-                    (brandCheckbox.checked || brandCheckboxesArr.every((checkbox) => !checkbox.checked)) &&
-                    product.amount >= Number(stockRange1.textContent) &&
-                    product.amount <= Number(stockRange2.textContent) &&
-                    product.price >= Number(priceRange1.textContent) &&
-                    product.price <= Number(priceRange2.textContent)
-                )
-                    return true;
-                return false;
-            });
-            activeCards.outerHTML = this.view.drawCards(this.model.activeProducts);
-
-            this.addRouting();
-            this.doSearch();
-            this.configView();
-            this.sortByGo();
-        };
-
-        priceRanges.forEach((range) => range.addEventListener('input', filtration));
-        stockRanges.forEach((range) => range.addEventListener('input', filtration));
-
-        brandCheckboxes.forEach((brandcheckbox) => brandcheckbox.addEventListener('click', filtration));
-        categoryCheckboxes.forEach((categorycheckbox) => categorycheckbox.addEventListener('click', filtration));
+        brandCheckboxes.forEach((brandcheckbox) => brandcheckbox.addEventListener('click', () => this.filtration()));
+        categoryCheckboxes.forEach((categorycheckbox) =>
+            categorycheckbox.addEventListener('click', () => this.filtration())
+        );
 
         if (this.url.categories || this.url.brands) {
             if (this.url.categories) {
@@ -173,7 +115,68 @@ export class HomeController extends Controller {
                 });
             }
         }
-        filtration();
+        this.filtration();
+    }
+
+    filtration() {
+        const input = selectorChecker(document, '.search-wrapper__input') as HTMLInputElement;
+
+        if (window.location.pathname === '/home') input.value = '';
+
+        const brandCheckboxes: NodeListOf<HTMLInputElement> = document.querySelectorAll('.brand-form__checkbox');
+        const categoryCheckboxes: NodeListOf<HTMLInputElement> = document.querySelectorAll('.category-form__checkbox');
+        const categoryCheckboxesArr = Array.from(categoryCheckboxes);
+        const brandCheckboxesArr = Array.from(brandCheckboxes);
+
+        const priceRange1 = document.querySelector('.price-range__min') as HTMLDivElement;
+        const priceRange2 = document.querySelector('.price-range__max') as HTMLDivElement;
+
+        const stockRange1 = document.querySelector('.stock-range__min') as HTMLDivElement;
+        const stockRange2 = document.querySelector('.stock-range__max') as HTMLDivElement;
+        const activeCards = selectorChecker(document, '.cards-wrapper');
+        this.model.activeProducts = this.model.products;
+        const activeCategories = categoryCheckboxesArr.filter((checkbox) => checkbox.checked).map((item) => item.id);
+        const activeBrands = brandCheckboxesArr.filter((checkbox) => checkbox.checked).map((item) => item.id);
+        activeCategories.length !== 0
+            ? (this.url.categories = `category=${activeCategories.join('↕')}`)
+            : delete this.url.categories;
+        activeBrands.length !== 0 ? (this.url.brands = `brand=${activeBrands.join('↕')}`) : delete this.url.brands;
+
+        Object.keys(this.url).length !== 0
+            ? window.history.replaceState({}, '', `/home/?${Object.values(this.url).join('&')}`)
+            : window.history.replaceState({}, '', `/home`);
+
+        this.model.activeProducts = this.model.activeProducts.filter((product) => {
+            const categoryCheckbox = categoryCheckboxesArr.find(
+                (checkbox) => product.category.indexOf(checkbox.id) !== -1
+            ) as HTMLInputElement;
+
+            const brandCheckbox = brandCheckboxesArr.find(
+                (checkbox) => product.brand.indexOf(checkbox.id) !== -1
+            ) as HTMLInputElement;
+
+            if (
+                (categoryCheckbox.checked || categoryCheckboxesArr.every((checkbox) => !checkbox.checked)) &&
+                (brandCheckbox.checked || brandCheckboxesArr.every((checkbox) => !checkbox.checked)) &&
+                product.amount >= Number(stockRange1.textContent) &&
+                product.amount <= Number(stockRange2.textContent) &&
+                product.price >= Number(priceRange1.textContent) &&
+                product.price <= Number(priceRange2.textContent)
+            )
+                return true;
+            return false;
+        });
+        activeCards.outerHTML = this.view.drawCards(this.model.activeProducts);
+
+        this.addRouting();
+        window.addEventListener('load', () => {
+            if (this.url.search) {
+                input.value = this.url.search.replace('search=', '');
+                this.doSearch();
+            }
+        });
+        this.configView();
+        this.sortByGo();
     }
 
     sortByGo() {
@@ -245,7 +248,7 @@ export class HomeController extends Controller {
         sortOptions.addEventListener('change', sortProducts);
     }
 
-    public rangesHandler() {
+    public configRanges() {
         const sliderColor = '#cce';
         const stockRange1 = document.querySelector('.stock-range__input-1') as HTMLInputElement;
         const stockRange2 = document.querySelector('.stock-range__input-2') as HTMLInputElement;
