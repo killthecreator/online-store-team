@@ -297,6 +297,13 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
     border-radius: 5px;
     width: 500px;
     height: 500px;
+    @include flex-col;
+    .form__is-valid {
+      align-items: center;
+      justify-content: center;
+      font-family: "Normal";
+      font-size: $basic-font-size;
+    }
     .personal-details {
       .personal-details__title {
         font-family: "Bold";
@@ -355,7 +362,7 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
     }
     .form__send {
       @include flex-centered;
-      margin-top: 55px;
+      margin: 30px;
       .form__send-button {
         @include button-style;
         width: 100px;

@@ -8,6 +8,7 @@ import { PromoCode } from '../../model/data';
 import MasterCard from '../../../assets/logos/cards/MasterCard.png';
 import Visa from '../../../assets/logos/cards/Visa.png';
 import AmericanExpress from '../../../assets/logos/cards/AmericanExpress.png';
+import { locationHandler } from '../../../routing/locationHandler';
 
 export class CartController extends Controller {
     url: Partial<URL>;
@@ -385,7 +386,7 @@ export class CartController extends Controller {
     }
 
     openModalWindow() {
-        const popup = document.querySelector('.popup');
+        const popup = document.querySelector('.popup') as HTMLDivElement;
         if (!popup) {
             const modalWindow = document.createElement('div');
             modalWindow.classList.add('popup');
@@ -488,6 +489,8 @@ export class CartController extends Controller {
         });
 
         form.addEventListener('submit', (e) => {
+            let formValid = true;
+
             e.preventDefault();
 
             removeValidation();
@@ -497,6 +500,7 @@ export class CartController extends Controller {
                 createError('Cannot be blank', name);
             } else if (!name.value.match(/^[a-z]{3,} [a-z]{3,}\s*$/i)) {
                 createError('Invalid name', name);
+                formValid = false;
             }
 
             // check phone number
@@ -504,6 +508,7 @@ export class CartController extends Controller {
                 createError('Cannot be blank', phone);
             } else if (!phone.value.match(/^\+[0-9]{3} \([0-9]{2}\) [0-9]{3}-[0-9]{2}-[0-9]{2}\s*$/)) {
                 createError('Invalid phone', phone);
+                formValid = false;
             }
 
             // check address
@@ -511,6 +516,7 @@ export class CartController extends Controller {
                 createError('Cannot be blank', address);
             } else if (!address.value.match(/^([0-9a-z]{5,} ){2}[0-9a-z]{5,}/i)) {
                 createError('Invalid address', address);
+                formValid = false;
             }
 
             // check email
@@ -522,6 +528,7 @@ export class CartController extends Controller {
                 )
             ) {
                 createError('Invalid email', email);
+                formValid = false;
             }
 
             //card number check
@@ -529,6 +536,7 @@ export class CartController extends Controller {
                 createError('Cannot be blank', card);
             } else if (!card.value.match(/^([0-9]{4} ){3}[0-9]{4}$/)) {
                 createError('Invalid card number', card);
+                formValid = false;
             }
 
             //valid check
@@ -536,6 +544,7 @@ export class CartController extends Controller {
                 createError('Cannot be blank', valid);
             } else if (!valid.value.match(/^[0-9]{2}\/[0-9]{2}$/) || Number(valid.value.slice(0, 2)) > 12) {
                 createError('Invalid date', valid);
+                formValid = false;
             }
 
             //cvv check
@@ -543,6 +552,22 @@ export class CartController extends Controller {
                 createError('Cannot be blank', cvv);
             } else if (!cvv.value.match(/^[0-9]{3}$/)) {
                 createError('Invalid date', cvv);
+                formValid = false;
+            }
+
+
+            //if form is valid ...
+            if(true/*formValid*/) {
+              const form = selectorChecker(document, '.form');
+              const popup = selectorChecker(document, '.popup');
+              //pop.innerHTML = '';
+              form.innerHTML = `<div class="form__is-valid">Your order is accepted! Thanks</div>`
+              setTimeout(() => {
+                this.model.cart = [];
+                localStorage.setItem('cartCadence', JSON.stringify(this.model.cart));
+                locationHandler(e, '/home');
+              popup.remove();
+              }, 3000)
             }
         });
 
