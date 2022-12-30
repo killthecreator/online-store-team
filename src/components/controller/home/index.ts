@@ -5,28 +5,30 @@ import { selectorChecker } from '../../../utils/selectorChecker';
 import { route } from '../../../routing/routing';
 import { URL } from '../../../utils/urlInterface';
 
-import akg from '../../../assets/logos/brands/akg.svg';
-import bcrich from '../../../assets/logos/brands/b.c.rich.svg';
-import ephipone from '../../../assets/logos/brands/ephipone.svg';
-import fender from '../../../assets/logos/brands/fender.svg';
-import gibson from '../../../assets/logos/brands/gibson.svg';
-import ibanez from '../../../assets/logos/brands/ibanez.svg';
-import jackson from '../../../assets/logos/brands/jackson.svg';
-import neumann from '../../../assets/logos/brands/neumann.svg';
-import rode from '../../../assets/logos/brands/rode.svg';
-import sennheiser from '../../../assets/logos/brands/sennheiser.svg';
-import shure from '../../../assets/logos/brands/shure.svg';
-import schecter from '../../../assets/logos/brands/schecter.png';
-import mapex from '../../../assets/logos/brands/mapex.png';
-import pearl from '../../../assets/logos/brands/pearl.png';
-import ludwig from '../../../assets/logos/brands/ludwig.png';
-import tama from '../../../assets/logos/brands/tama.png';
-import dw from '../../../assets/logos/brands/dw.png';
-import yamaha from '../../../assets/logos/brands/yamaha.png';
-import roland from '../../../assets/logos/brands/roland.png';
-import korg from '../../../assets/logos/brands/korg.png';
-import moog from '../../../assets/logos/brands/moog.png';
-import novation from '../../../assets/logos/brands/novation.png';
+import {
+  akg,
+  bcrich,
+  ephipone,
+  fender,
+  gibson,
+  ibanez,
+  jackson,
+  neumann,
+  rode,
+  sennheiser,
+  shure,
+  schecter,
+  mapex,
+  pearl,
+  ludwig,
+  tama,
+  dw,
+  yamaha,
+  roland,
+  korg,
+  moog,
+  novation
+} from '../../../assets/logos/brands/brandLogos.js';
 
 export class HomeController extends Controller {
     url: Partial<URL>;
