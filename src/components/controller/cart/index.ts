@@ -49,7 +49,10 @@ export class CartController extends Controller {
         productAmounts.forEach((div) => {
             const productName = div.querySelector('.product__name')?.innerHTML;
             const amountDiv = div.querySelector('.product__amount-value');
+
+
             const ourProduct = this.model.cart.find((prodObj) => prodObj.product.name === productName);
+
             if (!ourProduct) throw new Error('There is no our Product');
             if (!amountDiv) throw new Error('There is no amount div');
             const plus = div.querySelector('.product__amount-plus');
@@ -62,8 +65,23 @@ export class CartController extends Controller {
             const cartCount = selectorChecker(document, '.cart-wrapper__count');
             plus.addEventListener('click', () => {
                 if (ourProduct.product.amount > 0) {
+                    //чтобы корзина работала как надо и менялось динамически количество товаров в модели и на странце
+                    let tempNum;
+                    for (let i = 0; i < this.model.cart.length; i++) {
+                      console.log(this.model.cart[i].product.name);
+                      console.log(ourProduct.product.name);
+                      console.log(ourProduct.product.name === this.model.cart[i].product.name);
+                      if (this.model.cart[i].product.name === ourProduct.product.name) {
+                        tempNum = i;
+                      }
+                    }
+                    if (tempNum === undefined) throw new Error('There is no such product in cart');
+
                     ourProduct.amount += 1;
                     ourProduct.product.amount -= 1;
+
+                    this.model.cart[tempNum] = ourProduct;
+
                     amountDiv.innerHTML = ourProduct.amount.toString();
 
                     let num = 0;
@@ -93,9 +111,14 @@ export class CartController extends Controller {
 
                     amountStore.innerHTML = `Stock: ${ourProduct.product.amount.toString()}`;
                     sumPrice.innerHTML = `${(ourProduct.product.price * ourProduct.amount).toString()} $`;
-                    //console.log(ourProduct.amount == 0);
+                    console.log(ourProduct.amount == 0);
+                    console.log(this.model.cart);
                     if (ourProduct.amount == 0) {
-                        this.model.cart.splice(this.model.cart.indexOf(ourProduct), 1);
+                        this.model.cart.splice(this.model.cart.indexOf(ourProduct) - 1, 1);
+                        localStorage.setItem('cartCadence', JSON.stringify(this.model.cart));
+                        cartState.innerHTML = `Cart total: ${this.model.cart
+                          .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
+                          .toString()} $`;
                         this.view.drawMain(this.model.cart);
                         this.configPage();
                     }
