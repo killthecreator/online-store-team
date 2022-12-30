@@ -2,34 +2,34 @@ import { Controller } from '../';
 import { HomeView } from '../../view/home';
 import { Model } from '../../model';
 import { selectorChecker } from '../../../utils/selectorChecker';
-import { route } from '../../../routing/routing';
 import { URL } from '../../../utils/urlInterface';
 import { Product } from '../../model/data';
 
 import {
-  akg,
-  bcrich,
-  ephipone,
-  fender,
-  gibson,
-  ibanez,
-  jackson,
-  neumann,
-  rode,
-  sennheiser,
-  shure,
-  schecter,
-  mapex,
-  pearl,
-  ludwig,
-  tama,
-  dw,
-  yamaha,
-  roland,
-  korg,
-  moog,
-  novation
+    akg,
+    bcrich,
+    ephipone,
+    fender,
+    gibson,
+    ibanez,
+    jackson,
+    neumann,
+    rode,
+    sennheiser,
+    shure,
+    schecter,
+    mapex,
+    pearl,
+    ludwig,
+    tama,
+    dw,
+    yamaha,
+    roland,
+    korg,
+    moog,
+    novation,
 } from '../../../assets/logos/brands/brandLogos.js';
+import { locationHandler } from '../../../routing/locationHandler';
 
 export class HomeController extends Controller {
     url: Partial<URL>;
@@ -142,7 +142,7 @@ export class HomeController extends Controller {
             ancor.addEventListener('click', (e) => {
                 const curTarget = e.currentTarget as HTMLElement;
                 if (curTarget.id.startsWith('/product')) window.history.pushState({}, '', curTarget.id);
-                route(e, curTarget.id);
+                locationHandler(e, curTarget.id);
             })
         );
     }
