@@ -50,7 +50,6 @@ export class CartController extends Controller {
             const productName = div.querySelector('.product__name')?.innerHTML;
             const amountDiv = div.querySelector('.product__amount-value');
 
-
             const ourProduct = this.model.cart.find((prodObj) => prodObj.product.name === productName);
 
             if (!ourProduct) throw new Error('There is no our Product');
@@ -68,9 +67,6 @@ export class CartController extends Controller {
                     //чтобы корзина работала как надо и менялось динамически количество товаров в модели и на странце
                     let tempNum;
                     for (let i = 0; i < this.model.cart.length; i++) {
-                      console.log(this.model.cart[i].product.name);
-                      console.log(ourProduct.product.name);
-                      console.log(ourProduct.product.name === this.model.cart[i].product.name);
                       if (this.model.cart[i].product.name === ourProduct.product.name) {
                         tempNum = i;
                       }
@@ -111,10 +107,11 @@ export class CartController extends Controller {
 
                     amountStore.innerHTML = `Stock: ${ourProduct.product.amount.toString()}`;
                     sumPrice.innerHTML = `${(ourProduct.product.price * ourProduct.amount).toString()} $`;
-                    console.log(ourProduct.amount == 0);
-                    console.log(this.model.cart);
+
                     if (ourProduct.amount == 0) {
-                        this.model.cart.splice(this.model.cart.indexOf(ourProduct) - 1, 1);
+                        const deleteProd = this.model.cart.find((prodObj) => prodObj.product.name === ourProduct.product.name);
+                        if(!deleteProd) throw new Error('there is nothing to delete');
+                        this.model.cart.splice(this.model.cart.indexOf( deleteProd) , 1);
                         localStorage.setItem('cartCadence', JSON.stringify(this.model.cart));
                         cartState.innerHTML = `Cart total: ${this.model.cart
                           .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
@@ -139,6 +136,7 @@ export class CartController extends Controller {
             this.model.cart = JSON.parse(item) as { product: Product; amount: 1 }[];
         }
 
+        console.log(this.model.cart);
         const cartCount = selectorChecker(document, '.cart-wrapper__count');
         const cartState = selectorChecker(document, '.cart-wrapper__state');
         cartCount.innerHTML = this.model.cart.length.toString();
@@ -162,14 +160,12 @@ export class CartController extends Controller {
         const itemInput = selectorChecker(document, '.products__header-items-input') as HTMLInputElement;
         const tempValue = '3';
         itemInput.value = tempValue;
-        //if (this.url.pagenumber) itemInput.value = this.url.pagenumber;  //TODO ПОЛУЧИТЬ ЗНАЧЕНИЯ ИЗ КВЕРИ ЕСЛИ ОНО ТАМ ЕСТЬ
+
         let pagesAmount = Math.ceil(this.model.cart.length / Number(itemInput.value));
 
         const pageInput = selectorChecker(document, '.products__header-pages-input') as HTMLInputElement;
         const tempPageNumber = '1';
         pageInput.value = tempPageNumber;
-
-        //if (this.url.pages) pageInput.value = this.url.pages;  //TODO ПОЛУЧИТЬ ЗНАЧЕНИЯ ИЗ КВЕРИ ЕСЛИ ОНО ТАМ ЕСТЬ
 
         const decrease = selectorChecker(document, '.products__header-pages-decrease') as HTMLDivElement;
 
@@ -298,7 +294,6 @@ export class CartController extends Controller {
         }
 
         promoCodeButton.addEventListener('click', () => {
-            console.log(this.model.appliedPromo);
             this.model.promoCodes.forEach((promocode) => {
                 const appliedPromocodes = promoCodeList.querySelectorAll('.applied-promo');
                 if (promocode.id === promoCodeInput.value) {
