@@ -37,7 +37,7 @@ export class HomeController extends Controller {
         ancors.forEach((ancor) =>
             ancor.addEventListener('click', (e) => {
                 e.preventDefault();
-                //if (ancor.id.startsWith('/product')) window.location.href = ancor.id;
+                if (ancor.id.startsWith('/product')) window.history.pushState({}, '', ancor.id);
                 route(e, ancor.id);
             })
         );
@@ -121,6 +121,9 @@ export class HomeController extends Controller {
     filtration() {
         const input = selectorChecker(document, '.search-wrapper__input') as HTMLInputElement;
 
+        if (this.url.search) {
+            input.value = this.url.search.replace('search=', '');
+        }
         if (window.location.pathname === '/home') input.value = '';
 
         const brandCheckboxes: NodeListOf<HTMLInputElement> = document.querySelectorAll('.brand-form__checkbox');
@@ -169,12 +172,7 @@ export class HomeController extends Controller {
         activeCards.outerHTML = this.view.drawCards(this.model.activeProducts);
 
         this.addRouting();
-        window.addEventListener('load', () => {
-            if (this.url.search) {
-                input.value = this.url.search.replace('search=', '');
-                this.doSearch();
-            }
-        });
+        this.doSearch();
         this.configView();
         this.sortByGo();
     }
@@ -237,7 +235,6 @@ export class HomeController extends Controller {
             cardsWrapper.innerHTML = '';
             tempArr.forEach((el) => cardsWrapper.append(el.el));
 
-            this.configView();
             this.url.sort = `sort=${sortOptions.value}`;
             window.history.replaceState({}, '', `/home/?${Object.values(this.url).join('&')}`);
         };
