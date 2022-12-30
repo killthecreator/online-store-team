@@ -16,6 +16,17 @@ import neumann from '../../../assets/logos/brands/neumann.svg';
 import rode from '../../../assets/logos/brands/rode.svg';
 import sennheiser from '../../../assets/logos/brands/sennheiser.svg';
 import shure from '../../../assets/logos/brands/shure.svg';
+import schecter from '../../../assets/logos/brands/schecter.png';
+import mapex from '../../../assets/logos/brands/mapex.png';
+import pearl from '../../../assets/logos/brands/pearl.png';
+import ludwig from '../../../assets/logos/brands/ludwig.png';
+import tama from '../../../assets/logos/brands/tama.png';
+import dw from '../../../assets/logos/brands/dw.png';
+import yamaha from '../../../assets/logos/brands/yamaha.png';
+import roland from '../../../assets/logos/brands/roland.png';
+import korg from '../../../assets/logos/brands/korg.png';
+import moog from '../../../assets/logos/brands/moog.png';
+import novation from '../../../assets/logos/brands/novation.png';
 
 export class HomeController extends Controller {
     url: Partial<URL>;
@@ -46,7 +57,7 @@ export class HomeController extends Controller {
     }
 
     addLogos() {
-      const productBrands: NodeListOf<HTMLDivElement> = document.body.querySelectorAll('.name-zone__brand');
+      const productBrands: NodeListOf<HTMLDivElement> = document.body.querySelectorAll('.photo-zone__brand');
       productBrands.forEach(div => {
         switch  (div.id) {
           case 'Novation':

@@ -114,6 +114,10 @@ export class HomeView extends GlobalView {
           <div class="card-wrapper active" id="${card.name}">
 
             <div class="photo-zone" style="background-image: url(${card.photos[0]});">
+              <div class="photo-zone__brand-wrapper">
+                <div class="photo-zone__brand" id="${card.brand}">
+                </div>
+              </div>
               <div class="photo-zone__store">
                 Stock: ${card.amount}
               </div>
@@ -131,10 +135,6 @@ export class HomeView extends GlobalView {
             </div>
 
             <div class="name-zone">
-              <div class="name-zone__brand-wrapper">
-                <div class="name-zone__brand" id="${card.brand}">
-                </div>
-              </div>
               <div class="name-zone__titles">
                 <h4 class="name-zone__name routing" id='/product/${card.name}'>${card.name}</h4>
                 <p class="name-zone__category">${card.category}</p>
