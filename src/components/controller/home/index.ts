@@ -284,7 +284,6 @@ export class HomeController extends Controller {
 
     sortByGo() {
         const productCards: NodeListOf<HTMLDivElement> = document.querySelectorAll('.card-wrapper');
-
         const products = Array.from(productCards);
 
         type tempOb = {
@@ -337,8 +336,10 @@ export class HomeController extends Controller {
                     });
                     break;
             }
-            cardsWrapper.innerHTML =
-                '<section class="no-products" style="display: none">No products were found for your request</section>';
+            const noActiveCards = products.filter((card) => card.style.display === 'none');
+            cardsWrapper.innerHTML = `<section class="no-products" style="display: ${
+                noActiveCards ? 'flex' : 'none'
+            }">No products were found for your request</section>`;
             tempArr.forEach((el) => cardsWrapper.append(el.el));
 
             this.url.sort = `sort=${sortOptions.value}`;
