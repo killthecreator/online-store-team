@@ -131,9 +131,9 @@ export class HomeView extends GlobalView {
             </div>
 
             <div class="name-zone">
-              <div class="name-zone__brand" id="${card.brand}" style="background-image: url(${
-                    /*HomeController.brandLogo(card.brand)*/ 0
-                });">
+              <div class="name-zone__brand-wrapper">
+                <div class="name-zone__brand" id="${card.brand}">
+                </div>
               </div>
               <div class="name-zone__titles">
                 <h4 class="name-zone__name routing" id='/product/${card.name}'>${card.name}</h4>

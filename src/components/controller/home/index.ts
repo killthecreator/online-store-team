@@ -4,6 +4,19 @@ import { Model } from '../../model';
 import { selectorChecker } from '../../../utils/selectorChecker';
 import { route } from '../../../routing/routing';
 import { URL } from '../../../utils/urlInterface';
+
+import akg from '../../../assets/logos/brands/akg.svg';
+import bcrich from '../../../assets/logos/brands/b.c.rich.svg';
+import ephipone from '../../../assets/logos/brands/ephipone.svg';
+import fender from '../../../assets/logos/brands/fender.svg';
+import gibson from '../../../assets/logos/brands/gibson.svg';
+import ibanez from '../../../assets/logos/brands/ibanez.svg';
+import jackson from '../../../assets/logos/brands/jackson.svg';
+import neumann from '../../../assets/logos/brands/neumann.svg';
+import rode from '../../../assets/logos/brands/rode.svg';
+import sennheiser from '../../../assets/logos/brands/sennheiser.svg';
+import shure from '../../../assets/logos/brands/shure.svg';
+
 export class HomeController extends Controller {
     url: Partial<URL>;
     view: HomeView;
@@ -29,6 +42,83 @@ export class HomeController extends Controller {
         this.configView();
         this.addingToCart();
         this.copyLink();
+        this.addLogos();
+    }
+
+    addLogos() {
+      const productBrands: NodeListOf<HTMLDivElement> = document.body.querySelectorAll('.name-zone__brand');
+      productBrands.forEach(div => {
+        switch  (div.id) {
+          case 'Novation':
+            div.style.backgroundImage = `url(${novation})`;
+            break;
+          case 'Moog':
+            div.style.backgroundImage = `url(${moog})`;
+            break;
+          case 'Korg':
+            div.style.backgroundImage = `url(${korg})`;
+            break;
+          case 'Roland':
+            div.style.backgroundImage = `url(${roland})`;
+            break;
+          case 'Yamaha':
+            div.style.backgroundImage = `url(${yamaha})`;
+            break;
+          case 'DW':
+            div.style.backgroundImage = `url(${dw})`;
+            break;
+          case 'Tama':
+            div.style.backgroundImage = `url(${tama})`;
+            break;
+          case 'Ludwig':
+            div.style.backgroundImage = `url(${ludwig})`;
+            break;
+          case 'Pearl':
+            div.style.backgroundImage = `url(${pearl})`;
+            break;
+          case 'Mapex':
+            div.style.backgroundImage = `url(${mapex})`;
+            break;
+          case 'Schecter':
+            div.style.backgroundImage = `url(${schecter})`;
+            break;
+          case 'Jackson':
+            div.style.backgroundImage = `url(${jackson})`;
+            break;
+          case 'Fender':
+            div.style.backgroundImage = `url(${fender})`;
+            break;
+          case 'Gibson':
+            div.style.backgroundImage = `url(${gibson})`;
+            break;
+          case 'Ibanez':
+            div.style.backgroundImage = `url(${ibanez})`;
+            break;
+          case 'B.C.Rich':
+            div.style.backgroundImage = `url(${bcrich})`;
+            break;
+          case 'Epiphone':
+            div.style.backgroundImage = `url(${ephipone})`;
+            break;
+          case 'AKG':
+            div.style.backgroundImage = `url(${akg})`;
+            break;
+          case 'Shure':
+            div.style.backgroundImage = `url(${shure})`;
+            break;
+          case 'Rode':
+            div.style.backgroundImage = `url(${rode})`;
+            break;
+          case 'Sennheiser':
+            div.style.backgroundImage = `url(${sennheiser})`;
+            break;
+          case 'Neumann':
+            div.style.backgroundImage = `url(${neumann})`;
+            break;
+          default:
+            alert( "Нет таких значений" );
+        }
+      })
     }
 
     addRouting() {
@@ -497,9 +587,9 @@ export class HomeController extends Controller {
         const foundDiv = selectorChecker(document, '.found');
         foundDiv.innerHTML = `Found: ${activeCards.length}`;
 
-        /*         if (activeCards.length === 0) {
+                 if (activeCards.length === 0) {
             cardsWrapper.innerHTML = `<section class="no-products">No products were found for your request</section>`;
-        } */
+        }
     }
 
     copyLink() {

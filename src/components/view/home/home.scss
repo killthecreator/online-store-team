@@ -306,9 +306,24 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
         }
         .name-zone {
             @include flex-space-between;
-            .name-zone__brand {
+            .name-zone__brand-wrapper {
+              align-self: center;
+              border-radius: 50%;
+              background: $gradient;
+              margin-right: 3px;
+              width: 42px;
+              height: 42px;
+              .name-zone__brand {
+                width: 42px;
+                height: 42px;
+                background-size: 41px;
+                background-position: 1px 13px;
+                background-repeat: no-repeat;
+              }
             }
+
             .name-zone__titles {
+                max-width: 150px;
                 flex-grow: 1;
                 .name-zone__name {
                     cursor: pointer;
