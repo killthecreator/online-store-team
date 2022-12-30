@@ -299,6 +299,8 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
     height: 500px;
     @include flex-col;
     .form__is-valid {
+      display: flex;
+      height: 500px;
       align-items: center;
       justify-content: center;
       font-family: "Normal";
