@@ -1,4 +1,4 @@
-import { route } from './routing/routing.js';
+import { locationHandler } from './routing/locationHandler.js';
 
 import { GlobalView } from './components/view/';
 import { HomeView } from './components/view/home';
@@ -53,13 +53,13 @@ ancors.forEach((ancor) =>
     ancor.addEventListener('click', (e) => {
         const curTarget = e.currentTarget as HTMLElement;
         window.history.pushState({}, '', curTarget.id);
-        route(e, curTarget.id);
+        locationHandler(e, curTarget.id);
     })
 );
 
 window.addEventListener('DOMContentLoaded', (e) => {
-    route(e, currentPath);
+    locationHandler(e, currentPath);
 });
 window.onpopstate = (e) => {
-    route(e, window.location.pathname);
+    locationHandler(e, window.location.pathname);
 };

@@ -10,7 +10,8 @@ import {
     pageNotFoundView,
 } from '../';
 
-export const locationHandler = (location: string) => {
+export const locationHandler = (e: Event, location: string) => {
+    e.preventDefault();
     const page = location.startsWith('/home')
         ? '/home'
         : location.startsWith('/product')
