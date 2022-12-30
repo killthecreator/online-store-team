@@ -29,12 +29,10 @@ export class CartController extends Controller {
         }
 
         const products = this.model.cart;
-        if (!products) throw new Error(`There is no ${locationArr[2]} among our products`);
+        if (!products) throw new Error(`There are no ${locationArr[2]} among our products`);
         this.fillUrl(location);
         this.view.drawMain(products);
         this.configPage();
-        console.log(this.model.cart);
-        console.log(localStorage.getItem('cartCadence'));
     }
 
     configPage() {
@@ -542,9 +540,9 @@ export class CartController extends Controller {
 
             //cvv check
             if (!cvv.value) {
-                createError('Cannot be blank', valid);
+                createError('Cannot be blank', cvv);
             } else if (!cvv.value.match(/^[0-9]{3}$/)) {
-                createError('Invalid date', valid);
+                createError('Invalid date', cvv);
             }
         });
 
