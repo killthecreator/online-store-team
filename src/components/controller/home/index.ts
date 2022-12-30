@@ -337,7 +337,8 @@ export class HomeController extends Controller {
                     });
                     break;
             }
-            cardsWrapper.innerHTML = '<section class="no-products">No products were found for your request</section>';
+            cardsWrapper.innerHTML =
+                '<section class="no-products" style="display: none">No products were found for your request</section>';
             tempArr.forEach((el) => cardsWrapper.append(el.el));
 
             this.url.sort = `sort=${sortOptions.value}`;
