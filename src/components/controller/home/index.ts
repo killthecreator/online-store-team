@@ -336,7 +336,7 @@ export class HomeController extends Controller {
                     });
                     break;
             }
-            const noActiveCards = products.filter((card) => card.style.display === 'none');
+            const noActiveCards = products.every((card) => card.style.display === 'none');
             cardsWrapper.innerHTML = `<section class="no-products" style="display: ${
                 noActiveCards ? 'flex' : 'none'
             }">No products were found for your request</section>`;
