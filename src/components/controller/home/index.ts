@@ -56,7 +56,6 @@ export class HomeController extends Controller {
         this.configView();
         this.addingToCart();
         this.copyLink();
-        this.addLogos();
     }
 
     addLogos() {
@@ -279,6 +278,7 @@ export class HomeController extends Controller {
         this.doSearch();
         this.configView();
         this.sortByGo();
+        this.addLogos();
     }
 
     sortByGo() {
@@ -599,9 +599,9 @@ export class HomeController extends Controller {
         const foundDiv = selectorChecker(document, '.found');
         foundDiv.innerHTML = `Found: ${activeCards.length}`;
 
-        if (activeCards.length === 0) {
+        /*         if (activeCards.length === 0) {
             cardsWrapper.innerHTML = `<section class="no-products">No products were found for your request</section>`;
-        }
+        } */
     }
 
     copyLink() {
