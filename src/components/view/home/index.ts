@@ -112,7 +112,7 @@ export class HomeView extends GlobalView {
             (res: string, card: Product) =>
                 res +
                 `
-          <div class="card-wrapper active" id="${card.name}">
+          <div class="card-wrapper" id="${card.name}">
 
             <div class="photo-zone" style="background-image: url(${card.photos[0]});">
               <div class="photo-zone__brand-wrapper">
