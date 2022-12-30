@@ -107,6 +107,7 @@ export class HomeView extends GlobalView {
     public drawCards = (activeProducts: Product[]) => {
         return `
       <section class="cards-wrapper">
+        <section class="no-products">No products were found for your request</section>
         ${activeProducts.reduce(
             (res: string, card: Product) =>
                 res +

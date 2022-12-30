@@ -279,6 +279,7 @@ export class HomeController extends Controller {
         this.configView();
         this.sortByGo();
         this.addLogos();
+        this.found();
     }
 
     sortByGo() {
@@ -587,21 +588,26 @@ export class HomeController extends Controller {
     }
 
     found() {
-        let cardsWrapper: Element;
-        try {
-            cardsWrapper = selectorChecker(document, '.cards-wrapper');
-        } catch {
+        /*let cardsWrapper: Element;
+        try {*/
+          const cardsWrapper = selectorChecker(document, '.cards-wrapper');
+       /* } catch {
             cardsWrapper = selectorChecker(document, '.no-products');
-        }
+        }*/
 
-        const cards: NodeListOf<HTMLDivElement> = document.querySelectorAll('.card-wrapper');
+        const noProducts = selectorChecker(document, '.no-products') as HTMLDivElement;
+
+        const cards: NodeListOf<HTMLDivElement> = cardsWrapper.querySelectorAll('.card-wrapper');
         const activeCards = Array.from(cards).filter((card) => card.style.display === 'flex');
         const foundDiv = selectorChecker(document, '.found');
         foundDiv.innerHTML = `Found: ${activeCards.length}`;
 
-        /*         if (activeCards.length === 0) {
-            cardsWrapper.innerHTML = `<section class="no-products">No products were found for your request</section>`;
-        } */
+        if (activeCards.length === 0) {
+            noProducts.style.display = 'flex';
+            //cardsWrapper.innerHTML = `<section class="no-products">No products were found for your request</section>`;
+        } else {
+          noProducts.style.display = 'none';
+        }
     }
 
     copyLink() {
