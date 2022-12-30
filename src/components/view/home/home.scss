@@ -354,6 +354,7 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
 .no-products {
     display: none;
     @include flex-centered;
+    flex: 1;
     font-family: 'Normal';
     font-size: $basic-font-size;
 }
