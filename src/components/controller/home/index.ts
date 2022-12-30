@@ -337,7 +337,7 @@ export class HomeController extends Controller {
                     });
                     break;
             }
-            cardsWrapper.innerHTML = '';
+            cardsWrapper.innerHTML = '<section class="no-products">No products were found for your request</section>';
             tempArr.forEach((el) => cardsWrapper.append(el.el));
 
             this.url.sort = `sort=${sortOptions.value}`;
@@ -588,15 +588,8 @@ export class HomeController extends Controller {
     }
 
     found() {
-        /*let cardsWrapper: Element;
-        try {*/
-          const cardsWrapper = selectorChecker(document, '.cards-wrapper');
-       /* } catch {
-            cardsWrapper = selectorChecker(document, '.no-products');
-        }*/
-
+        const cardsWrapper = selectorChecker(document, '.cards-wrapper');
         const noProducts = selectorChecker(document, '.no-products') as HTMLDivElement;
-
         const cards: NodeListOf<HTMLDivElement> = cardsWrapper.querySelectorAll('.card-wrapper');
         const activeCards = Array.from(cards).filter((card) => card.style.display === 'flex');
         const foundDiv = selectorChecker(document, '.found');
@@ -604,9 +597,8 @@ export class HomeController extends Controller {
 
         if (activeCards.length === 0) {
             noProducts.style.display = 'flex';
-            //cardsWrapper.innerHTML = `<section class="no-products">No products were found for your request</section>`;
         } else {
-          noProducts.style.display = 'none';
+            noProducts.style.display = 'none';
         }
     }
 
