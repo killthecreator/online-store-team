@@ -22,11 +22,19 @@ export class CartController extends Controller {
 
     setupPage(location: string): void {
         const locationArr = location.split('/');
+
+        const item = localStorage.getItem('cartCadence');
+        if (item) {
+            this.model.cart = JSON.parse(item) as { product: Product; amount: 1 }[];
+        }
+
         const products = this.model.cart;
         if (!products) throw new Error(`There is no ${locationArr[2]} among our products`);
         this.fillUrl(location);
         this.view.drawMain(products);
         this.configPage();
+        console.log(this.model.cart);
+        console.log(localStorage.getItem('cartCadence'));
     }
 
     configPage() {
@@ -131,10 +139,10 @@ export class CartController extends Controller {
     }
 
     areProductsInCart() {
-        const item = localStorage.getItem('cartCadence');
+        /*const item = localStorage.getItem('cartCadence');
         if (item) {
             this.model.cart = JSON.parse(item) as { product: Product; amount: 1 }[];
-        }
+        }*/
 
         console.log(this.model.cart);
         const cartCount = selectorChecker(document, '.cart-wrapper__count');
