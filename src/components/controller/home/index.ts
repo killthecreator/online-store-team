@@ -23,11 +23,11 @@ export class HomeController extends Controller {
 
     configPage() {
         this.rangesHandler();
-        this.searchGo();
         this.filtersAndCheckboxes();
+        this.configSearch();
         this.sortByGo();
+        this.configView();
         this.addingToCart();
-        this.changeView();
         this.copyLink();
     }
 
@@ -37,49 +37,58 @@ export class HomeController extends Controller {
         ancors.forEach((ancor) =>
             ancor.addEventListener('click', (e) => {
                 e.preventDefault();
-                /* document.location.href = ancor.id; */
+                if (ancor.id.startsWith('/product')) window.location.href = ancor.id;
                 route(e, ancor.id);
             })
         );
     }
 
-    searchGo() {
+    configSearch() {
         const search = selectorChecker(document, '.search-wrapper') as HTMLDivElement;
         search.style.display = 'flex';
-        const activeProducts = this.model.activeProducts;
         const input = selectorChecker(document, '.search-wrapper__input') as HTMLInputElement;
-
-        const doSearch = () => {
-            const filter = input.value.toLowerCase();
-            filter.length !== 0 ? (this.url.search = `search=${filter}`) : delete this.url.search;
-
-            Object.keys(this.url).length !== 0
-                ? window.history.replaceState({}, '', `/home/?${Object.values(this.url).join('&')}`)
-                : window.history.replaceState({}, '', `/home`);
-
-            this.model.activeProducts = activeProducts.filter((product) => {
-                if (
-                    product.name.toLowerCase().includes(filter) ||
-                    product.brand.toLowerCase().includes(filter) ||
-                    product.category.toLowerCase().includes(filter) ||
-                    product.amount.toString().includes(filter) ||
-                    product.price.toString().includes(filter)
-                ) {
-                    return true;
-                }
-                return false;
-            });
-            this.found();
-        };
 
         window.addEventListener('load', () => {
             if (this.url.search) {
                 input.value = this.url.search.replace('search=', '');
-                doSearch();
+                this.doSearch();
             }
         });
 
-        input.addEventListener('input', doSearch);
+        input.addEventListener('input', () => this.doSearch());
+    }
+
+    doSearch() {
+        const input = selectorChecker(document, '.search-wrapper__input') as HTMLInputElement;
+        const productCards: NodeListOf<HTMLDivElement> = document.body.querySelectorAll('.card-wrapper');
+        const filter = input.value.toLowerCase();
+        filter.length !== 0 ? (this.url.search = `search=${filter}`) : delete this.url.search;
+
+        Object.keys(this.url).length !== 0
+            ? window.history.replaceState({}, '', `/home/?${Object.values(this.url).join('&')}`)
+            : window.history.replaceState({}, '', `/home`);
+
+        productCards.forEach((card) => {
+            const cardTitle = selectorChecker(card, '.name-zone__name');
+            const cardCategory = selectorChecker(card, '.name-zone__category');
+            const cardPrice = selectorChecker(card, '.name-zone__price');
+            const cardStock = selectorChecker(card, '.photo-zone__store');
+            if (
+                cardTitle.textContent &&
+                cardCategory.textContent &&
+                cardPrice.textContent &&
+                cardStock.textContent &&
+                (cardTitle.textContent.toLowerCase().indexOf(filter) !== -1 ||
+                    cardCategory.textContent.toLowerCase().indexOf(filter) !== -1 ||
+                    cardPrice.textContent.toLowerCase().indexOf(filter) !== -1 ||
+                    cardStock.textContent.toLowerCase().replace('Stock ', '').indexOf(filter) !== -1)
+            ) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+        this.found();
     }
 
     filtersAndCheckboxes() {
@@ -98,6 +107,7 @@ export class HomeController extends Controller {
         const stockRange2 = document.querySelector('.stock-range__max') as HTMLDivElement;
 
         const filtration = () => {
+            const activeCards = selectorChecker(document, '.cards-wrapper');
             this.model.activeProducts = this.model.products;
             const activeCategories = categoryCheckboxesArr
                 .filter((checkbox) => checkbox.checked)
@@ -133,10 +143,12 @@ export class HomeController extends Controller {
                     return true;
                 return false;
             });
+            activeCards.outerHTML = this.view.drawCards(this.model.activeProducts);
 
-            this.searchGo();
+            this.addRouting();
+            this.doSearch();
+            this.configView();
             this.sortByGo();
-            this.found();
         };
 
         priceRanges.forEach((range) => range.addEventListener('input', filtration));
@@ -165,17 +177,43 @@ export class HomeController extends Controller {
     }
 
     sortByGo() {
+        const productCards: NodeListOf<HTMLDivElement> = document.querySelectorAll('.card-wrapper');
+
+        const products = Array.from(productCards);
+
+        type tempOb = {
+            el: HTMLDivElement;
+            price: number;
+            name: string;
+        };
+
+        const tempArr: tempOb[] = [];
+
+        products.forEach((product) => {
+            const priceDiv = selectorChecker(product, '.name-zone__price');
+            const priceDivHTML = priceDiv.innerHTML;
+            const priceArr = priceDivHTML.match(/\d+/);
+            if (!priceArr) throw new Error('there is data in element');
+            const price = Number(priceArr[0]);
+            tempArr.push({
+                el: product,
+                price: price,
+                name: product.id,
+            });
+        });
+
+        const cardsWrapper = selectorChecker(document, '.cards-wrapper') as HTMLDivElement;
         const sortOptions = selectorChecker(document, '.sort-options') as HTMLOptionElement;
         const sortProducts = () => {
             switch (sortOptions.value) {
                 case 'priceASC':
-                    this.model.activeProducts.sort((a, b) => a.price - b.price);
+                    tempArr.sort((a, b) => a.price - b.price);
                     break;
                 case 'priceDESC':
-                    this.model.activeProducts.sort((a, b) => -(a.price - b.price));
+                    tempArr.sort((a, b) => b.price - a.price);
                     break;
                 case 'nameASC':
-                    this.model.activeProducts.sort((a, b) => {
+                    tempArr.sort((a, b) => {
                         const nameA = a.name.toLowerCase();
                         const nameB = b.name.toLowerCase();
                         if (nameA < nameB) return -1;
@@ -184,7 +222,7 @@ export class HomeController extends Controller {
                     });
                     break;
                 case 'nameDESC':
-                    this.model.activeProducts.sort((a, b) => {
+                    tempArr.sort((a, b) => {
                         const nameA = a.name.toLowerCase();
                         const nameB = b.name.toLowerCase();
                         if (nameA < nameB) return 1;
@@ -193,7 +231,10 @@ export class HomeController extends Controller {
                     });
                     break;
             }
-            this.found();
+            cardsWrapper.innerHTML = '';
+            tempArr.forEach((el) => cardsWrapper.append(el.el));
+
+            this.configView();
             this.url.sort = `sort=${sortOptions.value}`;
             window.history.replaceState({}, '', `/home/?${Object.values(this.url).join('&')}`);
         };
@@ -292,7 +333,6 @@ export class HomeController extends Controller {
                 fromSlider.value = from.toString();
                 fromInput.textContent = from.toString();
             }
-            this.found();
             if (e) {
                 if (e.target === priceRange1) this.url.price = `price=${[from, to].join('↕')}`;
                 if (e.target === stockRange1) this.url.stock = `stock=${[from, to].join('↕')}`;
@@ -320,7 +360,6 @@ export class HomeController extends Controller {
                 toSlider.value = from.toString();
                 toInput.textContent = from.toString();
             }
-            this.found();
             if (e) {
                 if (e.target === priceRange2) this.url.price = `price=${[from, to].join('↕')}`;
                 if (e.target === stockRange2) this.url.stock = `stock=${[from, to].join('↕')}`;
@@ -348,7 +387,7 @@ export class HomeController extends Controller {
             //console.log('get info from localStorage');
         }
 
-        const productCards /*: NodeListOf<HTMLDivElement>*/ = document.querySelectorAll('.card-wrapper');
+        const productCards: NodeListOf<HTMLDivElement> = document.querySelectorAll('.card-wrapper');
 
         const cartCount = selectorChecker(document, '.cart-wrapper__count');
         const cartState = selectorChecker(document, '.cart-wrapper__state');
@@ -398,7 +437,22 @@ export class HomeController extends Controller {
         });
     }
 
-    changeView() {
+    configView() {
+        const view1 = selectorChecker(document, '.view1') as HTMLButtonElement;
+        const view2 = selectorChecker(document, '.view2') as HTMLButtonElement;
+
+        view1.addEventListener('click', (e) => this.changeView(e.target as EventTarget));
+        view2.addEventListener('click', (e) => this.changeView(e.target as EventTarget));
+        if (this.url.big) {
+            if (this.url.big === 'big=true') {
+                this.changeView(view2);
+            } else if (this.url.big === 'big=false') {
+                this.changeView(view1);
+            }
+        }
+    }
+
+    changeView(target: EventTarget) {
         const view1 = selectorChecker(document, '.view1') as HTMLButtonElement;
         const view2 = selectorChecker(document, '.view2') as HTMLButtonElement;
 
@@ -409,55 +463,43 @@ export class HomeController extends Controller {
             const buttons = photo.querySelectorAll('button');
             buttons.forEach((button) => buttonArr.push(button));
         });
-
-        const changeView = (target: EventTarget) => {
-            if (target === view1) {
-                view1.classList.add('togleView');
-                view2.classList.remove('togleView');
-                cardWrappers.forEach((cardWrapper) => cardWrapper.classList.add('toggleCardWrapper'));
-                photoZones.forEach((photo) => photo.classList.add('toglePhotoZone'));
-                buttonArr.forEach((button) => button.classList.add('togleBtn'));
-                this.url.big = `big=false`;
-            } else {
-                view2.classList.add('togleView');
-                view1.classList.remove('togleView');
-                cardWrappers.forEach((cardWrapper) => cardWrapper.classList.remove('togleCardWrapper'));
-                photoZones.forEach((photo) => photo.classList.remove('toglePhotoZone'));
-                buttonArr.forEach((button) => button.classList.remove('togleBtn'));
-                this.url.big = `big=true`;
-            }
-
-            Object.keys(this.url).length !== 0
-                ? window.history.replaceState({}, '', `/home/?${Object.values(this.url).join('&')}`)
-                : window.history.replaceState({}, '', `/home`);
-        };
-        view1.addEventListener('click', (e) => changeView(e.target as EventTarget));
-        view2.addEventListener('click', (e) => changeView(e.target as EventTarget));
-        if (this.url.big) {
-            if (this.url.big === 'big=true') {
-                changeView(view2);
-            } else if (this.url.big === 'big=false') {
-                changeView(view1);
-            }
+        if (target === view1) {
+            view1.classList.add('togleView');
+            view2.classList.remove('togleView');
+            cardWrappers.forEach((cardWrapper) => cardWrapper.classList.add('toggleCardWrapper'));
+            photoZones.forEach((photo) => photo.classList.add('toglePhotoZone'));
+            buttonArr.forEach((button) => button.classList.add('togleBtn'));
+            this.url.big = `big=false`;
+        } else {
+            view2.classList.add('togleView');
+            view1.classList.remove('togleView');
+            cardWrappers.forEach((cardWrapper) => cardWrapper.classList.remove('togleCardWrapper'));
+            photoZones.forEach((photo) => photo.classList.remove('toglePhotoZone'));
+            buttonArr.forEach((button) => button.classList.remove('togleBtn'));
+            this.url.big = `big=true`;
         }
+
+        Object.keys(this.url).length !== 0
+            ? window.history.replaceState({}, '', `/home/?${Object.values(this.url).join('&')}`)
+            : window.history.replaceState({}, '', `/home`);
     }
 
     found() {
-        let activeCards: Element;
+        let cardsWrapper: Element;
         try {
-            activeCards = selectorChecker(document, '.cards-wrapper');
+            cardsWrapper = selectorChecker(document, '.cards-wrapper');
         } catch {
-            activeCards = selectorChecker(document, '.no-products');
+            cardsWrapper = selectorChecker(document, '.no-products');
         }
-        const foundDiv = selectorChecker(document, '.found');
-        foundDiv.innerHTML = `Found: ${this.model.activeProducts.length}`;
 
-        if (this.model.activeProducts.length === 0) {
-            activeCards.outerHTML = `<section class="no-products">No products were found for your request</section>`;
-        } else {
-            activeCards.outerHTML = this.view.drawCards(this.model.activeProducts);
-            this.addRouting();
-        }
+        const cards: NodeListOf<HTMLDivElement> = document.querySelectorAll('.card-wrapper');
+        const activeCards = Array.from(cards).filter((card) => card.style.display === 'flex');
+        const foundDiv = selectorChecker(document, '.found');
+        foundDiv.innerHTML = `Found: ${activeCards.length}`;
+
+        /*         if (activeCards.length === 0) {
+            cardsWrapper.innerHTML = `<section class="no-products">No products were found for your request</section>`;
+        } */
     }
 
     copyLink() {
