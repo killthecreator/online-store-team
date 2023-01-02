@@ -39,7 +39,8 @@ import { url } from '../src';
 describe('online-store tests', () => {
   it('fillUrl sould fill url properly', () => {
 
-const window = global;
+    const window = global;// я не знаю как еще определить window
+    
     const exampleUrl = '/home/?category=guitars↕basses&brand=Ibanez↕B.C.Rich&price=1087↕11232&stock=1↕29&sort=priceDESC&big=false';
     fillUrl(exampleUrl);
     const thisUrl: Partial<URL> = {

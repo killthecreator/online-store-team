@@ -13,6 +13,8 @@ import { ProductController } from './components/controller/product/index.js';
 import { PageNotFoundController } from './components/controller/404/index.js';
 import { CartController } from './components/controller/cart/index.js';
 
+console.log('запущен главный файл index');
+
 class App {
     location: string;
     model: Model;
@@ -48,7 +50,7 @@ export const app = new App(currentPath, model, homeView, homeController);
 app.view.drawHeader();
 app.view.drawFooter();
 
-const ancors = document.querySelectorAll('.routing');
+const ancors = document.querySelectorAll('.header-routing');
 ancors.forEach((ancor) =>
     ancor.addEventListener('click', (e) => {
         const curTarget = e.currentTarget as HTMLElement;

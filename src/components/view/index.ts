@@ -12,7 +12,7 @@ export class GlobalView {
         header.classList.add('header');
         header.innerHTML = `
     <div class="logo-wrapper">
-      <a href="" class="routing" id="/home">
+      <a href="" class="header-routing" id="/home">
           <img src="${Logo}" class="logo__image"/>
 
         <h1 class="logo-wrapper__text">Cadence</h1>
@@ -30,7 +30,7 @@ export class GlobalView {
       </div>
       <div class="cart-wrapper__poromocoded">1</div>
       <div class="cart-wrapper__image">
-        <a href="/cart"><img class="routing" id="/cart" src="${ShoppingCartImg}"/></a>
+        <a href="/cart"><img class="header-routing" id="/cart" src="${ShoppingCartImg}"/></a>
         <div class="cart-wrapper__count"></div>
       </div>
     </div>`;
