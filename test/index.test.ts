@@ -1,7 +1,10 @@
 import { assert, describe, expect, it, test } from 'vitest'
 import { app } from '../src/index';
 import { homeController } from '../src/index'
-
+import { productController } from '../src/index';
+import { pageNotFoundController } from '../src/index';
+import { cartController } from '../src/index';
+import { URL } from '../src/utils/urlInterface';
 
 // link to test examples https://github.com/vitest-dev/vitest/tree/main/examples/mocks/test
 
@@ -30,8 +33,24 @@ import { homeController } from '../src/index'
 10) product controller строка 18 setuppage есть ли в квери строке называние продукта, находит ли нужный продукт по названию среди всех продуктов, отрабатывают ли методы this.view.drawMain(product); и this.configPage();
 */
 
+// 1 попытка сделать тест но он падает. ReferenceError: window is not defined
+describe('online-store tests', () => {
+  it('fillUrl sould fill url properly', () => {
+    const exampleUrl = '/home/?category=guitars↕basses&brand=Ibanez↕B.C.Rich&price=1087↕11232&stock=1↕29&sort=priceDESC&big=false';
+    homeController.fillUrl(exampleUrl);
+    const thisUrl: Partial<URL> = {
+      big: 'false',
+      sort: 'priceDESC',
+      categories: 'guitars↕basses',
+      brands: 'Ibanez↕B.C.Rich',
+      price: '1087↕11232',
+      stock: '1↕29'
+    }
+    assert.equal(homeController.url, thisUrl);
 
-
+  })
+})
+//////////////////////////////////
 describe('suite name', () => {
   it('foo', () => {
     assert.equal(Math.sqrt(4), 2)
