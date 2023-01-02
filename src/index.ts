@@ -63,3 +63,6 @@ window.addEventListener('DOMContentLoaded', (e) => {
 window.onpopstate = (e) => {
     locationHandler(e, window.location.pathname);
 };
+
+export const fillUrl = homeController.fillUrl;
+export const url = homeController.url;

@@ -1,10 +1,13 @@
 import { assert, describe, expect, it, test } from 'vitest'
-import { app } from '../src/index';
-import { homeController } from '../src/index'
-import { productController } from '../src/index';
-import { pageNotFoundController } from '../src/index';
-import { cartController } from '../src/index';
+//import { app } from '../src/index';
+//import { homeController} from '../src'
+//import { productController } from '../src';
+//import { pageNotFoundController } from '../src';
+//import { cartController } from '../src';
 import { URL } from '../src/utils/urlInterface';
+
+import { fillUrl } from '../src';
+import { url } from '../src';
 
 // link to test examples https://github.com/vitest-dev/vitest/tree/main/examples/mocks/test
 
@@ -32,12 +35,13 @@ import { URL } from '../src/utils/urlInterface';
 9)  home controller строка 137 addRouting проверить добавились ли лисенеры на нужные элементы
 10) product controller строка 18 setuppage есть ли в квери строке называние продукта, находит ли нужный продукт по названию среди всех продуктов, отрабатывают ли методы this.view.drawMain(product); и this.configPage();
 */
-
 // 1 попытка сделать тест но он падает. ReferenceError: window is not defined
 describe('online-store tests', () => {
   it('fillUrl sould fill url properly', () => {
+
+const window = global;
     const exampleUrl = '/home/?category=guitars↕basses&brand=Ibanez↕B.C.Rich&price=1087↕11232&stock=1↕29&sort=priceDESC&big=false';
-    homeController.fillUrl(exampleUrl);
+    fillUrl(exampleUrl);
     const thisUrl: Partial<URL> = {
       big: 'false',
       sort: 'priceDESC',
@@ -46,7 +50,7 @@ describe('online-store tests', () => {
       price: '1087↕11232',
       stock: '1↕29'
     }
-    assert.equal(homeController.url, thisUrl);
+    assert.equal(url, thisUrl);
 
   })
 })
