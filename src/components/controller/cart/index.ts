@@ -557,7 +557,7 @@ export class CartController extends Controller {
 
 
             //if form is valid ...
-            if(true/*formValid*/) {
+            if(formValid) {
               const form = selectorChecker(document, '.form');
               const popup = selectorChecker(document, '.popup');
               //pop.innerHTML = '';
