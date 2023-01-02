@@ -1,5 +1,6 @@
 import { assert, describe, expect, it, test } from 'vitest'
 import { app } from '../src/index';
+import { homeController } from '../src/index'
 
 
 // link to test examples https://github.com/vitest-dev/vitest/tree/main/examples/mocks/test
@@ -28,6 +29,8 @@ import { app } from '../src/index';
 9)  home controller строка 137 addRouting проверить добавились ли лисенеры на нужные элементы
 10) product controller строка 18 setuppage есть ли в квери строке называние продукта, находит ли нужный продукт по названию среди всех продуктов, отрабатывают ли методы this.view.drawMain(product); и this.configPage();
 */
+
+
 
 describe('suite name', () => {
   it('foo', () => {
