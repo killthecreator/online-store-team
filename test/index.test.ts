@@ -1,9 +1,34 @@
 import { assert, describe, expect, it, test } from 'vitest'
+import { app } from '../src/index';
 
 
 // link to test examples https://github.com/vitest-dev/vitest/tree/main/examples/mocks/test
 
 // here are some examples from documentaion
+
+//TODO * * * Н А Ш    Т Е С Т О В Ы Й    С Ц Е Н А Р И Й * * * //
+/*
+реализованы юнит-тесты, использующие различные методы jest – 2 балла за каждую покрытую функию/метод, но не более 20 баллов (процент покрытия каждой функции/метода не учитывается)
+
+всего 10 функций будем тестировать
+
+можно например потестировать:
+
+1)  fillUrl из homeController
+      заполняем объект this.url
+      тестим разные строки
+
+2)  тестим локейшн хэндлер, что у нас меняются контроллеры и вью в зависимости от строки урл
+3)  turnOffSearch контроллер 404 строка 26 можно проверить стало ли значиение search.style.display = 'none';
+4)  cart controller строка 39 configPage проверить все ли фукции запустились - как это проверить?
+5)  cart controller строка 602 modalWindowConfig проверить добавился ли на кнопку ивент лисенер - как это проверить?
+6)  home controller строка 592 found проверить сколько найдено карточек и отображается ли сообщение что их не найдено
+7)  home controller строка 545 configView проверить добавились ли лисенеры кнопкам смены вида
+8)  home controller строка 149 configSearch проверить стал ли отображаться инпут поиска, и есть на на нем лисенер на инпут - как это сделать?!
+9)  home controller строка 137 addRouting проверить добавились ли лисенеры на нужные элементы
+10) product controller строка 18 setuppage есть ли в квери строке называние продукта, находит ли нужный продукт по названию среди всех продуктов, отрабатывают ли методы this.view.drawMain(product); и this.configPage();
+*/
+
 describe('suite name', () => {
   it('foo', () => {
     assert.equal(Math.sqrt(4), 2)

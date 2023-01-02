@@ -143,7 +143,6 @@ export class CartController extends Controller {
             this.model.cart = JSON.parse(item) as { product: Product; amount: 1 }[];
         }*/
 
-        console.log(this.model.cart);
         const cartCount = selectorChecker(document, '.cart-wrapper__count');
         const cartState = selectorChecker(document, '.cart-wrapper__state');
         cartCount.innerHTML = this.model.cart.length.toString();

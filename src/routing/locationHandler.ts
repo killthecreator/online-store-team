@@ -11,7 +11,7 @@ import {
 } from '../';
 
 export const locationHandler = (e: Event, location: string) => {
-    //e.preventDefault();
+    e.preventDefault(); //эта строка была закоментирована
     const page = location.startsWith('/home')
         ? '/home'
         : location.startsWith('/product')
