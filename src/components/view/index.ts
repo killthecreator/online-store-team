@@ -38,13 +38,13 @@ export class GlobalView {
         document.body.append(header);
         const ancors = header.querySelectorAll('.routing_type_header');
         ancors.forEach((ancor) => {
-          ancor.addEventListener('click', (e) => {
-          console.log('произошел клик на роутинг!')
-          const curTarget = e.currentTarget as HTMLElement;
-          window.history.pushState({}, '', curTarget.id);
-          locationHandler(e, curTarget.id);
-    })
-  });
+            ancor.addEventListener('click', (e) => {
+                console.log('произошел клик на роутинг!');
+                const curTarget = e.currentTarget as HTMLElement;
+                window.history.pushState({}, '', curTarget.id);
+                locationHandler(curTarget.id);
+            });
+        });
     };
 
     public drawFooter = (): void => {
