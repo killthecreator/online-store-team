@@ -71,6 +71,7 @@ export class ProductController extends Controller {
         const buyNow = selectorChecker(document, '.product__description-buy-now');
         console.log(buyNow);
         buyNow.addEventListener('click', (e) => {
+            e.preventDefault();
             productInCart = this.model.cart.find((product) => product.product.name === addToCartButton.id);
             if (!product) throw new Error('there is no such product');
             if (!productInCart) {
@@ -86,7 +87,7 @@ export class ProductController extends Controller {
 
             localStorage.setItem('cartCadence', JSON.stringify(this.model.cart));
 
-            locationHandler(e, '/cart');
+            locationHandler('/cart');
             cartController.openModalWindow();
         });
         //ends buy now

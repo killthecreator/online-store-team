@@ -42,9 +42,6 @@ export const cartController = new CartController(cartView, model);
 export const pageNotFoundController = new PageNotFoundController(pageNotFoundView, model);
 export const homeController = new HomeController(homeView, model);
 
-export const fillUrl = homeController.fillUrl;
-export const configPage = pageNotFoundController.configPage;
-
 /* if (window.location.pathname === '/' || window.location.pathname === '/home/') {
     window.location.pathname = `/home`;
 }  */ //а вот эта строка влияет на билд. одну секкунду показывается хедер и футер, а потом всё, страница не найдена, и это не наша страница не найдена
@@ -57,8 +54,10 @@ app.view.drawFooter();
 
 window.addEventListener('DOMContentLoaded', (e) => {
     console.log(`on content loaded, currentPath = ${currentPath}`);
-    locationHandler(e, currentPath);
+    e.preventDefault();
+    locationHandler(currentPath);
 });
 window.onpopstate = (e) => {
-    locationHandler(e, window.location.pathname);
+    e.preventDefault();
+    locationHandler(window.location.pathname);
 }; //из-за этого куска кода страница перезагружается дважды
