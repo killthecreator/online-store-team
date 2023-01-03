@@ -1,5 +1,5 @@
 import { assert, beforeEach, describe, expect, it } from 'vitest';
-import { app, cartController, homeController, pageNotFoundController, pageNotFoundView } from '../src';
+import { app, cartController, homeController, pageNotFoundController, pageNotFoundView, productController } from '../src';
 //import { homeController} from '../src'
 //import { productController } from '../src';
 //import { pageNotFoundController } from '../src';
@@ -25,7 +25,6 @@ import { selectorChecker } from '../src/utils/selectorChecker';
 
 всего 10 функций будем тестировать
 
-9)  home controller строка 137 addRouting проверить добавились ли лисенеры на нужные элементы
 10) product controller строка 18 setuppage есть ли в квери строке называние продукта, находит ли нужный продукт по названию среди всех продуктов, отрабатывают ли методы this.view.drawMain(product); и this.configPage();
 */
 
@@ -108,10 +107,16 @@ describe('online-store tests', () => {
     })
 
     it('should check if correct brand image added', ()=> {
-      const imagePath = '/src/assets/logos/brands/';
-      homeController.addLogos();
-      const someBrandDiv = selectorChecker(document, '.photo-zone__brand') as HTMLDivElement;
-      expect(someBrandDiv.style.backgroundImage).toEqual(`url(${imagePath}${someBrandDiv.id.toLowerCase()}.svg)`)
+        const imagePath = '/src/assets/logos/brands/';
+        homeController.addLogos();
+        const someBrandDiv = selectorChecker(document, '.photo-zone__brand') as HTMLDivElement;
+        expect(someBrandDiv.style.backgroundImage).toEqual(`url(${imagePath}${someBrandDiv.id.toLowerCase()}.svg)`)
+    })
 
+    it('should create proper product page depending on link', () => {
+      const someLocation = 'Jackson%20CBX%20IV%20David%20Ellefson';
+      productController.setupPage(someLocation);
+      const productName = selectorChecker(document, '.product__description-name');
+      expect(productName.textContent).toBe('Jackson CBX IV David Ellefson');
     })
 });
