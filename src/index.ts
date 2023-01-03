@@ -45,7 +45,7 @@ export const homeController = new HomeController(homeView, model);
 
 /*if (window.location.pathname === '/') {
     window.location.href = `${window.location.origin}/home`;
-}*/
+}*/ //а вот эта строка влияет на билд. одну секкунду показывается хедер и футер, а потом всё, страница не найдена, и это не наша страница не найдена
 const currentPath = window.location.href.replace(window.location.origin, '');
 
 export const app = new App(currentPath, model, homeView, homeController);
@@ -62,7 +62,7 @@ window.addEventListener('DOMContentLoaded', (e) => {
 /*window.onpopstate = (e) => {
     console.log('on pop state');
     locationHandler(e, window.location.pathname);
-};
+};*/ //из-за этого куска кода страница перезагружается дважды
 
-export const fillUrl = homeController.fillUrl;
+/*export const fillUrl = homeController.fillUrl;
 export const url = homeController.url;*/
