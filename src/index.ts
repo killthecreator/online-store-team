@@ -28,7 +28,7 @@ class App {
     }
 }
 
-const model = new Model();
+export const model = new Model();
 
 //const globalView = new GlobalView();
 
@@ -43,6 +43,7 @@ export const pageNotFoundController = new PageNotFoundController(pageNotFoundVie
 export const homeController = new HomeController(homeView, model);
 
 export const fillUrl = homeController.fillUrl;
+export const configPage = pageNotFoundController.configPage;
 
 /* if (window.location.pathname === '/' || window.location.pathname === '/home/') {
     window.location.pathname = `/home`;

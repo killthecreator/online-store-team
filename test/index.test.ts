@@ -1,18 +1,16 @@
-import { assert, describe, expect, it, test } from 'vitest';
-import { app } from '../src';
+import { assert, beforeEach, describe, expect, it, test } from 'vitest';
+import { app, pageNotFoundController, pageNotFoundView, productController, productView } from '../src';
 //import { homeController} from '../src'
 //import { productController } from '../src';
 //import { pageNotFoundController } from '../src';
 //import { cartController } from '../src';
 import { URL } from '../src/utils/urlInterface';
 import { fillUrl } from '../src';
+import { locationHandler } from '../src/routing/locationHandler';
 
 /**
  * @vitest-environment jsdom
  */
-
-//import { fillUrl } from '../src';
-//import { url } from '../src';
 
 // link to test examples https://github.com/vitest-dev/vitest/tree/main/examples/mocks/test
 
@@ -26,11 +24,11 @@ import { fillUrl } from '../src';
 
 можно например потестировать:
 
-1)  fillUrl из homeController
+!!!! готово1)  fillUrl из homeController
       заполняем объект this.url
       тестим разные строки
 
-2)  тестим локейшн хэндлер, что у нас меняются контроллеры и вью в зависимости от строки урл
+!!!! готово 2)  тестим локейшн хэндлер, что у нас меняются контроллеры и вью в зависимости от строки урл
 3)  turnOffSearch контроллер 404 строка 26 можно проверить стало ли значиение search.style.display = 'none';
 4)  cart controller строка 39 configPage проверить все ли фукции запустились - как это проверить?
 5)  cart controller строка 602 modalWindowConfig проверить добавился ли на кнопку ивент лисенер - как это проверить?
@@ -43,6 +41,11 @@ import { fillUrl } from '../src';
 // 1 попытка сделать тест но он падает. ReferenceError: window is not defined
 
 describe('online-store tests', () => {
+
+    beforeEach(() => {
+
+    });
+
     it('fillUrl should controller url object properly reading page url queries', () => {
         const exampleUrl =
             '/home/?category=guitars↕basses&brand=Ibanez↕B.C.Rich&price=1087↕11232&stock=1↕29&sort=priceDESC&big=false';
@@ -59,6 +62,14 @@ describe('online-store tests', () => {
         fillUrl.call(fictController, exampleUrl);
         assert.equal(fictController.url, thisUrl);
     });
+
+    it('locationHandler sould select proper controller', () => {
+        const e = new Event("click");
+        const someLocation = '/hvkhjvkjhv';
+        locationHandler(e, someLocation);
+        assert.equal(app.controller, pageNotFoundController);
+        assert.equal(app.view, pageNotFoundView);
+    })
 });
 //////////////////////////////////
 describe('suite name', () => {
