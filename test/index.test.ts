@@ -1,18 +1,19 @@
-import { assert, describe, expect, it, test } from 'vitest';
-import { app } from '../src';
+import { assert, beforeEach, describe, expect, it, test } from 'vitest';
+import { app, homeController } from '../src';
 //import { homeController} from '../src'
 //import { productController } from '../src';
 //import { pageNotFoundController } from '../src';
 //import { cartController } from '../src';
 import { URL } from '../src/utils/urlInterface';
-import { fillUrl } from '../src';
+import { locationHandler } from '../src/routing/locationHandler';
+import { CartController } from '../src/components/controller/cart';
+import { PageNotFoundController } from '../src/components/controller/404';
+import { CartView } from '../src/components/view/cart/index';
+import { selectorChecker } from '../src/utils/selectorChecker';
 
 /**
  * @vitest-environment jsdom
  */
-
-//import { fillUrl } from '../src';
-//import { url } from '../src';
 
 // link to test examples https://github.com/vitest-dev/vitest/tree/main/examples/mocks/test
 
@@ -24,13 +25,6 @@ import { fillUrl } from '../src';
 
 всего 10 функций будем тестировать
 
-можно например потестировать:
-
-1)  fillUrl из homeController
-      заполняем объект this.url
-      тестим разные строки
-
-2)  тестим локейшн хэндлер, что у нас меняются контроллеры и вью в зависимости от строки урл
 3)  turnOffSearch контроллер 404 строка 26 можно проверить стало ли значиение search.style.display = 'none';
 4)  cart controller строка 39 configPage проверить все ли фукции запустились - как это проверить?
 5)  cart controller строка 602 modalWindowConfig проверить добавился ли на кнопку ивент лисенер - как это проверить?
@@ -40,10 +34,13 @@ import { fillUrl } from '../src';
 9)  home controller строка 137 addRouting проверить добавились ли лисенеры на нужные элементы
 10) product controller строка 18 setuppage есть ли в квери строке называние продукта, находит ли нужный продукт по названию среди всех продуктов, отрабатывают ли методы this.view.drawMain(product); и this.configPage();
 */
-// 1 попытка сделать тест но он падает. ReferenceError: window is not defined
 
 describe('online-store tests', () => {
-    it('fillUrl should controller url object properly reading page url queries', () => {
+    beforeEach(() => {
+        locationHandler('/home');
+    });
+
+    it('fillUrl should change app controller url object properly reading page url queries', () => {
         const exampleUrl =
             '/home/?category=guitars↕basses&brand=Ibanez↕B.C.Rich&price=1087↕11232&stock=1↕29&sort=priceDESC&big=false';
 
@@ -55,42 +52,31 @@ describe('online-store tests', () => {
             price: '1087↕11232',
             stock: '1↕29',
         };
-        const fictController = { url: thisUrl };
-        fillUrl.call(fictController, exampleUrl);
-        assert.equal(fictController.url, thisUrl);
-    });
-});
-//////////////////////////////////
-describe('suite name', () => {
-    it('foo', () => {
-        assert.equal(Math.sqrt(4), 2);
+        const fictiveController = { url: thisUrl };
+        homeController.fillUrl.call(fictiveController, exampleUrl);
+        expect(fictiveController.url).toEqual(thisUrl);
     });
 
-    it('bar', () => {
-        expect(1 + 1).eq(2);
+    it('should change controller and view of the app with page change', () => {
+        locationHandler('/cart');
+        expect(app.controller).toBeInstanceOf(CartController);
+        expect(app.view).toBeInstanceOf(CartView);
     });
 
-    it('snapshot', () => {
-        expect({ foo: 'bar' }).toMatchSnapshot();
+    it('should hide search bar in case if page is not found', () => {
+        const search = selectorChecker(document, '.search-wrapper') as HTMLElement;
+        expect(search.style.display).toEqual('flex');
+        locationHandler('/404');
+        const notFoundController = app.controller as PageNotFoundController;
+        notFoundController.turnOffSearch();
+        expect(search.style.display).toEqual('none');
     });
-});
 
-// Edit an assertion and save to see HMR in action
-
-test('Math.sqrt()', () => {
-    expect(Math.sqrt(4)).toBe(2);
-    expect(Math.sqrt(144)).toBe(12);
-    expect(Math.sqrt(2)).toBe(Math.SQRT2);
-});
-
-test('JSON', () => {
-    const input = {
-        foo: 'hello',
-        bar: 'world',
-    };
-
-    const output = JSON.stringify(input);
-
-    expect(output).eq('{"foo":"hello","bar":"world"}');
-    assert.deepEqual(JSON.parse(output), input, 'matches original');
+    it('should count nubmer of products and display it', () => {
+        app.controller.url = { search: 'Fender' };
+        homeController.doSearch();
+        homeController.found();
+        const foundDiv = selectorChecker(document, '.found');
+        expect(parseInt(foundDiv.innerHTML.replace('Found: ', ''))).toBeLessThanOrEqual(10);
+    });
 });

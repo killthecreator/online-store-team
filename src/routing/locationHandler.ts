@@ -8,21 +8,19 @@ import {
     cartController,
     pageNotFoundController,
     app,
-
 } from '../';
 
-export const locationHandler = (e: Event, location: string) => {
-    e.preventDefault();
-    console.log(`сработал locationHandler, location=${location}`);
+export const locationHandler = (location: string) => {
+    //console.log(`сработал locationHandler, location=${location}`);
     let page;
     if (location.startsWith('/home') || location === '' || location === '/') {
-      page = '/home'
+        page = '/home';
     } else if (location.startsWith('/product')) {
-      page = '/product'
+        page = '/product';
     } else if (location.startsWith('/cart')) {
-      page = '/cart'
+        page = '/cart';
     } else {
-      page = '/404'
+        page = '/404';
     }
     /*const page = (location.startsWith('/home') || location === '' || location === '/')
         ? '/home'

@@ -139,9 +139,10 @@ export class HomeController extends Controller {
         const ancors = cards.querySelectorAll('.routing_type_card');
         ancors.forEach((ancor) =>
             ancor.addEventListener('click', (e) => {
+                e.preventDefault();
                 const curTarget = e.currentTarget as HTMLElement;
                 if (curTarget.id.startsWith('/product')) window.history.pushState({}, '', curTarget.id);
-                locationHandler(e, curTarget.id);
+                locationHandler(curTarget.id);
             })
         );
     }
@@ -534,7 +535,6 @@ export class HomeController extends Controller {
                     .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
                     .toString()} $`;
 
-                //console.log('добавим в localStorage');
                 localStorage.setItem('cartCadence', JSON.stringify(this.model.cart));
             };
 
@@ -646,9 +646,7 @@ export class HomeController extends Controller {
         if (Object.keys(this.url).length !== 0) return;
 
         if (queriesArr[0] !== '/home' && queriesArr[0] !== '/home/' && queriesArr[0] !== '/') {
-            if (typeof window !== 'undefined') {
-                window.location.pathname = '404';
-            }
+            window.location.pathname = '404';
         }
     }
 }
