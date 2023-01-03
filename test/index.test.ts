@@ -1,4 +1,4 @@
-import { assert, beforeEach, describe, expect, it, test } from 'vitest';
+import { assert, beforeEach, describe, expect, it } from 'vitest';
 import { app, cartController, homeController, pageNotFoundController, pageNotFoundView } from '../src';
 //import { homeController} from '../src'
 //import { productController } from '../src';
@@ -61,7 +61,7 @@ describe('online-store tests', () => {
         locationHandler(someLocation);
         assert.equal(app.controller, pageNotFoundController);
         assert.equal(app.view, pageNotFoundView);
-    })
+    });
 
     it('should change controller and view of the app with page change', () => {
         locationHandler('/cart');
@@ -87,28 +87,28 @@ describe('online-store tests', () => {
     });
 
     it('config.page should execute all 6 functions', () => {
-        let i: number = 0;
+        let i = 0;
         const fakeCartController = {
             turnOffSearch: () => {
                 return i++;
             },
             productAmount: () => {
-              return i++;
+                return i++;
             },
             areProductsInCart: () => {
-              return i++;
+                return i++;
             },
             pagination: () => {
-              return i++;
+                return i++;
             },
             promoCodding: () => {
-              return i++;
+                return i++;
             },
             modalWindowConfig: () => {
-              return i++;
+                return i++;
             },
-        }
+        };
         cartController.configPage.call(fakeCartController);
         expect(i).toBe(6);
-    })
+    });
 });
