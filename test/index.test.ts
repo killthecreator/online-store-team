@@ -5,6 +5,7 @@ import { app } from '../src';
 //import { pageNotFoundController } from '../src';
 //import { cartController } from '../src';
 import { URL } from '../src/utils/urlInterface';
+import { fillUrl } from '../src';
 
 //import { fillUrl } from '../src';
 //import { url } from '../src';
@@ -40,10 +41,10 @@ import { URL } from '../src/utils/urlInterface';
 describe('online-store tests', () => {
     it('fillUrl sould fill url properly', () => {
         const window = global; // я не знаю как еще определить window
-
+        const urlObj = {};
         const exampleUrl =
             '/home/?category=guitars↕basses&brand=Ibanez↕B.C.Rich&price=1087↕11232&stock=1↕29&sort=priceDESC&big=false';
-        fillUrl(exampleUrl);
+
         const thisUrl: Partial<URL> = {
             big: 'false',
             sort: 'priceDESC',
@@ -52,7 +53,8 @@ describe('online-store tests', () => {
             price: '1087↕11232',
             stock: '1↕29',
         };
-        assert.equal(url, thisUrl);
+        fillUrl.call(urlObj, exampleUrl);
+        assert.equal(urlObj, thisUrl);
     });
 });
 //////////////////////////////////
