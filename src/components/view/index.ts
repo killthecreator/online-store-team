@@ -4,6 +4,7 @@ import RsschoolLogo from './../../assets/logos/rs_school_js.svg';
 import ShoppingCartImg from '../../assets/logos/shopping-cart.svg';
 import SearchIcon from '../../assets/logos/seach-icon.svg';
 import Logo from '../../assets/logos/site-logo.jpg';
+import { locationHandler } from '../../routing/locationHandler';
 
 export class GlobalView {
     public drawHeader = (): void => {
@@ -35,6 +36,15 @@ export class GlobalView {
       </div>
     </div>`;
         document.body.append(header);
+        const ancors = header.querySelectorAll('.routing_type_header');
+        ancors.forEach((ancor) => {
+          ancor.addEventListener('click', (e) => {
+          console.log('произошел клик на роутинг!')
+          const curTarget = e.currentTarget as HTMLElement;
+          window.history.pushState({}, '', curTarget.id);
+          locationHandler(e, curTarget.id);
+    })
+  });
     };
 
     public drawFooter = (): void => {

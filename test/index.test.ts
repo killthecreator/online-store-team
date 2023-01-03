@@ -6,8 +6,8 @@ import { app } from '../src';
 //import { cartController } from '../src';
 import { URL } from '../src/utils/urlInterface';
 
-import { fillUrl } from '../src';
-import { url } from '../src';
+//import { fillUrl } from '../src';
+//import { url } from '../src';
 
 // link to test examples https://github.com/vitest-dev/vitest/tree/main/examples/mocks/test
 

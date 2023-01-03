@@ -1,5 +1,5 @@
 //import { locationHandler } from './routing/locationHandler.js';
-import { URL } from './utils/urlInterface.js';
+//import { URL } from './utils/urlInterface.js';
 import { locationHandler } from './routing/locationHandler.js';
 
 import { GlobalView } from './components/view/';
@@ -15,6 +15,8 @@ import { HomeController } from './components/controller/home/';
 import { ProductController } from './components/controller/product';
 import { PageNotFoundController } from './components/controller/404';
 import { CartController } from './components/controller/cart';
+
+console.log('загрузился корневой индекс');
 
 class App {
     location: string;
@@ -32,19 +34,21 @@ class App {
 
 const model = new Model();
 
+//const globalView = new GlobalView();
+
 export const homeView = new HomeView();
 export const productView = new ProductView();
 export const cartView = new CartView();
 export const pageNotFoundView = new PageNotFoundView();
 
-export const homeController = new HomeController(homeView, model);
 export const productController = new ProductController(productView, model);
 export const cartController = new CartController(cartView, model);
 export const pageNotFoundController = new PageNotFoundController(pageNotFoundView, model);
+export const homeController = new HomeController(homeView, model);
 
-if (window.location.pathname === '/' || window.location.pathname === '/home/') {
+/*if (window.location.pathname === '/' || window.location.pathname === '/home/') {
     window.location.pathname = `/home`;
-}
+}  */ //а вот эта строка влияет на билд. одну секкунду показывается хедер и футер, а потом всё, страница не найдена, и это не наша страница не найдена
 
 const currentPath = window.location.href.replace(window.location.origin, '');
 
@@ -52,22 +56,10 @@ export const app = new App(currentPath, model, homeView, homeController);
 app.view.drawHeader();
 app.view.drawFooter();
 
-const ancors = document.querySelectorAll('.routing_type_header');
-ancors.forEach((ancor) =>
-    ancor.addEventListener('click', (e) => {
-        const curTarget = e.currentTarget as HTMLElement;
-        window.history.pushState({}, '', curTarget.id);
-        locationHandler(e, curTarget.id);
-    })
-);
-
 window.addEventListener('DOMContentLoaded', (e) => {
+  console.log(`on content loaded, currentPath = ${currentPath}`);
     locationHandler(e, currentPath);
 });
-
-window.onpopstate = (e) => {
+/*window.onpopstate = (e) => {
     locationHandler(e, window.location.pathname);
-};
-
-export const fillUrl = homeController.fillUrl;
-export const url = homeController.url;
+};*/ //из-за этого куска кода страница перезагружается дважды

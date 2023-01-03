@@ -1,24 +1,36 @@
 import {
-    app,
-    homeController,
-    productController,
-    cartController,
-    pageNotFoundController,
     homeView,
     productView,
     cartView,
     pageNotFoundView,
+    homeController,
+    productController,
+    cartController,
+    pageNotFoundController,
+    app,
+
 } from '../';
 
 export const locationHandler = (e: Event, location: string) => {
     e.preventDefault();
-    const page = location.startsWith('/home')
+    console.log(`сработал locationHandler, location=${location}`);
+    let page;
+    if (location.startsWith('/home') || location === '' || location === '/') {
+      page = '/home'
+    } else if (location.startsWith('/product')) {
+      page = '/product'
+    } else if (location.startsWith('/cart')) {
+      page = '/cart'
+    } else {
+      page = '/404'
+    }
+    /*const page = (location.startsWith('/home') || location === '' || location === '/')
         ? '/home'
         : location.startsWith('/product')
         ? '/product'
         : location.startsWith('/cart')
         ? '/cart'
-        : '/404';
+        : '/404';*/
 
     switch (page) {
         case '/home':
