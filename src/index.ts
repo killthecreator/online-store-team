@@ -1,5 +1,5 @@
 //import { locationHandler } from './routing/locationHandler.js';
-import { URL } from './utils/urlInterface.js';
+//import { URL } from './utils/urlInterface.js';
 import { locationHandler } from './routing/locationHandler.js';
 
 import { GlobalView } from './components/view/';
@@ -63,6 +63,3 @@ window.addEventListener('DOMContentLoaded', (e) => {
 /*window.onpopstate = (e) => {
     locationHandler(e, window.location.pathname);
 };*/ //из-за этого куска кода страница перезагружается дважды
-
-/*export const fillUrl = homeController.fillUrl;
-export const url = homeController.url;*/

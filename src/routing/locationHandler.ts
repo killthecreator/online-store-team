@@ -13,7 +13,7 @@ import {
 
 export const locationHandler = (e: Event, location: string) => {
     e.preventDefault();
-    alert(`сработал locationHandler, location=${location}`);
+    console.log(`сработал locationHandler, location=${location}`);
     let page;
     if (location.startsWith('/home') || location === '' || location === '/') {
       page = '/home'
