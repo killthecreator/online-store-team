@@ -65,7 +65,6 @@ describe('online-store tests', () => {
     });
 
     it('locationHandler sould select proper controller', () => {
-        const e = new Event("click");
         const someLocation = '/hvkhjvkjhv';
         locationHandler(someLocation);
         assert.equal(app.controller, pageNotFoundController);
