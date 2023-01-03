@@ -43,21 +43,21 @@ import { fillUrl } from '../src';
 // 1 попытка сделать тест но он падает. ReferenceError: window is not defined
 
 describe('online-store tests', () => {
-    it('fillUrl sould fill url properly', () => {
-        const urlObj = {};
+    it('fillUrl should controller url object properly reading page url queries', () => {
         const exampleUrl =
             '/home/?category=guitars↕basses&brand=Ibanez↕B.C.Rich&price=1087↕11232&stock=1↕29&sort=priceDESC&big=false';
 
         const thisUrl: Partial<URL> = {
-            big: 'false',
-            sort: 'priceDESC',
+            big: 'big=false',
+            sort: 'sort=priceDESC',
             categories: 'guitars↕basses',
             brands: 'Ibanez↕B.C.Rich',
             price: '1087↕11232',
             stock: '1↕29',
         };
-        fillUrl.call(urlObj, exampleUrl);
-        assert.equal(urlObj, thisUrl);
+        const fictController = { url: thisUrl };
+        fillUrl.call(fictController, exampleUrl);
+        assert.equal(fictController.url, thisUrl);
     });
 });
 //////////////////////////////////

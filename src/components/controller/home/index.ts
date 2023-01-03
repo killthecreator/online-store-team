@@ -645,7 +645,7 @@ export class HomeController extends Controller {
 
         if (Object.keys(this.url).length !== 0) return;
 
-        if (queriesArr[0] !== '/home' && queriesArr[0] !== '/home/'  && queriesArr[0] !== '/') {
+        if (queriesArr[0] !== '/home' && queriesArr[0] !== '/home/' && queriesArr[0] !== '/') {
             if (typeof window !== 'undefined') {
                 window.location.pathname = '404';
             }
