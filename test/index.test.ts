@@ -1,5 +1,5 @@
-import { assert, describe, expect, it, test } from 'vitest'
-//import { app } from '../src/index';
+import { assert, describe, expect, it, test } from 'vitest';
+import { app } from '../src';
 //import { homeController} from '../src'
 //import { productController } from '../src';
 //import { pageNotFoundController } from '../src';
@@ -36,56 +36,56 @@ import { url } from '../src';
 10) product controller строка 18 setuppage есть ли в квери строке называние продукта, находит ли нужный продукт по названию среди всех продуктов, отрабатывают ли методы this.view.drawMain(product); и this.configPage();
 */
 // 1 попытка сделать тест но он падает. ReferenceError: window is not defined
+
 describe('online-store tests', () => {
-  it('fillUrl sould fill url properly', () => {
+    it('fillUrl sould fill url properly', () => {
+        const window = global; // я не знаю как еще определить window
 
-    const window = global;// я не знаю как еще определить window
-    
-    const exampleUrl = '/home/?category=guitars↕basses&brand=Ibanez↕B.C.Rich&price=1087↕11232&stock=1↕29&sort=priceDESC&big=false';
-    fillUrl(exampleUrl);
-    const thisUrl: Partial<URL> = {
-      big: 'false',
-      sort: 'priceDESC',
-      categories: 'guitars↕basses',
-      brands: 'Ibanez↕B.C.Rich',
-      price: '1087↕11232',
-      stock: '1↕29'
-    }
-    assert.equal(url, thisUrl);
-
-  })
-})
+        const exampleUrl =
+            '/home/?category=guitars↕basses&brand=Ibanez↕B.C.Rich&price=1087↕11232&stock=1↕29&sort=priceDESC&big=false';
+        fillUrl(exampleUrl);
+        const thisUrl: Partial<URL> = {
+            big: 'false',
+            sort: 'priceDESC',
+            categories: 'guitars↕basses',
+            brands: 'Ibanez↕B.C.Rich',
+            price: '1087↕11232',
+            stock: '1↕29',
+        };
+        assert.equal(url, thisUrl);
+    });
+});
 //////////////////////////////////
 describe('suite name', () => {
-  it('foo', () => {
-    assert.equal(Math.sqrt(4), 2)
-  })
+    it('foo', () => {
+        assert.equal(Math.sqrt(4), 2);
+    });
 
-  it('bar', () => {
-    expect(1 + 1).eq(2)
-  })
+    it('bar', () => {
+        expect(1 + 1).eq(2);
+    });
 
-  it('snapshot', () => {
-    expect({ foo: 'bar' }).toMatchSnapshot()
-  })
-})
+    it('snapshot', () => {
+        expect({ foo: 'bar' }).toMatchSnapshot();
+    });
+});
 
 // Edit an assertion and save to see HMR in action
 
 test('Math.sqrt()', () => {
-  expect(Math.sqrt(4)).toBe(2)
-  expect(Math.sqrt(144)).toBe(12)
-  expect(Math.sqrt(2)).toBe(Math.SQRT2)
-})
+    expect(Math.sqrt(4)).toBe(2);
+    expect(Math.sqrt(144)).toBe(12);
+    expect(Math.sqrt(2)).toBe(Math.SQRT2);
+});
 
 test('JSON', () => {
-  const input = {
-    foo: 'hello',
-    bar: 'world',
-  }
+    const input = {
+        foo: 'hello',
+        bar: 'world',
+    };
 
-  const output = JSON.stringify(input)
+    const output = JSON.stringify(input);
 
-  expect(output).eq('{"foo":"hello","bar":"world"}')
-  assert.deepEqual(JSON.parse(output), input, 'matches original')
-})
+    expect(output).eq('{"foo":"hello","bar":"world"}');
+    assert.deepEqual(JSON.parse(output), input, 'matches original');
+});
