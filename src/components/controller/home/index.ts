@@ -136,7 +136,7 @@ export class HomeController extends Controller {
 
     addRouting() {
         const cards = selectorChecker(document, 'main');
-        const ancors = cards.querySelectorAll('.routing');
+        const ancors = cards.querySelectorAll('.routing_type_card');
         ancors.forEach((ancor) =>
             ancor.addEventListener('click', (e) => {
                 const curTarget = e.currentTarget as HTMLElement;
@@ -619,7 +619,6 @@ export class HomeController extends Controller {
 
     fillUrl(location: string) {
         const queriesArr = location.replace('/home?', '').split('&');
-        console.log(queriesArr);
         queriesArr.forEach((query) => {
             if (query.startsWith('category=')) {
                 this.url.categories = query;
@@ -647,9 +646,9 @@ export class HomeController extends Controller {
         if (Object.keys(this.url).length !== 0) return;
 
         if (queriesArr[0] !== '/home' && queriesArr[0] !== '/home/') {
-          if (typeof window !== 'undefined') {
-            window.location.pathname = '404';
-          }
+            if (typeof window !== 'undefined') {
+                window.location.pathname = '404';
+            }
         }
     }
 }
