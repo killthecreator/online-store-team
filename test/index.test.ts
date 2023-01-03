@@ -1,5 +1,5 @@
 import { assert, beforeEach, describe, expect, it, test } from 'vitest';
-import { app, homeController, pageNotFoundController, pageNotFoundView } from '../src';
+import { app, cartController, homeController, pageNotFoundController, pageNotFoundView } from '../src';
 //import { homeController} from '../src'
 //import { productController } from '../src';
 //import { pageNotFoundController } from '../src';
@@ -25,14 +25,6 @@ import { selectorChecker } from '../src/utils/selectorChecker';
 
 всего 10 функций будем тестировать
 
-можно например потестировать:
-
-!!!! готово1)  fillUrl из homeController
-      заполняем объект this.url
-      тестим разные строки
-
-!!!! готово 2)  тестим локейшн хэндлер, что у нас меняются контроллеры и вью в зависимости от строки урл
-3)  turnOffSearch контроллер 404 строка 26 можно проверить стало ли значиение search.style.display = 'none';
 4)  cart controller строка 39 configPage проверить все ли фукции запустились - как это проверить?
 5)  cart controller строка 602 modalWindowConfig проверить добавился ли на кнопку ивент лисенер - как это проверить?
 6)  home controller строка 592 found проверить сколько найдено карточек и отображается ли сообщение что их не найдено
@@ -64,7 +56,7 @@ describe('online-store tests', () => {
         expect(fictiveController.url).toEqual(thisUrl);
     });
 
-    it('locationHandler sould select proper controller', () => {
+    it('locationHandler sould select proper controller in case of wrong location', () => {
         const someLocation = '/hvkhjvkjhv';
         locationHandler(someLocation);
         assert.equal(app.controller, pageNotFoundController);
@@ -93,4 +85,30 @@ describe('online-store tests', () => {
         const foundDiv = selectorChecker(document, '.found');
         expect(parseInt(foundDiv.innerHTML.replace('Found: ', ''))).toBeLessThanOrEqual(10);
     });
+
+    it('config.page should execute all 6 functions', () => {
+        let i: number = 0;
+        const fakeCartController = {
+            turnOffSearch: () => {
+                return i++;
+            },
+            productAmount: () => {
+              return i++;
+            },
+            areProductsInCart: () => {
+              return i++;
+            },
+            pagination: () => {
+              return i++;
+            },
+            promoCodding: () => {
+              return i++;
+            },
+            modalWindowConfig: () => {
+              return i++;
+            },
+        }
+        cartController.configPage.call(fakeCartController);
+        expect(i).toBe(6);
+    })
 });
