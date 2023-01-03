@@ -16,6 +16,8 @@ import { ProductController } from './components/controller/product';
 import { PageNotFoundController } from './components/controller/404';
 import { CartController } from './components/controller/cart';
 
+console.log('загрузился корневой индекс');
+
 class App {
     location: string;
     model: Model;
@@ -55,7 +57,7 @@ app.view.drawHeader();
 app.view.drawFooter();
 
 window.addEventListener('DOMContentLoaded', (e) => {
-  console.log('on content loaded');
+  console.log(`on content loaded, currentPath = ${currentPath}`);
     locationHandler(e, currentPath);
 });
 /*window.onpopstate = (e) => {

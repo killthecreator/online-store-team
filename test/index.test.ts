@@ -6,8 +6,8 @@ import { assert, describe, expect, it, test } from 'vitest'
 //import { cartController } from '../src';
 import { URL } from '../src/utils/urlInterface';
 
-import { fillUrl } from '../src';
-import { url } from '../src';
+//import { fillUrl } from '../src';
+//import { url } from '../src';
 
 // link to test examples https://github.com/vitest-dev/vitest/tree/main/examples/mocks/test
 
@@ -40,7 +40,7 @@ describe('online-store tests', () => {
   it('fillUrl sould fill url properly', () => {
 
     const window = global;// я не знаю как еще определить window
-    
+
     const exampleUrl = '/home/?category=guitars↕basses&brand=Ibanez↕B.C.Rich&price=1087↕11232&stock=1↕29&sort=priceDESC&big=false';
     fillUrl(exampleUrl);
     const thisUrl: Partial<URL> = {
