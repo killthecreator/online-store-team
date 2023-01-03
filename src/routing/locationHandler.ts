@@ -1,13 +1,14 @@
 import {
-    app,
-    homeController,
-    productController,
-    cartController,
-    pageNotFoundController,
     homeView,
     productView,
     cartView,
     pageNotFoundView,
+    homeController,
+    productController,
+    cartController,
+    pageNotFoundController,
+    app,
+
 } from '../';
 
 export const locationHandler = (e: Event, location: string) => {
