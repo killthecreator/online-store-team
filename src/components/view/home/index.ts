@@ -1,6 +1,6 @@
 import './home.scss';
 import { Product, Category, Brand } from '../../model/data';
-import { GlobalView } from '../index';
+import { GlobalView } from '../';
 import { selectorChecker } from '../../../utils/selectorChecker';
 
 export class HomeView extends GlobalView {
@@ -84,7 +84,7 @@ export class HomeView extends GlobalView {
     public drawButtons = () => {
         return `
       <section class="buttons">
-        <button class="reset-filters button routing" id="/home" =>Reset filters</button>
+        <button class="reset-filters button routing_type_card" id="/home" =>Reset filters</button>
         <button class="copy-link button">Copy link</button>
         <select class="sort-options">
           <option selected disabled>Sort products</option>
@@ -122,10 +122,12 @@ export class HomeView extends GlobalView {
               <div class="photo-zone__store">
                 Stock: ${card.amount}
               </div>
-              <div class="photo-zone__empty routing" id='/product/${card.name}'></div>
+              <div class="photo-zone__empty routing_type_card" id='/product/${card.name}'></div>
               <div class="photo-zone__buttons">
                 <div class="photo-zone__product">
-                  <button class="photo-zone__product-button routing" id='/product/${card.name}'>details</button>
+                  <button class="photo-zone__product-button routing_type_card" id='/product/${
+                      card.name
+                  }'>details</button>
                 </div>
                 <div class="photo-zone__add-to-cart">
                   <button class="photo-zone__add-to-cart-button" id="${card.name}" ${
@@ -137,7 +139,7 @@ export class HomeView extends GlobalView {
 
             <div class="name-zone">
               <div class="name-zone__titles">
-                <h4 class="name-zone__name routing" id='/product/${card.name}'>${card.name}</h4>
+                <h4 class="name-zone__name routing_type_card" id='/product/${card.name}'>${card.name}</h4>
                 <p class="name-zone__category">${card.category}</p>
               </div>
               <div class="name-zone__price">

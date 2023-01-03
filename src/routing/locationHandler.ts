@@ -11,8 +11,7 @@ import {
 } from '../';
 
 export const locationHandler = (e: Event, location: string) => {
-    console.log('сработал location handler');
-    e.preventDefault(); //эта строка была закоментирована
+    e.preventDefault();
     const page = location.startsWith('/home')
         ? '/home'
         : location.startsWith('/product')
@@ -23,8 +22,8 @@ export const locationHandler = (e: Event, location: string) => {
 
     switch (page) {
         case '/home':
-            app.controller = homeController;
             app.view = homeView;
+            app.controller = homeController;
             app.location = location.replace('/home/?', '');
             break;
         case '/product':
