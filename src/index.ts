@@ -54,8 +54,6 @@ export const app = new App(currentPath, model, homeView, homeController);
 app.view.drawHeader();
 app.view.drawFooter();
 
-
-
 window.addEventListener('DOMContentLoaded', (e) => {
   console.log('on content loaded');
     locationHandler(e, currentPath);
