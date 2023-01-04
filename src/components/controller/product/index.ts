@@ -54,7 +54,6 @@ export class ProductController extends Controller {
                 .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
                 .toString()} $`;
 
-            //console.log('добавим в localStorage');
             localStorage.setItem('cartCadence', JSON.stringify(this.model.cart));
         };
         const addToCartButton = selectorChecker(document, '.product__description-add-to-cart');
@@ -67,9 +66,7 @@ export class ProductController extends Controller {
             addToCartButton.innerHTML = 'remove';
         }
 
-        //buy now
         const buyNow = selectorChecker(document, '.product__description-buy-now');
-        console.log(buyNow);
         buyNow.addEventListener('click', (e) => {
             e.preventDefault();
             productInCart = this.model.cart.find((product) => product.product.name === addToCartButton.id);
