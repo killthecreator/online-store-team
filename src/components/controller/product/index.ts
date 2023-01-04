@@ -29,8 +29,7 @@ export class ProductController extends Controller {
     }
 
     turnOffSearch() {
-        const search: HTMLDivElement | null = document.querySelector('.search-wrapper');
-        if (!search) throw new Error('there is no search block');
+        const search = selectorChecker(document, '.search-wrapper') as HTMLElement;
         search.style.display = 'none';
     }
 
