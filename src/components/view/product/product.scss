@@ -141,3 +141,38 @@ $light-grad: linear-gradient(180deg, mistyrose 5%, transparent 80%),
         }
     }
 }
+
+@media (max-width: 780px) {
+  body {
+    justify-content: center;
+    .bread-crumbs {
+      margin: 5vw 3vw;
+    }
+    .product {
+      flex-direction: column;
+      width: 90vw;
+      margin: 0 2vw;
+      .product__photos {
+         width: 90vw;
+         height: 66vw;
+        .product__additional-photos {
+          width: 23vw;
+          height: 66vw;
+          .product__additional-photo {
+          width: 22vw;
+          height: 20vw;
+          background-size: 22vw;
+          }
+        }
+        .product__main-photo {
+          width: 66vw;
+          height: 66vw;
+          background-size: 66vw;
+        }
+      }
+      .product__description {
+        margin: 10vw 0;
+      }
+    }
+  }
+}

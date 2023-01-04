@@ -86,14 +86,37 @@ body {
                 font-size: $basic-font-size;
                 margin: 0 1vw;
             }
+            .cart-wrapper__poromocoded {
+                font-size: $basic-font-size;
+                margin: 0 1vw;
+                color: violet;
+                display: none;
+            }
             .cart-wrapper__image {
-                width: 30px;
+                @include flex-space-between;
                 padding: 0 1vw 0 0;
+                align-items: center;
+                img {
+                    width: 30px;
+                    height: 30px;
+                }
+                .cart-wrapper__count {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+                    width: 50px;
+                    height: 30px;
+                    font-family: 'Bold';
+                    color: violet;
+                    font-size: 2rem;
+                }
             }
         }
     }
 
     .main {
+        flex-grow: 1;
+
         .filters,
         .ranges {
             .category-form__title,
@@ -157,4 +180,40 @@ body {
 @font-face {
     font-family: 'Normal';
     src: url('./../../assets/fonts/Montserrat/Montserrat-Medium.woff') format('woff');
+}
+
+@media (max-width: 780px) {
+    body {
+        align-items: center;
+        .header {
+            width: 90vw;
+            flex-direction: column;
+            .logo-wrapper {
+                width: 90vw;
+            }
+            .search-wrapper {
+                width: 90vw;
+                margin: 10px 0;
+            }
+            .cart-wrapper {
+                margin: 1vw 0;
+                width: 90vw;
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+        .footer {
+            width: 90vw;
+            .github {
+                .github__img {
+                    width: 7vw;
+                }
+            }
+            .rs-school {
+                .rs-school__img {
+                    width: 18vw;
+                }
+            }
+        }
+    }
 }

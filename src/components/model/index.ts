@@ -1,14 +1,17 @@
+import { PromoCode } from './data.js';
 import { Category, Brand, products, Product } from './data.js';
 
 export class Model {
+    cart: { product: Product; amount: number }[];
     categories: Category[];
     brands: Brand[];
     products: Product[];
-    activeCategories: Category[];
-    activeBrands: Brand[];
     cartState: number;
     pricesRange: [number, number];
-    stockRange: [0, number];
+    stockRange: [number, number];
+    promoCodes: PromoCode[];
+    appliedPromo: HTMLDivElement[];
+    activeProducts: Product[];
 
     constructor() {
         this.categories = ['guitars', 'basses', 'drums', 'keyboards', 'microphones'];
@@ -37,13 +40,37 @@ export class Model {
             'Neumann',
         ];
         this.products = products;
-        this.activeCategories = this.categories;
-        this.activeBrands = this.brands;
+
         this.cartState = 0;
         this.pricesRange = [
             Math.min(...this.products.map((item) => item.price)),
             Math.max(...this.products.map((item) => item.price)),
         ];
-        this.stockRange = [ 0, Math.max(...this.products.map((item) => item.amount))];
+        this.stockRange = [0, Math.max(...this.products.map((item) => item.amount))];
+        this.cart = [];
+        (this.promoCodes = [
+            {
+                name: 'Rolling Scopes School',
+                id: 'RS',
+                percent: 10,
+            },
+            {
+                name: 'Cadence Musical Instruments',
+                id: 'CADENCE',
+                percent: 20,
+            },
+            {
+                name: 'Happy New Year',
+                id: 'NEW YEAR',
+                percent: 5,
+            },
+            {
+                name: 'Black Friday Sale',
+                id: 'BLACK FRIDAY',
+                percent: 15,
+            },
+        ]),
+            (this.appliedPromo = []);
+        this.activeProducts = this.products;
     }
 }

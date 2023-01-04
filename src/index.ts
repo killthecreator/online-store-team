@@ -1,51 +1,60 @@
-import { route } from './routing/routing.js';
+import { locationHandler } from './routing/locationHandler.js';
+
+import { GlobalView } from './components/view/';
 import { HomeView } from './components/view/home';
 import { ProductView } from './components/view/product/index.js';
 import { CartView } from './components/view/cart';
-import { HomeController } from './components/controller/home';
+import { PageNotFoundView } from './components/view/404/index.js';
+
 import { Model } from './components/model';
-import { ProductController } from './components/controller/product/index.js';
-import { NonExistingController } from './components/controller/404/index.js';
-import { CartController } from './components/controller/cart/index.js';
-import { NonExistingView } from './components/view/404/index.js';
 
-export class App {
-    url: string;
+import { Controller } from './components/controller/';
+import { HomeController } from './components/controller/home/';
+import { ProductController } from './components/controller/product';
+import { PageNotFoundController } from './components/controller/404';
+import { CartController } from './components/controller/cart';
+
+class App {
+    location: string;
     model: Model;
-    view: HomeView | ProductView | CartView | NonExistingView;
-    controller: HomeController | CartController | NonExistingController | ProductController;
+    view: GlobalView;
+    controller: Controller;
 
-    constructor(
-        url: string,
-        model: Model,
-        view: HomeView | ProductView | CartView | NonExistingView,
-        controller: HomeController | CartController | NonExistingController | ProductController
-    ) {
-        this.url = url;
+    constructor(location: string, model: Model, view: GlobalView, controller: Controller) {
+        this.location = location;
         this.model = model;
         this.view = view;
         this.controller = controller;
     }
 }
 
-export const homeController = new HomeController();
-export const productController = new ProductController();
-export const cartController = new CartController();
-export const nonExistingController = new NonExistingController();
+export const model = new Model();
 
 export const homeView = new HomeView();
 export const productView = new ProductView();
 export const cartView = new CartView();
-export const nonExistingView = new NonExistingView();
+export const pageNotFoundView = new PageNotFoundView();
 
-export const app = new App('/home', new Model(), homeView, homeController);
-app.controller.setupPage(app.url, app.view, app.model);
+export const productController = new ProductController(productView, model);
+export const cartController = new CartController(cartView, model);
+export const pageNotFoundController = new PageNotFoundController(pageNotFoundView, model);
+export const homeController = new HomeController(homeView, model);
 
-const ancors = document.querySelectorAll('.routing');
-ancors.forEach((ancor) =>
-    ancor.addEventListener('click', (e) => {
-        e.preventDefault();
-        /* window.location.pathname = ancor.id; */
-        route(e, ancor.id);
-    })
-);
+if (window.location.pathname === '/' || window.location.pathname === '/home/') {
+    window.location.pathname = `/home`;
+}
+
+const currentPath = window.location.href.replace(window.location.origin, '');
+
+export const app = new App(currentPath, model, homeView, homeController);
+app.view.drawHeader();
+app.view.drawFooter();
+
+window.addEventListener('DOMContentLoaded', (e) => {
+    e.preventDefault();
+    locationHandler(currentPath);
+});
+window.onpopstate = (e) => {
+    e.preventDefault();
+    locationHandler(window.location.pathname);
+};

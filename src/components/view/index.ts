@@ -1,27 +1,21 @@
 import './global.scss';
 import GithubLogo from './../../assets/logos/github.png';
 import RsschoolLogo from './../../assets/logos/rs_school_js.svg';
-import { Controller } from './../controller';
-import { Brand, Category } from '../model/data';
 import ShoppingCartImg from '../../assets/logos/shopping-cart.svg';
 import SearchIcon from '../../assets/logos/seach-icon.svg';
 import Logo from '../../assets/logos/site-logo.jpg';
-import { selectorChecker } from '../../utils/selectorChecker';
+import { locationHandler } from '../../routing/locationHandler';
 
 export class GlobalView {
-    constructor() {}
-
     public drawHeader = (): void => {
         if (document.querySelector('.header')) return;
         const header = document.createElement('header');
         header.classList.add('header');
-        //TODO implement search
         header.innerHTML = `
     <div class="logo-wrapper">
-      <a href="" class="routing" id="/">
-        <div class="logo-wrapper__image">
-          <img src="${Logo}"/>
-        </div>
+      <a href="" class="routing_type_header" id="/home">
+          <img src="${Logo}" class="logo__image"/>
+
         <h1 class="logo-wrapper__text">Cadence</h1>
       </a>
     </div>
@@ -35,13 +29,22 @@ export class GlobalView {
       <div class="cart-wrapper__state">
         Cart total: 0 $
       </div>
+      <div class="cart-wrapper__poromocoded">1</div>
       <div class="cart-wrapper__image">
-        <a class="routing" id="/cart" href="/cart">
-          <img src="${ShoppingCartImg}"/>
-        </a>
+        <a href="/cart"><img class="routing_type_header" id="/cart" src="${ShoppingCartImg}"/></a>
+        <div class="cart-wrapper__count"></div>
       </div>
     </div>`;
         document.body.append(header);
+        const ancors = header.querySelectorAll('.routing_type_header');
+        ancors.forEach((ancor) => {
+            ancor.addEventListener('click', (e) => {
+                e.preventDefault();
+                const curTarget = e.currentTarget as HTMLElement;
+                window.history.pushState({}, '', curTarget.id);
+                locationHandler(curTarget.id);
+            });
+        });
     };
 
     public drawFooter = (): void => {

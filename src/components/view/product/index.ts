@@ -1,10 +1,8 @@
 import './product.scss';
 import { GlobalView } from '../index';
 import { Product } from './../../model/data';
-import { ProductController } from './../../controller/product';
 import basicImage from '../../../assets/default-product-image.jpg';
-
-//TODO ProductController.brandLogo(product.brand)
+import { selectorChecker } from '../../../utils/selectorChecker';
 
 export class ProductView extends GlobalView {
     constructor() {
@@ -13,10 +11,11 @@ export class ProductView extends GlobalView {
 
     public drawMain = (product: Product) => {
         let main = document.querySelector('.main');
+        const footer = selectorChecker(document, '.footer');
         if (!main) {
             main = document.createElement('main');
             main.classList.add('main');
-            document.body.append(main);
+            document.body.insertBefore(main, footer);
         }
         main.innerHTML = `
       <section class="bread-crumbs">
@@ -57,8 +56,9 @@ export class ProductView extends GlobalView {
             <div class="product__description-price">${product.price} $</div>
           </div>
           <div class="product__description-buttons">
-            <button class="product__description-add-to-cart button">Add to cart</button>
-            <button class="product__description-by-now button">Buy now</button>
+            <button class="product__description-add-to-cart button" id="${product.name}"
+            ${product.amount === 0 ? 'disabled' : ''}>Add to cart</button>
+            <button class="product__description-buy-now button">Buy now</button>
           </div>
         </div>
       </section>

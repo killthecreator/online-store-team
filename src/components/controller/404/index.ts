@@ -1,15 +1,22 @@
 import { Controller } from '../';
-import { Model } from '../../model/';
-import { NonExistingView } from '../../view/404/';
-export class NonExistingController extends Controller {
-    /*url: string;*/
-    constructor(/*url: string*/) {
+import { PageNotFoundView } from '../../view/404/';
+import { URL } from '../../../utils/urlInterface';
+import { Model } from '../../model/index';
+export class PageNotFoundController extends Controller {
+    url: Partial<URL>;
+    view: PageNotFoundView;
+    model: Model;
+    constructor(view: PageNotFoundView, model: Model) {
         super();
-        /*this.url = url;*/
+        this.url = {};
+        this.view = view;
+        this.model = model;
     }
 
-    setupPage(location: string, view: NonExistingView, model: Model): void {
-        view.drawMain();
+    setupPage(): void {
+        this.view.drawHeader();
+        this.view.drawMain();
+        this.view.drawFooter();
     }
 
     configPage() {

@@ -1,17 +1,19 @@
 import './404.scss';
 import { GlobalView } from '../index';
+import { selectorChecker } from '../../../utils/selectorChecker';
 
-export class NonExistingView extends GlobalView {
+export class PageNotFoundView extends GlobalView {
     constructor() {
         super();
     }
 
     public drawMain = () => {
         let main = document.querySelector('.main');
+        const footer = selectorChecker(document, '.footer');
         if (!main) {
             main = document.createElement('main');
             main.classList.add('main');
-            document.body.append(main);
+            document.body.insertBefore(main, footer);
         }
         main.innerHTML = `
       <div class="not-found">

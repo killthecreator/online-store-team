@@ -1,7 +1,10 @@
 import { Model } from '../model';
+import { GlobalView } from '../view';
+import { URL } from '../../utils/urlInterface';
 
 export abstract class Controller {
-    /*     setupPage(location: string): void {
-
-    }; */
+    abstract url: Partial<URL>;
+    abstract view: GlobalView;
+    abstract model: Model;
+    abstract setupPage(location?: string): void;
 }
