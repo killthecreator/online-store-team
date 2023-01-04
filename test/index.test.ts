@@ -1,5 +1,12 @@
 import { assert, beforeEach, describe, expect, it } from 'vitest';
-import { app, cartController, homeController, pageNotFoundController, pageNotFoundView, productController } from '../src';
+import {
+    app,
+    cartController,
+    homeController,
+    pageNotFoundController,
+    pageNotFoundView,
+    productController,
+} from '../src';
 //import { homeController} from '../src'
 //import { productController } from '../src';
 //import { pageNotFoundController } from '../src';
@@ -17,14 +24,8 @@ import { selectorChecker } from '../src/utils/selectorChecker';
 
 // link to test examples https://github.com/vitest-dev/vitest/tree/main/examples/mocks/test
 
-// here are some examples from documentaion
-
 //TODO * * * Н А Ш    Т Е С Т О В Ы Й    С Ц Е Н А Р И Й * * * //
-/*
-реализованы юнит-тесты, использующие различные методы jest – 2 балла за каждую покрытую функию/метод, но не более 20 баллов (процент покрытия каждой функции/метода не учитывается)
 
-всего 10 функций будем тестировать
-*/
 describe('online-store tests', () => {
     beforeEach(() => {
         locationHandler('/home');
@@ -74,7 +75,7 @@ describe('online-store tests', () => {
         homeController.doSearch();
         homeController.found();
         const foundDiv = selectorChecker(document, '.found');
-        expect(parseInt(foundDiv.innerHTML.replace('Found: ', ''))).toBeLessThanOrEqual(10);
+        expect(foundDiv.innerHTML).toContain('10');
     });
 
     it('config.page should execute all 6 functions', () => {
@@ -101,19 +102,19 @@ describe('online-store tests', () => {
         };
         cartController.configPage.call(fakeCartController);
         expect(i).toBe(6);
-    })
+    });
 
-    it('should check if correct brand image added', ()=> {
+    it('should check if correct brand image added', () => {
         const imagePath = '/src/assets/logos/brands/';
         homeController.addLogos();
         const someBrandDiv = selectorChecker(document, '.photo-zone__brand') as HTMLDivElement;
-        expect(someBrandDiv.style.backgroundImage).toEqual(`url(${imagePath}${someBrandDiv.id.toLowerCase()}.svg)`)
-    })
+        expect(someBrandDiv.style.backgroundImage).toEqual(`url(${imagePath}${someBrandDiv.id.toLowerCase()}.svg)`);
+    });
 
     it('should create proper product page depending on link', () => {
         const someLocation = 'Jackson%20CBX%20IV%20David%20Ellefson';
         productController.setupPage(someLocation);
         const productName = selectorChecker(document, '.product__description-name');
         expect(productName.textContent).toBe('Jackson CBX IV David Ellefson');
-    })
+    });
 });
