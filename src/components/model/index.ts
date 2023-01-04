@@ -42,11 +42,6 @@ export class Model {
         this.products = products;
 
         this.cartState = 0;
-        this.pricesRange = [
-            Math.min(...this.products.map((item) => item.price)),
-            Math.max(...this.products.map((item) => item.price)),
-        ];
-        this.stockRange = [0, Math.max(...this.products.map((item) => item.amount))];
         this.cart = [];
         (this.promoCodes = [
             {
@@ -72,5 +67,13 @@ export class Model {
         ]),
             (this.appliedPromo = []);
         this.activeProducts = this.products;
+        this.stockRange = [
+            Math.min(...this.activeProducts.map((item) => item.amount)),
+            Math.max(...this.activeProducts.map((item) => item.amount)),
+        ];
+        this.pricesRange = [
+            Math.min(...this.activeProducts.map((item) => item.price)),
+            Math.max(...this.activeProducts.map((item) => item.price)),
+        ];
     }
 }
