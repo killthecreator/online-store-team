@@ -39,7 +39,7 @@ export class GlobalView {
         const ancors = header.querySelectorAll('.routing_type_header');
         ancors.forEach((ancor) => {
             ancor.addEventListener('click', (e) => {
-                console.log('произошел клик на роутинг!');
+                e.preventDefault();
                 const curTarget = e.currentTarget as HTMLElement;
                 window.history.pushState({}, '', curTarget.id);
                 locationHandler(curTarget.id);
