@@ -17,6 +17,7 @@ import { CartController } from '../src/components/controller/cart';
 import { PageNotFoundController } from '../src/components/controller/404';
 import { CartView } from '../src/components/view/cart/index';
 import { selectorChecker } from '../src/utils/selectorChecker';
+import { Product } from '../src/components/model/data';
 
 /**
  * @vitest-environment jsdom
@@ -119,7 +120,7 @@ describe('online-store tests', () => {
         expect(productName.textContent).toBe('Jackson CBX IV David Ellefson');
     })
 
-    it('', () => {
+    it('should add products to cart on button "add to cart" click', () => {
       homeController.setupPage('/home');
       const buttonArr: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.photo-zone__add-to-cart-button');
 
@@ -127,5 +128,24 @@ describe('online-store tests', () => {
         button.click();
       })
       expect(buttonArr.length).toEqual(cartController.model.cart.length);
+    })
+
+    it('should reduce stock amount when adding to cart', () => {
+      homeController.setupPage('/home');
+      const cardArr: NodeListOf<HTMLDivElement> = document.querySelectorAll('.card-wrapper');
+      cardArr.forEach(card => {
+        const button = selectorChecker(card, '.photo-zone__add-to-cart-button') as HTMLButtonElement;
+        const stockDiv = selectorChecker(card, '.photo-zone__store');
+        const myProduct: {
+          product: Product;
+          amount: number;
+      } | undefined = cartController.model.cart.find(product => product.product.name === button.id);
+        if(!myProduct) throw new Error('there is no this product in cart');
+        const curAmount = myProduct.product.amount + 1;
+        button.click();
+        const stock = Number( stockDiv.textContent?.slice(7));
+        expect(stock).toEqual(curAmount);
+      })
+
     })
 });
