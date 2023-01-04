@@ -28,6 +28,7 @@ import { selectorChecker } from '../src/utils/selectorChecker';
 describe('online-store tests', () => {
     beforeEach(() => {
         locationHandler('/home');
+        cartController.model.cart = [];
     });
 
     it('fillUrl should change app controller url object properly reading page url queries', () => {
@@ -115,5 +116,15 @@ describe('online-store tests', () => {
         productController.setupPage(someLocation);
         const productName = selectorChecker(document, '.product__description-name');
         expect(productName.textContent).toBe('Jackson CBX IV David Ellefson');
+    })
+
+    it('', () => {
+      homeController.setupPage('/home');
+      const buttonArr: NodeListOf<HTMLButtonElement> = document.querySelectorAll('.photo-zone__add-to-cart-button');
+
+      buttonArr.forEach(button => {
+        button.click();
+      })
+      expect(buttonArr.length).toEqual(cartController.model.cart.length);
     })
 });
