@@ -1,5 +1,3 @@
-//import { locationHandler } from './routing/locationHandler.js';
-import { URL } from './utils/urlInterface.js';
 import { locationHandler } from './routing/locationHandler.js';
 
 import { GlobalView } from './components/view/';
@@ -30,17 +28,17 @@ class App {
     }
 }
 
-const model = new Model();
+export const model = new Model();
 
 export const homeView = new HomeView();
 export const productView = new ProductView();
 export const cartView = new CartView();
 export const pageNotFoundView = new PageNotFoundView();
 
-export const homeController = new HomeController(homeView, model);
 export const productController = new ProductController(productView, model);
 export const cartController = new CartController(cartView, model);
 export const pageNotFoundController = new PageNotFoundController(pageNotFoundView, model);
+export const homeController = new HomeController(homeView, model);
 
 if (window.location.pathname === '/' || window.location.pathname === '/home/') {
     window.location.pathname = `/home`;
@@ -52,19 +50,11 @@ export const app = new App(currentPath, model, homeView, homeController);
 app.view.drawHeader();
 app.view.drawFooter();
 
-const ancors = document.querySelectorAll('.routing');
-ancors.forEach((ancor) =>
-    ancor.addEventListener('click', (e) => {
-        const curTarget = e.currentTarget as HTMLElement;
-        window.history.pushState({}, '', curTarget.id);
-        locationHandler(e, curTarget.id);
-    })
-);
-
 window.addEventListener('DOMContentLoaded', (e) => {
-    locationHandler(e, currentPath);
+    e.preventDefault();
+    locationHandler(currentPath);
 });
-
 window.onpopstate = (e) => {
-    locationHandler(e, window.location.pathname);
+    e.preventDefault();
+    locationHandler(window.location.pathname);
 };

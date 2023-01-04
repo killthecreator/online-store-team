@@ -103,5 +103,8 @@
         // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
         "skipLibCheck": true /* Skip type checking all .d.ts files. */
     },
-    "include": ["./src", "src/components", "src/custom.d.ts"]
+    //"include": ["./src", "src/components", "src/custom.d.ts"]
+    "include": ["./**/*.ts"],
+    "exclude": ["./vitest.config.ts"],
+    "ts-node": { "esm": true }
 }

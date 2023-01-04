@@ -74,9 +74,9 @@ export class CartController extends Controller {
                     //чтобы корзина работала как надо и менялось динамически количество товаров в модели и на странце
                     let tempNum;
                     for (let i = 0; i < this.model.cart.length; i++) {
-                      if (this.model.cart[i].product.name === ourProduct.product.name) {
-                        tempNum = i;
-                      }
+                        if (this.model.cart[i].product.name === ourProduct.product.name) {
+                            tempNum = i;
+                        }
                     }
                     if (tempNum === undefined) throw new Error('There is no such product in cart');
 
@@ -116,13 +116,15 @@ export class CartController extends Controller {
                     sumPrice.innerHTML = `${(ourProduct.product.price * ourProduct.amount).toString()} $`;
 
                     if (ourProduct.amount == 0) {
-                        const deleteProd = this.model.cart.find((prodObj) => prodObj.product.name === ourProduct.product.name);
-                        if(!deleteProd) throw new Error('there is nothing to delete');
-                        this.model.cart.splice(this.model.cart.indexOf( deleteProd) , 1);
+                        const deleteProd = this.model.cart.find(
+                            (prodObj) => prodObj.product.name === ourProduct.product.name
+                        );
+                        if (!deleteProd) throw new Error('there is nothing to delete');
+                        this.model.cart.splice(this.model.cart.indexOf(deleteProd), 1);
                         localStorage.setItem('cartCadence', JSON.stringify(this.model.cart));
                         cartState.innerHTML = `Cart total: ${this.model.cart
-                          .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
-                          .toString()} $`;
+                            .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
+                            .toString()} $`;
                         this.view.drawMain(this.model.cart);
                         this.configPage();
                     }
@@ -143,7 +145,6 @@ export class CartController extends Controller {
             this.model.cart = JSON.parse(item) as { product: Product; amount: 1 }[];
         }*/
 
-        console.log(this.model.cart);
         const cartCount = selectorChecker(document, '.cart-wrapper__count');
         const cartState = selectorChecker(document, '.cart-wrapper__state');
         cartCount.innerHTML = this.model.cart.length.toString();
@@ -555,19 +556,18 @@ export class CartController extends Controller {
                 formValid = false;
             }
 
-
             //if form is valid ...
-            if(true/*formValid*/) {
-              const form = selectorChecker(document, '.form');
-              const popup = selectorChecker(document, '.popup');
-              //pop.innerHTML = '';
-              form.innerHTML = `<div class="form__is-valid">Your order is accepted! Thanks</div>`
-              setTimeout(() => {
-                this.model.cart = [];
-                localStorage.setItem('cartCadence', JSON.stringify(this.model.cart));
-                locationHandler(e, '/home');
-              popup.remove();
-              }, 3000)
+            if (formValid) {
+                const form = selectorChecker(document, '.form');
+                const popup = selectorChecker(document, '.popup');
+                //pop.innerHTML = '';
+                form.innerHTML = `<div class="form__is-valid">Your order is accepted! Thanks</div>`;
+                setTimeout(() => {
+                    this.model.cart = [];
+                    localStorage.setItem('cartCadence', JSON.stringify(this.model.cart));
+                    locationHandler('/home');
+                    popup.remove();
+                }, 3000);
             }
         });
 
