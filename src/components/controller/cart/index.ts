@@ -98,7 +98,6 @@ export class CartController extends Controller {
                         .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
                         .toString()} $`;
                 }
-                //console.log('добавим в localStorage');
                 localStorage.setItem('cartCadence', JSON.stringify(this.model.cart));
             });
             minus.addEventListener('click', () => {
@@ -133,18 +132,12 @@ export class CartController extends Controller {
                         .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
                         .toString()} $`;
                 }
-                //console.log('добавим в localStorage');
                 localStorage.setItem('cartCadence', JSON.stringify(this.model.cart));
             });
         });
     }
 
     areProductsInCart() {
-        /*const item = localStorage.getItem('cartCadence');
-        if (item) {
-            this.model.cart = JSON.parse(item) as { product: Product; amount: 1 }[];
-        }*/
-
         const cartCount = selectorChecker(document, '.cart-wrapper__count');
         const cartState = selectorChecker(document, '.cart-wrapper__state');
         cartCount.innerHTML = this.model.cart.length.toString();
@@ -315,7 +308,6 @@ export class CartController extends Controller {
                             }
                         }
                     }
-                    console.log('No applied promocodes');
                     addPromoCodeBlock(promocode);
                     return;
                 }
@@ -584,20 +576,6 @@ export class CartController extends Controller {
             if (!el.parentElement) throw new Error('there is no From!');
             el.parentElement.append(error);
         }
-
-        /*function fieldsEmptyCheck() {
-        formInputs.forEach(input => {
-          if (!input.value) {
-            console.log('field is blank', input);
-            const error = document.createElement('div')
-            error.className='error';
-            error.style.color = 'violet';
-            error.innerHTML = 'Cannot be blank';
-            if(!input.parentElement) throw new Error('there is no From!');
-            input.parentElement.insertBefore(error, input);
-          }
-        })
-      }*/
     }
 
     modalWindowConfig() {
