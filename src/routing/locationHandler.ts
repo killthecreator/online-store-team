@@ -11,7 +11,6 @@ import {
 } from '../';
 
 export const locationHandler = (location: string) => {
-    //console.log(`сработал locationHandler, location=${location}`);
     let page;
     if (location.startsWith('/home') || location === '' || location === '/') {
         page = '/home';
@@ -22,13 +21,6 @@ export const locationHandler = (location: string) => {
     } else {
         page = '/404';
     }
-    /*const page = (location.startsWith('/home') || location === '' || location === '/')
-        ? '/home'
-        : location.startsWith('/product')
-        ? '/product'
-        : location.startsWith('/cart')
-        ? '/cart'
-        : '/404';*/
 
     switch (page) {
         case '/home':
