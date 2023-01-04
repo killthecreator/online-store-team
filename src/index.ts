@@ -42,9 +42,9 @@ export const cartController = new CartController(cartView, model);
 export const pageNotFoundController = new PageNotFoundController(pageNotFoundView, model);
 export const homeController = new HomeController(homeView, model);
 
-/* if (window.location.pathname === '/' || window.location.pathname === '/home/') {
+if (window.location.pathname === '/' || window.location.pathname === '/home/') {
     window.location.pathname = `/home`;
-}  */ //а вот эта строка влияет на билд. одну секкунду показывается хедер и футер, а потом всё, страница не найдена, и это не наша страница не найдена
+} //а вот эта строка влияет на билд. одну секкунду показывается хедер и футер, а потом всё, страница не найдена, и это не наша страница не найдена
 
 const currentPath = window.location.href.replace(window.location.origin, '');
 
