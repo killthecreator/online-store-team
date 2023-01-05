@@ -197,12 +197,12 @@ export class HomeController extends Controller {
         const priceRanges: NodeListOf<HTMLInputElement> = document.querySelectorAll('.price-range__input');
         const stockRanges: NodeListOf<HTMLInputElement> = document.querySelectorAll('.stock-range__input');
 
-        priceRanges.forEach((range) => range.addEventListener('input', () => this.filtration()));
-        stockRanges.forEach((range) => range.addEventListener('input', () => this.filtration()));
+        priceRanges.forEach((range) => range.addEventListener('change', (e) => this.filtration(e)));
+        stockRanges.forEach((range) => range.addEventListener('change', (e) => this.filtration(e)));
 
-        brandCheckboxes.forEach((brandcheckbox) => brandcheckbox.addEventListener('click', () => this.filtration()));
+        brandCheckboxes.forEach((brandcheckbox) => brandcheckbox.addEventListener('click', (e) => this.filtration(e)));
         categoryCheckboxes.forEach((categorycheckbox) =>
-            categorycheckbox.addEventListener('click', () => this.filtration())
+            categorycheckbox.addEventListener('click', (e) => this.filtration(e))
         );
 
         if (this.url.categories || this.url.brands) {
@@ -221,10 +221,11 @@ export class HomeController extends Controller {
                 });
             }
         }
-        this.filtration();
+        const e = new Event('click');
+        this.filtration(e);
     }
 
-    filtration() {
+    filtration(e: Event) {
         const input = selectorChecker(document, '.search-wrapper__input') as HTMLInputElement;
 
         if (this.url.search) {
@@ -237,11 +238,11 @@ export class HomeController extends Controller {
         const categoryCheckboxesArr = Array.from(categoryCheckboxes);
         const brandCheckboxesArr = Array.from(brandCheckboxes);
 
-        //const priceRange1 = document.querySelector('.price-range__min') as HTMLDivElement;
-        //const priceRange2 = document.querySelector('.price-range__max') as HTMLDivElement;
+        const priceRange1 = document.querySelector('.price-range__min') as HTMLDivElement;
+        const priceRange2 = document.querySelector('.price-range__max') as HTMLDivElement;
 
-        //const stockRange1 = document.querySelector('.stock-range__min') as HTMLDivElement;
-        //const stockRange2 = document.querySelector('.stock-range__max') as HTMLDivElement;
+        const stockRange1 = document.querySelector('.stock-range__min') as HTMLDivElement;
+        const stockRange2 = document.querySelector('.stock-range__max') as HTMLDivElement;
         const activeCards = selectorChecker(document, '.cards-wrapper');
         this.model.activeProducts = this.model.products;
         const activeCategories = categoryCheckboxesArr.filter((checkbox) => checkbox.checked).map((item) => item.id);
@@ -255,7 +256,7 @@ export class HomeController extends Controller {
             ? window.history.replaceState({}, '', `/home/?${Object.values(this.url).join('&')}`)
             : window.history.replaceState({}, '', `/home`);
 
-        this.model.activeProducts = this.model.activeProducts.filter((product: { category: string | string[]; brand: string | string[]; }) => {
+        this.model.activeProducts = this.model.activeProducts.filter((product) => {
             const categoryCheckbox = categoryCheckboxesArr.find(
                 (checkbox) => product.category.indexOf(checkbox.id) !== -1
             ) as HTMLInputElement;
@@ -264,16 +265,33 @@ export class HomeController extends Controller {
                 (checkbox) => product.brand.indexOf(checkbox.id) !== -1
             ) as HTMLInputElement;
 
-            if (
+            const stockRangeInput1 = document.querySelector('.stock-range__input-1') as HTMLInputElement;
+            const stockRangeInput2 = document.querySelector('.stock-range__input-2') as HTMLInputElement;
+
+            const priceRangeInput1 = document.querySelector('.price-range__input-1') as HTMLInputElement;
+            const priceRangeInput2 = document.querySelector('.price-range__input-2') as HTMLInputElement;
+            if (e.target === stockRangeInput1
+              || e.target === stockRangeInput2
+              || e.target === priceRangeInput1
+              || e.target === priceRangeInput2
+            ) {
+              if (
                 (categoryCheckbox.checked || categoryCheckboxesArr.every((checkbox) => !checkbox.checked)) &&
-                (brandCheckbox.checked || brandCheckboxesArr.every((checkbox) => !checkbox.checked)) /*&&
+                (brandCheckbox.checked || brandCheckboxesArr.every((checkbox) => !checkbox.checked)) &&
                 product.amount >= Number(stockRange1.textContent) &&
                 product.amount <= Number(stockRange2.textContent) &&
                 product.price >= Number(priceRange1.textContent) &&
-                product.price <= Number(priceRange2.textContent)*/
-            )
-                return true;
+                product.price <= Number(priceRange2.textContent)
+            ) return true;
             return false;
+            } else {
+              if (
+                (categoryCheckbox.checked || categoryCheckboxesArr.every((checkbox) => !checkbox.checked)) &&
+                (brandCheckbox.checked || brandCheckboxesArr.every((checkbox) => !checkbox.checked))
+            ) return true;
+            return false;
+            }
+
         });
         activeCards.outerHTML = this.view.drawCards(this.model.activeProducts);
 
@@ -584,7 +602,6 @@ export class HomeController extends Controller {
                 if (!product) throw new Error('there is no such product');
                 productInCart = this.model.cart.find((product: { product: { name: string; }; }) => product.product.name === addToCartButton.id);
 
-                console.log(productInCart);
                 if (productInCart) {
                     addToCartButton.innerHTML = 'add to cart';
                     product.amount += 1;
