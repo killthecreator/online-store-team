@@ -9,7 +9,7 @@ export class CartView extends GlobalView {
     }
 
     public drawMain = (products: { product: Product; amount: number }[]) => {
-        //window.scrollTo(0, 0);
+
         let main = document.querySelector('.main');
         const footer = selectorChecker(document, '.footer');
         if (!main) {

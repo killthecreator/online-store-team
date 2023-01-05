@@ -205,12 +205,6 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
             .products__header-pages-input {
                 @include white-input;
             }
-            /*.view1, .view2 {
-          font-size: $basic-font-size;
-          width: 40px;
-          height: 40px;
-          @include button-style;
-        }*/
         }
     }
     .products__list {
@@ -444,46 +438,16 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
                   min-width: 100px;
                   width: 10vw;
                   flex-grow: 1;
-                  .product__name {
-                  }
                   .product__desc {
                       display: none;
                   }
               }
               .product__params {
                   width: 110px;
-                  .product__stock {
-                  }
-                  .product__amount {
-                  }
-                  .product__price {
-                  }
               }
           }
       }
-        /*.products__list {
-          .product {
-            width: 90vw;
-            .product__number {
 
-            }
-            .product__pictire {
-              width: 100px;
-              height: 100px;
-              background-size: 100vw;
-            }
-            .product__description {
-              flex: 1;
-              width: 10vw;
-              .product__desc {
-                display: none;
-              }
-            }
-            .product__params {
-              width: 110px;
-            }
-          }
-        }*/
       }
     }
   }

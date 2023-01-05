@@ -1,6 +1,6 @@
-import { Controller } from '../';
-import { HomeView } from '../../view/home';
-import { Model } from '../../model';
+import { Controller } from '../index';
+import { HomeView } from '../../view/home/index';
+import { Model } from '../../model/index';
 import { selectorChecker } from '../../../utils/selectorChecker';
 import { URL } from '../../../utils/urlInterface';
 import { Product } from '../../model/data';
@@ -30,6 +30,7 @@ import {
     novation,
 } from '../../../assets/logos/brands/brandLogos.js';
 import { locationHandler } from '../../../routing/locationHandler';
+import { homeController } from '../../../index';
 
 export class HomeController extends Controller {
     url: Partial<URL>;
@@ -236,11 +237,11 @@ export class HomeController extends Controller {
         const categoryCheckboxesArr = Array.from(categoryCheckboxes);
         const brandCheckboxesArr = Array.from(brandCheckboxes);
 
-        const priceRange1 = document.querySelector('.price-range__min') as HTMLDivElement;
-        const priceRange2 = document.querySelector('.price-range__max') as HTMLDivElement;
+        //const priceRange1 = document.querySelector('.price-range__min') as HTMLDivElement;
+        //const priceRange2 = document.querySelector('.price-range__max') as HTMLDivElement;
 
-        const stockRange1 = document.querySelector('.stock-range__min') as HTMLDivElement;
-        const stockRange2 = document.querySelector('.stock-range__max') as HTMLDivElement;
+        //const stockRange1 = document.querySelector('.stock-range__min') as HTMLDivElement;
+        //const stockRange2 = document.querySelector('.stock-range__max') as HTMLDivElement;
         const activeCards = selectorChecker(document, '.cards-wrapper');
         this.model.activeProducts = this.model.products;
         const activeCategories = categoryCheckboxesArr.filter((checkbox) => checkbox.checked).map((item) => item.id);
@@ -254,7 +255,7 @@ export class HomeController extends Controller {
             ? window.history.replaceState({}, '', `/home/?${Object.values(this.url).join('&')}`)
             : window.history.replaceState({}, '', `/home`);
 
-        this.model.activeProducts = this.model.activeProducts.filter((product) => {
+        this.model.activeProducts = this.model.activeProducts.filter((product: { category: string | string[]; brand: string | string[]; }) => {
             const categoryCheckbox = categoryCheckboxesArr.find(
                 (checkbox) => product.category.indexOf(checkbox.id) !== -1
             ) as HTMLInputElement;
@@ -405,14 +406,14 @@ export class HomeController extends Controller {
 
     responseRanges() {
         const searchInput = selectorChecker(document, '.search-wrapper__input');
-        searchInput.addEventListener('input', this.rangeChanger);
+        searchInput.addEventListener('input', this.rangeChanger.bind(homeController));
         const categoryCheckboxes = document.querySelectorAll('.category-form__checkbox');
         categoryCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('input', this.rangeChanger);
+            checkbox.addEventListener('input', this.rangeChanger.bind(homeController));
         })
         const brandCheckboxes = document.querySelectorAll('.brand-form__checkbox');
         brandCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('input', this.rangeChanger);
+            checkbox.addEventListener('input', this.rangeChanger.bind(homeController));
         })
     }
 
@@ -571,7 +572,7 @@ export class HomeController extends Controller {
             const addToCartButton = selectorChecker(card, '.photo-zone__add-to-cart-button');
             const cartCount = selectorChecker(document, '.cart-wrapper__count');
 
-            let productInCart = this.model.cart.find((product) => product.product.name === addToCartButton.id);
+            let productInCart = this.model.cart.find((product: { product: { name: string; }; }) => product.product.name === addToCartButton.id);
 
             if (productInCart) {
                 addToCartButton.innerHTML = 'remove';
@@ -579,9 +580,9 @@ export class HomeController extends Controller {
 
             const cartState = selectorChecker(document, '.cart-wrapper__state');
             const adding = () => {
-                const product = this.model.products.find((product) => product.name === addToCartButton.id);
+                const product = this.model.products.find((product: { name: string; }) => product.name === addToCartButton.id);
                 if (!product) throw new Error('there is no such product');
-                productInCart = this.model.cart.find((product) => product.product.name === addToCartButton.id);
+                productInCart = this.model.cart.find((product: { product: { name: string; }; }) => product.product.name === addToCartButton.id);
 
                 console.log(productInCart);
                 if (productInCart) {
@@ -598,7 +599,7 @@ export class HomeController extends Controller {
                 stockDiv.innerHTML = `Stock: ${product.amount}`;
 
                 cartState.innerHTML = `Cart total: ${this.model.cart
-                    .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
+                    .reduce((res: number, cur: { product: { price: number; }; amount: number; }) => res + cur.product.price * cur.amount, 0)
                     .toString()} $`;
 
                 localStorage.setItem('cartCadence', JSON.stringify(this.model.cart));
