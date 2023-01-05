@@ -1,6 +1,6 @@
-import { Controller } from '../';
-import { HomeView } from '../../view/home';
-import { Model } from '../../model';
+import { Controller } from '../index';
+import { HomeView } from '../../view/home/index';
+import { Model } from '../../model/index';
 import { selectorChecker } from '../../../utils/selectorChecker';
 import { URL } from '../../../utils/urlInterface';
 import { Product } from '../../model/data';
@@ -30,6 +30,7 @@ import {
     novation,
 } from '../../../assets/logos/brands/brandLogos.js';
 import { locationHandler } from '../../../routing/locationHandler';
+import { homeController } from '../../../index';
 
 export class HomeController extends Controller {
     url: Partial<URL>;
@@ -54,8 +55,9 @@ export class HomeController extends Controller {
         this.configSearch();
         this.sortByGo();
         this.configView();
-        this.addingToCart();
+        //this.addingToCart();
         this.copyLink();
+        this.responseRanges()
     }
 
     addLogos() {
@@ -195,12 +197,12 @@ export class HomeController extends Controller {
         const priceRanges: NodeListOf<HTMLInputElement> = document.querySelectorAll('.price-range__input');
         const stockRanges: NodeListOf<HTMLInputElement> = document.querySelectorAll('.stock-range__input');
 
-        priceRanges.forEach((range) => range.addEventListener('input', () => this.filtration()));
-        stockRanges.forEach((range) => range.addEventListener('input', () => this.filtration()));
+        priceRanges.forEach((range) => range.addEventListener('change', (e) => this.filtration(e)));
+        stockRanges.forEach((range) => range.addEventListener('change', (e) => this.filtration(e)));
 
-        brandCheckboxes.forEach((brandcheckbox) => brandcheckbox.addEventListener('click', () => this.filtration()));
+        brandCheckboxes.forEach((brandcheckbox) => brandcheckbox.addEventListener('click', (e) => this.filtration(e)));
         categoryCheckboxes.forEach((categorycheckbox) =>
-            categorycheckbox.addEventListener('click', () => this.filtration())
+            categorycheckbox.addEventListener('click', (e) => this.filtration(e))
         );
 
         if (this.url.categories || this.url.brands) {
@@ -219,10 +221,11 @@ export class HomeController extends Controller {
                 });
             }
         }
-        this.filtration();
+        const e = new Event('click');
+        this.filtration(e);
     }
 
-    filtration() {
+    filtration(e: Event) {
         const input = selectorChecker(document, '.search-wrapper__input') as HTMLInputElement;
 
         if (this.url.search) {
@@ -262,25 +265,44 @@ export class HomeController extends Controller {
                 (checkbox) => product.brand.indexOf(checkbox.id) !== -1
             ) as HTMLInputElement;
 
-            if (
+            const stockRangeInput1 = document.querySelector('.stock-range__input-1') as HTMLInputElement;
+            const stockRangeInput2 = document.querySelector('.stock-range__input-2') as HTMLInputElement;
+
+            const priceRangeInput1 = document.querySelector('.price-range__input-1') as HTMLInputElement;
+            const priceRangeInput2 = document.querySelector('.price-range__input-2') as HTMLInputElement;
+            if (e.target === stockRangeInput1
+              || e.target === stockRangeInput2
+              || e.target === priceRangeInput1
+              || e.target === priceRangeInput2
+            ) {
+              if (
                 (categoryCheckbox.checked || categoryCheckboxesArr.every((checkbox) => !checkbox.checked)) &&
                 (brandCheckbox.checked || brandCheckboxesArr.every((checkbox) => !checkbox.checked)) &&
                 product.amount >= Number(stockRange1.textContent) &&
                 product.amount <= Number(stockRange2.textContent) &&
                 product.price >= Number(priceRange1.textContent) &&
                 product.price <= Number(priceRange2.textContent)
-            )
-                return true;
+            ) return true;
             return false;
+            } else {
+              if (
+                (categoryCheckbox.checked || categoryCheckboxesArr.every((checkbox) => !checkbox.checked)) &&
+                (brandCheckbox.checked || brandCheckboxesArr.every((checkbox) => !checkbox.checked))
+            ) return true;
+            return false;
+            }
+
         });
         activeCards.outerHTML = this.view.drawCards(this.model.activeProducts);
 
         this.addRouting();
+        this.addingToCart();
         this.doSearch();
         this.configView();
         this.sortByGo();
         this.addLogos();
         this.found();
+        //this.rangesReaction();
     }
 
     sortByGo() {
@@ -351,6 +373,66 @@ export class HomeController extends Controller {
             sortProducts();
         }
         sortOptions.addEventListener('change', sortProducts);
+    }
+
+    rangeChanger() {
+
+        const stockRange1 = document.querySelector('.stock-range__input-1') as HTMLInputElement;
+        const stockRange2 = document.querySelector('.stock-range__input-2') as HTMLInputElement;
+
+        const priceRange1 = document.querySelector('.price-range__input-1') as HTMLInputElement;
+        const priceRange2 = document.querySelector('.price-range__input-2') as HTMLInputElement;
+
+        const stockMin = document.querySelector('.stock-range__min') as HTMLDivElement;
+        const stockMax = document.querySelector('.stock-range__max') as HTMLDivElement;
+
+        const priceMin = document.querySelector('.price-range__min') as HTMLDivElement;
+        const priceMax = document.querySelector('.price-range__max') as HTMLDivElement;
+
+        const cardWrappers: HTMLDivElement[]= Array.from(document.querySelectorAll('.card-wrapper'));
+        const cwFiltered = cardWrappers.filter(cw => cw.style.display === 'flex');
+
+        const productPrices = cwFiltered.map(cw => {
+            const priceDiv = selectorChecker(cw, '.name-zone__price');
+            return Number(priceDiv.textContent?.slice(17, -16));
+      });
+
+      const productStocks = cwFiltered.map(cw => {
+        const stockDiv = selectorChecker(cw, '.photo-zone__store');
+        return Number(stockDiv.textContent?.slice(24));
+     });
+
+      priceRange1.value = Math.min(...productPrices).toString();
+      priceRange2.value = Math.max(...productPrices).toString();
+
+      priceMin.innerHTML = priceRange1.value;
+      priceMax.innerHTML = priceRange2.value;
+
+      stockRange1.value = Math.min(...productStocks).toString();
+      stockRange2.value = Math.max(...productStocks).toString();
+
+      stockMin.innerHTML = stockRange1.value;
+      stockMax.innerHTML = stockRange2.value;
+
+      const fakeE = new Event('input');
+      stockRange1.dispatchEvent(fakeE);
+      priceRange1.dispatchEvent(fakeE);
+      stockRange2.dispatchEvent(fakeE);
+      priceRange2.dispatchEvent(fakeE);
+
+    }
+
+    responseRanges() {
+        const searchInput = selectorChecker(document, '.search-wrapper__input');
+        searchInput.addEventListener('input', this.rangeChanger.bind(homeController));
+        const categoryCheckboxes = document.querySelectorAll('.category-form__checkbox');
+        categoryCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('input', this.rangeChanger.bind(homeController));
+        })
+        const brandCheckboxes = document.querySelectorAll('.brand-form__checkbox');
+        brandCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('input', this.rangeChanger.bind(homeController));
+        })
     }
 
     public configRanges() {
@@ -485,6 +567,7 @@ export class HomeController extends Controller {
         stockRange2.addEventListener('input', (e) => controlToSlider(stockRange1, stockRange2, stockMax, e));
         priceRange1.addEventListener('input', (e) => controlFromSlider(priceRange1, priceRange2, priceMin, e));
         priceRange2.addEventListener('input', (e) => controlToSlider(priceRange1, priceRange2, priceMax, e));
+
     }
 
     addingToCart() {
@@ -507,7 +590,7 @@ export class HomeController extends Controller {
             const addToCartButton = selectorChecker(card, '.photo-zone__add-to-cart-button');
             const cartCount = selectorChecker(document, '.cart-wrapper__count');
 
-            let productInCart = this.model.cart.find((product) => product.product.name === addToCartButton.id);
+            let productInCart = this.model.cart.find((product: { product: { name: string; }; }) => product.product.name === addToCartButton.id);
 
             if (productInCart) {
                 addToCartButton.innerHTML = 'remove';
@@ -515,9 +598,10 @@ export class HomeController extends Controller {
 
             const cartState = selectorChecker(document, '.cart-wrapper__state');
             const adding = () => {
-                const product = this.model.products.find((product) => product.name === addToCartButton.id);
+                const product = this.model.products.find((product: { name: string; }) => product.name === addToCartButton.id);
                 if (!product) throw new Error('there is no such product');
-                productInCart = this.model.cart.find((product) => product.product.name === addToCartButton.id);
+                productInCart = this.model.cart.find((product: { product: { name: string; }; }) => product.product.name === addToCartButton.id);
+
                 if (productInCart) {
                     addToCartButton.innerHTML = 'add to cart';
                     product.amount += 1;
@@ -532,7 +616,7 @@ export class HomeController extends Controller {
                 stockDiv.innerHTML = `Stock: ${product.amount}`;
 
                 cartState.innerHTML = `Cart total: ${this.model.cart
-                    .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
+                    .reduce((res: number, cur: { product: { price: number; }; amount: number; }) => res + cur.product.price * cur.amount, 0)
                     .toString()} $`;
 
                 localStorage.setItem('cartCadence', JSON.stringify(this.model.cart));

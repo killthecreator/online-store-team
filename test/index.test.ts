@@ -6,26 +6,19 @@ import {
     pageNotFoundController,
     pageNotFoundView,
     productController,
-} from '../src';
-//import { homeController} from '../src'
-//import { productController } from '../src';
-//import { pageNotFoundController } from '../src';
-//import { cartController } from '../src';
+} from '../src/index';
+
 import { URL } from '../src/utils/urlInterface';
 import { locationHandler } from '../src/routing/locationHandler';
-import { CartController } from '../src/components/controller/cart';
-import { PageNotFoundController } from '../src/components/controller/404';
-import { CartView } from '../src/components/view/cart/index';
+import { CartController } from '../src/components/controller/cart/';
+import { PageNotFoundController } from '../src/components/controller/404/';
+import { CartView } from '../src/components/view/cart/';
 import { selectorChecker } from '../src/utils/selectorChecker';
 import { Product } from '../src/components/model/data';
 
 /**
  * @vitest-environment jsdom
  */
-
-// link to test examples https://github.com/vitest-dev/vitest/tree/main/examples/mocks/test
-
-//TODO * * * Н А Ш    Т Е С Т О В Ы Й    С Ц Е Н А Р И Й * * * //
 
 describe('online-store tests', () => {
     beforeEach(() => {
