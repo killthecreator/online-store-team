@@ -450,5 +450,23 @@ $button-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http
 
       }
     }
+    .popup {
+      height: 100vh;
+      .form {
+        width: 90vw;
+        padding: 2vw;
+        height: fit-content;
+        .personal-details, .credit-card-details {
+          .label {
+            flex-direction: column;
+            padding: $medium-padding;
+            .input {
+              margin: 1vw 0;
+              width: 95%;
+            }
+          }
+        }
+      }
+    }
   }
 }

@@ -491,6 +491,7 @@ export class CartController extends Controller {
             // check name
             if (!name.value) {
                 createError('Cannot be blank', name);
+                formValid = false;
             } else if (!name.value.match(/^[a-z]{3,} [a-z]{3,}\s*$/i)) {
                 createError('Invalid name', name);
                 formValid = false;
@@ -499,6 +500,7 @@ export class CartController extends Controller {
             // check phone number
             if (!phone.value) {
                 createError('Cannot be blank', phone);
+                formValid = false;
             } else if (!phone.value.match(/^\+[0-9]{3} \([0-9]{2}\) [0-9]{3}-[0-9]{2}-[0-9]{2}\s*$/)) {
                 createError('Invalid phone', phone);
                 formValid = false;
@@ -507,6 +509,7 @@ export class CartController extends Controller {
             // check address
             if (!address.value) {
                 createError('Cannot be blank', address);
+                formValid = false;
             } else if (!address.value.match(/^([0-9a-z]{5,} ){2}[0-9a-z]{5,}/i)) {
                 createError('Invalid address', address);
                 formValid = false;
@@ -515,6 +518,7 @@ export class CartController extends Controller {
             // check email
             if (!email.value) {
                 createError('Cannot be blank', email);
+                formValid = false;
             } else if (
                 !email.value.match(
                     /^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$/i
@@ -527,6 +531,7 @@ export class CartController extends Controller {
             //card number check
             if (!card.value) {
                 createError('Cannot be blank', card);
+                formValid = false;
             } else if (!card.value.match(/^([0-9]{4} ){3}[0-9]{4}$/)) {
                 createError('Invalid card number', card);
                 formValid = false;
@@ -535,6 +540,7 @@ export class CartController extends Controller {
             //valid check
             if (!valid.value) {
                 createError('Cannot be blank', valid);
+                formValid = false;
             } else if (!valid.value.match(/^[0-9]{2}\/[0-9]{2}$/) || Number(valid.value.slice(0, 2)) > 12) {
                 createError('Invalid date', valid);
                 formValid = false;
@@ -543,6 +549,7 @@ export class CartController extends Controller {
             //cvv check
             if (!cvv.value) {
                 createError('Cannot be blank', cvv);
+                formValid = false;
             } else if (!cvv.value.match(/^[0-9]{3}$/)) {
                 createError('Invalid date', cvv);
                 formValid = false;
