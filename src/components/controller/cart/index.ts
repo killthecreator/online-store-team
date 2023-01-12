@@ -168,6 +168,11 @@ export class CartController extends Controller {
         const tempPageNumber = '1';
         pageInput.value = tempPageNumber;
 
+        //query
+        if (this.url.pagenumber) itemInput.value = this.url.pagenumber.slice(11);
+        if (this.url.pages) pageInput.value = this.url.pages.slice(6);
+        //query end
+
         const decrease = selectorChecker(document, '.products__header-pages-decrease') as HTMLDivElement;
 
         const increase = selectorChecker(document, '.products__header-pages-increase') as HTMLDivElement;
@@ -183,22 +188,16 @@ export class CartController extends Controller {
             productsDiv.forEach((el, i) => (el.style.display = i < Number(itemInput.value) ? 'flex' : 'none'));
         }
 
-        //query
-        if (this.url.pagenumber) itemInput.value = this.url.pagenumber.slice(11);
-        if (this.url.pages) pageInput.value = this.url.pages.slice(6);
-        //query end
-
         pageInput.addEventListener('input', () => {
             if (!pageInput.value.match(/^[1-9]$/) && pageInput.value !== '') {
                 pageInput.value = tempPageNumber;
             }
 
             if (Number(pageInput.value) > pagesAmount) {
-                pageInput.value = tempPageNumber;
+                pageInput.value = pagesAmount.toString();
             }
             const from = Number(itemInput.value) * (Number(pageInput.value) - 1);
             const to = from + Number(itemInput.value);
-
             productsDiv.forEach((el, i) => (el.style.display = i < from ? 'none' : i >= to ? 'none' : 'flex'));
 
             this.url.pages = `pages=${pageInput.value}`;
@@ -220,7 +219,7 @@ export class CartController extends Controller {
                 pageInput.value = tempPageNumber;
             } else {
                 pagesAmount = Math.ceil(this.model.cart.length / Number(itemInput.value));
-                pageInput.value = tempPageNumber;
+                pageInput.value = pagesAmount.toString();
                 productsDiv.forEach((el, i) => (el.style.display = i < Number(itemInput.value) ? 'flex' : 'none'));
             }
 
