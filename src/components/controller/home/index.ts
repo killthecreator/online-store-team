@@ -376,7 +376,6 @@ export class HomeController extends Controller {
     }
 
     rangeChanger(e: Event) {
-        alert(e.target);
         const stockRange1 = document.querySelector('.stock-range__input-1') as HTMLInputElement;
         const stockRange2 = document.querySelector('.stock-range__input-2') as HTMLInputElement;
 
@@ -588,7 +587,9 @@ export class HomeController extends Controller {
 
         const cartCount = selectorChecker(document, '.cart-wrapper__count');
         const cartState = selectorChecker(document, '.cart-wrapper__state');
-        cartCount.innerHTML = this.model.cart.length.toString();
+        let num = 0;
+        this.model.cart.forEach((product) => (num += product.amount));
+        cartCount.innerHTML = num.toString();
         cartState.innerHTML = `Cart total: ${this.model.cart
             .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
             .toString()} $`;
@@ -619,8 +620,9 @@ export class HomeController extends Controller {
                     this.model.cart.push({ product: product, amount: 1 });
                     product.amount -= 1;
                 }
-
-                cartCount.innerHTML = this.model.cart.length.toString();
+                let num = 0;
+                this.model.cart.forEach((product) => (num += product.amount));
+                cartCount.innerHTML = num.toString();
                 stockDiv.innerHTML = `Stock: ${product.amount}`;
 
                 cartState.innerHTML = `Cart total: ${this.model.cart

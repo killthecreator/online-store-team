@@ -47,7 +47,9 @@ export class ProductController extends Controller {
                 product.amount -= 1;
             }
             if (!cartCount) throw new Error('There is no cart count');
-            cartCount.innerHTML = this.model.cart.length.toString();
+            let num = 0;
+            this.model.cart.forEach((product) => (num += product.amount));
+            cartCount.innerHTML = num.toString();
 
             cartState.innerHTML = `Cart total: ${this.model.cart
                 .reduce((res, cur) => res + cur.product.price * cur.amount, 0)

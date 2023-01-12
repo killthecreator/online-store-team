@@ -98,6 +98,7 @@ export class CartController extends Controller {
                         .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
                         .toString()} $`;
                 }
+
                 localStorage.setItem('cartCadence', JSON.stringify(this.model.cart));
             });
             minus.addEventListener('click', () => {
@@ -124,6 +125,17 @@ export class CartController extends Controller {
                         cartState.innerHTML = `Cart total: ${this.model.cart
                             .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
                             .toString()} $`;
+                            //пересчитать количество страниц и добавить в квери
+                            const itemInput = selectorChecker(document, '.products__header-items-input') as HTMLInputElement;
+                            let pagesAmount = Math.ceil(this.model.cart.length / Number(itemInput.value));
+                            const pageInput = selectorChecker(document, '.products__header-pages-input') as HTMLInputElement;
+                            pageInput.value = pagesAmount.toString();
+                            this.url.pages = `pages=${pageInput.value}`;
+                            console.log(this.url);
+                            Object.keys(this.url).length !== 0
+                            ? window.history.replaceState({}, '', `/cart/?${Object.values(this.url).join('&')}`)
+                            : window.history.replaceState({}, '', `/cart`);
+//end
                         this.view.drawMain(this.model.cart);
                         this.configPage();
                     }
@@ -140,7 +152,9 @@ export class CartController extends Controller {
     areProductsInCart() {
         const cartCount = selectorChecker(document, '.cart-wrapper__count');
         const cartState = selectorChecker(document, '.cart-wrapper__state');
-        cartCount.innerHTML = this.model.cart.length.toString();
+        let num = 0;
+        this.model.cart.forEach((product) => (num += product.amount));
+        cartCount.innerHTML = num.toString();
         cartState.innerHTML = `Cart total: ${this.model.cart
             .reduce((res, cur) => res + cur.product.price * cur.amount, 0)
             .toString()} $`;
@@ -165,12 +179,18 @@ export class CartController extends Controller {
         let pagesAmount = Math.ceil(this.model.cart.length / Number(itemInput.value));
 
         const pageInput = selectorChecker(document, '.products__header-pages-input') as HTMLInputElement;
-        const tempPageNumber = '1';
-        pageInput.value = tempPageNumber;
-
+        let tempPageNumber: string;
         //query
         if (this.url.pagenumber) itemInput.value = this.url.pagenumber.slice(11);
-        if (this.url.pages) pageInput.value = this.url.pages.slice(6);
+        if (this.url.pages) {
+          tempPageNumber = this.url.pages.slice(6);
+          pageInput.value = tempPageNumber;
+        } else {
+          tempPageNumber = '1';
+          pageInput.value = tempPageNumber;
+        }
+        console.log(this.url.pages)
+        console.log(pageInput.value)
         //query end
 
         const decrease = selectorChecker(document, '.products__header-pages-decrease') as HTMLDivElement;
@@ -181,11 +201,14 @@ export class CartController extends Controller {
 
         if (Number(itemInput.value) > this.model.cart.length) {
             productsDiv.forEach((el) => (el.style.display = 'flex'));
-            pageInput.value = tempPageNumber;
+            pageInput.value = '1';
         } else {
             pagesAmount = Math.ceil(this.model.cart.length / Number(itemInput.value));
+            const from = Number(itemInput.value) * (Number(pageInput.value) - 1);
+            const to = from + Number(itemInput.value);
+            productsDiv.forEach((el, i) => (el.style.display = i < from ? 'none' : i >= to ? 'none' : 'flex'));
             pageInput.value = tempPageNumber;
-            productsDiv.forEach((el, i) => (el.style.display = i < Number(itemInput.value) ? 'flex' : 'none'));
+            //productsDiv.forEach((el, i) => (el.style.display = i < Number(itemInput.value) ? 'flex' : 'none'));
         }
 
         pageInput.addEventListener('input', () => {
@@ -216,10 +239,10 @@ export class CartController extends Controller {
 
             if (Number(itemInput.value) > this.model.cart.length) {
                 productsDiv.forEach((el) => (el.style.display = 'flex'));
-                pageInput.value = tempPageNumber;
+                pageInput.value =tempPageNumber;
             } else {
                 pagesAmount = Math.ceil(this.model.cart.length / Number(itemInput.value));
-                pageInput.value = pagesAmount.toString();
+                pageInput.value = '1'//pagesAmount.toString();
                 productsDiv.forEach((el, i) => (el.style.display = i < Number(itemInput.value) ? 'flex' : 'none'));
             }
 
@@ -235,13 +258,12 @@ export class CartController extends Controller {
             pageInput.value = (Number(pageInput.value) - 1).toString();
 
             if (!pageInput.value.match(/^[1-9]$/) && pageInput.value !== '') {
-                pageInput.value = tempPageNumber;
+                pageInput.value = '1';
             }
 
             if (Number(pageInput.value) > pagesAmount) {
                 pageInput.value = tempPageNumber;
             }
-
             const from = Number(itemInput.value) * (Number(pageInput.value) - 1);
             const to = from + Number(itemInput.value);
 
