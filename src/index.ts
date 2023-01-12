@@ -40,7 +40,7 @@ export const cartController = new CartController(cartView, model);
 export const pageNotFoundController = new PageNotFoundController(pageNotFoundView, model);
 export const homeController = new HomeController(homeView, model);
 
-if (window.location.pathname === '/' || window.location.pathname === '/home/') {
+if (window.location.pathname === '' || window.location.pathname === '/') {
     window.location.pathname = `/home`;
 }
 

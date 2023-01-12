@@ -57,7 +57,7 @@ export class HomeController extends Controller {
         this.configView();
         //this.addingToCart();
         this.copyLink();
-        this.responseRanges()
+        this.responseRanges();
     }
 
     addLogos() {
@@ -270,28 +270,30 @@ export class HomeController extends Controller {
 
             const priceRangeInput1 = document.querySelector('.price-range__input-1') as HTMLInputElement;
             const priceRangeInput2 = document.querySelector('.price-range__input-2') as HTMLInputElement;
-            if (e.target === stockRangeInput1
-              || e.target === stockRangeInput2
-              || e.target === priceRangeInput1
-              || e.target === priceRangeInput2
+            if (
+                e.target === stockRangeInput1 ||
+                e.target === stockRangeInput2 ||
+                e.target === priceRangeInput1 ||
+                e.target === priceRangeInput2
             ) {
-              if (
-                (categoryCheckbox.checked || categoryCheckboxesArr.every((checkbox) => !checkbox.checked)) &&
-                (brandCheckbox.checked || brandCheckboxesArr.every((checkbox) => !checkbox.checked)) &&
-                product.amount >= Number(stockRange1.textContent) &&
-                product.amount <= Number(stockRange2.textContent) &&
-                product.price >= Number(priceRange1.textContent) &&
-                product.price <= Number(priceRange2.textContent)
-            ) return true;
-            return false;
+                if (
+                    (categoryCheckbox.checked || categoryCheckboxesArr.every((checkbox) => !checkbox.checked)) &&
+                    (brandCheckbox.checked || brandCheckboxesArr.every((checkbox) => !checkbox.checked)) &&
+                    product.amount >= Number(stockRange1.textContent) &&
+                    product.amount <= Number(stockRange2.textContent) &&
+                    product.price >= Number(priceRange1.textContent) &&
+                    product.price <= Number(priceRange2.textContent)
+                )
+                    return true;
+                return false;
             } else {
-              if (
-                (categoryCheckbox.checked || categoryCheckboxesArr.every((checkbox) => !checkbox.checked)) &&
-                (brandCheckbox.checked || brandCheckboxesArr.every((checkbox) => !checkbox.checked))
-            ) return true;
-            return false;
+                if (
+                    (categoryCheckbox.checked || categoryCheckboxesArr.every((checkbox) => !checkbox.checked)) &&
+                    (brandCheckbox.checked || brandCheckboxesArr.every((checkbox) => !checkbox.checked))
+                )
+                    return true;
+                return false;
             }
-
         });
         activeCards.outerHTML = this.view.drawCards(this.model.activeProducts);
 
@@ -388,50 +390,49 @@ export class HomeController extends Controller {
         const priceMin = document.querySelector('.price-range__min') as HTMLDivElement;
         const priceMax = document.querySelector('.price-range__max') as HTMLDivElement;
 
-        const cardWrappers: HTMLDivElement[]= Array.from(document.querySelectorAll('.card-wrapper'));
-        const cwFiltered = cardWrappers.filter(cw => cw.style.display === 'flex');
+        const cardWrappers: HTMLDivElement[] = Array.from(document.querySelectorAll('.card-wrapper'));
+        const cwFiltered = cardWrappers.filter((cw) => cw.style.display === 'flex');
 
-        const productPrices = cwFiltered.map(cw => {
+        const productPrices = cwFiltered.map((cw) => {
             const priceDiv = selectorChecker(cw, '.name-zone__price');
             return Number(priceDiv.textContent?.slice(17, -16));
-      });
+        });
 
-      const productStocks = cwFiltered.map(cw => {
-        const stockDiv = selectorChecker(cw, '.photo-zone__store');
-        return Number(stockDiv.textContent?.slice(24));
-     });
+        const productStocks = cwFiltered.map((cw) => {
+            const stockDiv = selectorChecker(cw, '.photo-zone__store');
+            return Number(stockDiv.textContent?.slice(24));
+        });
 
-      if (e.target !== priceRange1) priceRange1.value = Math.min(...productPrices).toString();
-      if (e.target !== priceRange2)  priceRange2.value = Math.max(...productPrices).toString();
+        if (e.target !== priceRange1) priceRange1.value = Math.min(...productPrices).toString();
+        if (e.target !== priceRange2) priceRange2.value = Math.max(...productPrices).toString();
 
-      priceMin.innerHTML = priceRange1.value;
-      priceMax.innerHTML = priceRange2.value;
+        priceMin.innerHTML = priceRange1.value;
+        priceMax.innerHTML = priceRange2.value;
 
-      if (e.target !== stockRange1) stockRange1.value = Math.min(...productStocks).toString();
-      if (e.target !== stockRange2) stockRange2.value = Math.max(...productStocks).toString();
+        if (e.target !== stockRange1) stockRange1.value = Math.min(...productStocks).toString();
+        if (e.target !== stockRange2) stockRange2.value = Math.max(...productStocks).toString();
 
-      stockMin.innerHTML = stockRange1.value;
-      stockMax.innerHTML = stockRange2.value;
+        stockMin.innerHTML = stockRange1.value;
+        stockMax.innerHTML = stockRange2.value;
 
-      const fakeE = new Event('input');
-      if (e.target !== stockRange1) stockRange1.dispatchEvent(fakeE);
-      if (e.target !== priceRange1) priceRange1.dispatchEvent(fakeE);
-      if (e.target !== stockRange2) stockRange2.dispatchEvent(fakeE);
-      if (e.target !== priceRange2) priceRange2.dispatchEvent(fakeE);
-
+        const fakeE = new Event('input');
+        if (e.target !== stockRange1) stockRange1.dispatchEvent(fakeE);
+        if (e.target !== priceRange1) priceRange1.dispatchEvent(fakeE);
+        if (e.target !== stockRange2) stockRange2.dispatchEvent(fakeE);
+        if (e.target !== priceRange2) priceRange2.dispatchEvent(fakeE);
     }
 
     responseRanges() {
         const searchInput = selectorChecker(document, '.search-wrapper__input');
         searchInput.addEventListener('input', this.rangeChanger.bind(homeController));
         const categoryCheckboxes = document.querySelectorAll('.category-form__checkbox');
-        categoryCheckboxes.forEach(checkbox => {
+        categoryCheckboxes.forEach((checkbox) => {
             checkbox.addEventListener('input', this.rangeChanger.bind(homeController));
-        })
+        });
         const brandCheckboxes = document.querySelectorAll('.brand-form__checkbox');
-        brandCheckboxes.forEach(checkbox => {
+        brandCheckboxes.forEach((checkbox) => {
             checkbox.addEventListener('input', this.rangeChanger.bind(homeController));
-        })
+        });
         const stockSlider1 = document.querySelector('.stock-range__input-1') as HTMLInputElement;
         const stockSlider2 = document.querySelector('.stock-range__input-2') as HTMLInputElement;
         const priceSlider1 = document.querySelector('.price-range__input-1') as HTMLInputElement;
@@ -574,7 +575,6 @@ export class HomeController extends Controller {
         stockRange2.addEventListener('input', (e) => controlToSlider(stockRange1, stockRange2, stockMax, e));
         priceRange1.addEventListener('input', (e) => controlFromSlider(priceRange1, priceRange2, priceMin, e));
         priceRange2.addEventListener('input', (e) => controlToSlider(priceRange1, priceRange2, priceMax, e));
-
     }
 
     addingToCart() {
@@ -599,7 +599,9 @@ export class HomeController extends Controller {
             const addToCartButton = selectorChecker(card, '.photo-zone__add-to-cart-button');
             const cartCount = selectorChecker(document, '.cart-wrapper__count');
 
-            let productInCart = this.model.cart.find((product: { product: { name: string; }; }) => product.product.name === addToCartButton.id);
+            let productInCart = this.model.cart.find(
+                (product: { product: { name: string } }) => product.product.name === addToCartButton.id
+            );
 
             if (productInCart) {
                 addToCartButton.innerHTML = 'remove';
@@ -607,9 +609,13 @@ export class HomeController extends Controller {
 
             const cartState = selectorChecker(document, '.cart-wrapper__state');
             const adding = () => {
-                const product = this.model.products.find((product: { name: string; }) => product.name === addToCartButton.id);
+                const product = this.model.products.find(
+                    (product: { name: string }) => product.name === addToCartButton.id
+                );
                 if (!product) throw new Error('there is no such product');
-                productInCart = this.model.cart.find((product: { product: { name: string; }; }) => product.product.name === addToCartButton.id);
+                productInCart = this.model.cart.find(
+                    (product: { product: { name: string } }) => product.product.name === addToCartButton.id
+                );
 
                 if (productInCart) {
                     addToCartButton.innerHTML = 'add to cart';
@@ -626,7 +632,11 @@ export class HomeController extends Controller {
                 stockDiv.innerHTML = `Stock: ${product.amount}`;
 
                 cartState.innerHTML = `Cart total: ${this.model.cart
-                    .reduce((res: number, cur: { product: { price: number; }; amount: number; }) => res + cur.product.price * cur.amount, 0)
+                    .reduce(
+                        (res: number, cur: { product: { price: number }; amount: number }) =>
+                            res + cur.product.price * cur.amount,
+                        0
+                    )
                     .toString()} $`;
 
                 localStorage.setItem('cartCadence', JSON.stringify(this.model.cart));
@@ -712,7 +722,7 @@ export class HomeController extends Controller {
     }
 
     fillUrl(location: string) {
-        const queriesArr = location.replace('/home?', '').split('&');
+        const queriesArr = location.replace('/home/?', '').split('&');
         queriesArr.forEach((query) => {
             if (query.startsWith('category=')) {
                 this.url.categories = query;
@@ -738,9 +748,5 @@ export class HomeController extends Controller {
         });
 
         if (Object.keys(this.url).length !== 0) return;
-
-        if (queriesArr[0] !== '/home' && queriesArr[0] !== '/home/' && queriesArr[0] !== '/') {
-            window.location.pathname = '404';
-        }
     }
 }

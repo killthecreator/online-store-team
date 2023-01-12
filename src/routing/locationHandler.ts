@@ -11,12 +11,14 @@ import {
 } from '../';
 
 export const locationHandler = (location: string) => {
+    if (location.endsWith('/')) location = location.slice(0, -1);
+
     let page;
-    if (location.startsWith('/home') || location === '' || location === '/') {
+    if (location === '/home' || location.startsWith('/home/?')) {
         page = '/home';
-    } else if (location.startsWith('/product')) {
+    } else if (location === '/product' || location.startsWith('/product/')) {
         page = '/product';
-    } else if (location.startsWith('/cart')) {
+    } else if (location === '/cart' || location.startsWith('/cart/?')) {
         page = '/cart';
     } else {
         page = '/404';
