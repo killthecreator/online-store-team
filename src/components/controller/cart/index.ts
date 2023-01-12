@@ -411,7 +411,7 @@ export class CartController extends Controller {
 
         //insert proper marks in phone number while input
         phone.addEventListener('input', () => {
-            if (phone.value.length > '+375 (29) 111-11-11'.length || phone.value.match(/[a-z]+/i))
+            if (phone.value.length > '+375 (29) 111-11-11'.length || !phone.value.match(/[0-9\+]+$/i))
                 phone.value = phone.value.slice(0, phone.value.length - 1);
 
             if (phone.value.length === 1 && phone.value.match(/[a-z]+/i)) phone.value = '';
@@ -449,7 +449,7 @@ export class CartController extends Controller {
                 cardLogo.style.marginLeft = '0px';
             }
 
-            if (card.value.length > 19 || card.value.match(/[a-z]+/i))
+            if (card.value.length > 19 || !card.value.match(/[0-9]+$/i))
                 card.value = card.value.slice(0, card.value.length - 1);
 
             if (card.value.length === 1 && card.value.match(/[a-z]+/i)) card.value = '';
@@ -464,7 +464,7 @@ export class CartController extends Controller {
         });
 
         valid.addEventListener('input', () => {
-            if (valid.value.length > 5 || valid.value.match(/[a-z]+/i))
+            if (valid.value.length > 5 || !valid.value.match(/[0-9]+$/i))
                 valid.value = valid.value.slice(0, valid.value.length - 1);
 
             if (valid.value.length === 1 && valid.value.match(/[a-z]+/i)) valid.value = '';
@@ -475,7 +475,7 @@ export class CartController extends Controller {
         });
 
         cvv.addEventListener('input', () => {
-            if (cvv.value.length > 3 || cvv.value.match(/[a-z]+/i))
+            if (cvv.value.length > 3 || !cvv.value.match(/[0-9]+$/i))
                 cvv.value = cvv.value.slice(0, cvv.value.length - 1);
 
             if (cvv.value.length === 1 && cvv.value.match(/[a-z]+/i)) valid.value = '';
@@ -541,7 +541,7 @@ export class CartController extends Controller {
             if (!valid.value) {
                 createError('Cannot be blank', valid);
                 formValid = false;
-            } else if (!valid.value.match(/^[0-9]{2}\/[0-9]{2}$/) || Number(valid.value.slice(0, 2)) > 12) {
+            } else if (!valid.value.match(/^[0-9]{2}\/[0-9]{2}$/) || Number(valid.value.slice(0, 2)) > 12 || Number(valid.value.slice(0, 2)) < 1 || Number(valid.value.slice(3)) < 23) {
                 createError('Invalid date', valid);
                 formValid = false;
             }
@@ -551,7 +551,7 @@ export class CartController extends Controller {
                 createError('Cannot be blank', cvv);
                 formValid = false;
             } else if (!cvv.value.match(/^[0-9]{3}$/)) {
-                createError('Invalid date', cvv);
+                createError('Invalid cvv', cvv);
                 formValid = false;
             }
 
