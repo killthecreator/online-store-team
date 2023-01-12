@@ -1,0 +1,219 @@
+* {
+    &:active,
+    &:hover,
+    &:focus {
+        outline: 0;
+        outline-offset: 0;
+    }
+    color: #444;
+}
+$color: #eee;
+$basic-font-size: 1.2rem;
+$basic-padding: 2vw 1vw;
+$small-padding: 0 1vw;
+
+@mixin flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+@mixin flex-space-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+body {
+    @include flex-col;
+    @include flex-space-between;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #fff;
+    .header {
+        font-family: 'Normal';
+        @include flex-space-between;
+        align-items: center;
+        padding: $small-padding;
+        .logo-wrapper {
+            a {
+                text-decoration: none;
+                color: black;
+                display: flex;
+                flex-wrap: nowrap;
+                .logo-wrapper__text {
+                    margin: 0 1vw;
+                    display: flex;
+                    align-items: center;
+                }
+            }
+        }
+        .search-wrapper {
+            height: 40px;
+            display: flex;
+            border-radius: 5px;
+            @include flex-space-between;
+            flex-grow: 1;
+            background-color: #eee;
+            align-items: center;
+            .search-wrapper__image {
+                display: flex;
+                align-items: center;
+                margin: 0 1rem;
+                img {
+                    width: 20px;
+                }
+            }
+            .search-wrapper__input {
+                cursor: pointer;
+                font-family: 'Normal';
+                font-size: 1rem;
+                margin-left: calc(-2rem - 20px);
+                padding: 0 1rem 0 calc(2rem + 20px);
+                border-radius: 5px;
+                height: 35px;
+                flex-grow: 1;
+                background-color: transparent;
+                border: none;
+
+                &:focus {
+                    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+                }
+            }
+        }
+        .cart-wrapper {
+            @include flex-space-between;
+            align-items: center;
+            .cart-wrapper__state {
+                font-size: $basic-font-size;
+                margin: 0 1vw;
+            }
+            .cart-wrapper__poromocoded {
+                font-size: $basic-font-size;
+                margin: 0 1vw;
+                color: violet;
+                display: none;
+            }
+            .cart-wrapper__image {
+                @include flex-space-between;
+                padding: 0 1vw 0 0;
+                align-items: center;
+                img {
+                    width: 30px;
+                    height: 30px;
+                }
+                .cart-wrapper__count {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+                    width: 50px;
+                    height: 30px;
+                    font-family: 'Bold';
+                    color: violet;
+                    font-size: 2rem;
+                }
+            }
+        }
+    }
+
+    .main {
+        flex-grow: 1;
+
+        .filters,
+        .ranges {
+            .category-form__title,
+            .brand-form__title,
+            .price-range__title,
+            .stock-range__title {
+                font-family: Bold;
+            }
+            .category-form__content,
+            .brand-form__content {
+                font-family: Normal;
+            }
+        }
+        .buttons {
+            .button {
+                font-family: Normal;
+            }
+            .sort-options {
+                font-family: Normal;
+            }
+            .found {
+                font-family: 'Bold';
+            }
+        }
+        .cards-wrapper {
+            .cards-wrapper {
+                .photo-zone {
+                    font-family: 'Normal';
+                }
+            }
+        }
+    }
+
+    .footer {
+        font-family: 'Normal';
+        @include flex-space-between;
+        padding: 1vw 1vw;
+        .github {
+            @include flex-space-between;
+            .github__img {
+                width: 3vw;
+                margin: 0 1vw;
+            }
+        }
+        .year {
+            font-size: $basic-font-size;
+        }
+        .rs-school {
+            .rs-school__img {
+                width: 5vw;
+            }
+        }
+    }
+}
+
+@font-face {
+    font-family: 'Bold';
+    src: url('./../../assets/fonts/Montserrat/Montserrat-Bold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Normal';
+    src: url('./../../assets/fonts/Montserrat/Montserrat-Medium.woff') format('woff');
+}
+
+@media (max-width: 780px) {
+    body {
+        align-items: center;
+        .header {
+            width: 90vw;
+            flex-direction: column;
+            .logo-wrapper {
+                width: 90vw;
+            }
+            .search-wrapper {
+                width: 90vw;
+                margin: 10px 0;
+            }
+            .cart-wrapper {
+                margin: 1vw 0;
+                width: 90vw;
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+        .footer {
+            width: 90vw;
+            .github {
+                .github__img {
+                    width: 7vw;
+                }
+            }
+            .rs-school {
+                .rs-school__img {
+                    width: 18vw;
+                }
+            }
+        }
+    }
+}

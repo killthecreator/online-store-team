@@ -1,0 +1,176 @@
+$lightColor: #cce;
+@mixin flex-space-between {
+    display: flex;
+    justify-content: space-between;
+}
+@mixin flex-col {
+    display: flex;
+    flex-direction: column;
+}
+@mixin link {
+    text-decoration: none;
+    &:hover {
+        color: purple;
+        font-family: 'Bold';
+    }
+    &:active {
+        color: magenta;
+        font-family: 'Bold';
+    }
+    &:disabled {
+        color: $lightColor;
+        cursor: initial;
+    }
+}
+
+@mixin button-style {
+    font-family: 'Normal';
+    width: 100px;
+    height: 30px;
+    border-radius: 5px;
+    border-width: 0px;
+    background: $light-grad;
+    &:hover {
+        @include button-hover;
+    }
+    &:active {
+        @include button-active;
+    }
+    &:disabled {
+        @include button-disabled;
+    }
+}
+
+@mixin button-hover {
+    background: $gradient;
+    color: white;
+    cursor: pointer;
+}
+@mixin button-active {
+    background: $gradient;
+    color: white;
+    cursor: pointer;
+}
+@mixin button-disabled {
+    background: #eee;
+    color: $color;
+    cursor: default;
+}
+
+$color: #cce;
+$basic-font-size: 1.2rem;
+$big-font-size: 1.75rem;
+$basic-padding: 2vw 1vw;
+$small-padding: 0 1vw;
+$gradient: linear-gradient(hotpink 5%, transparent 80%), linear-gradient(90deg, darkorchid 5%, transparent 80%),
+    linear-gradient(-90deg, violet 5%, transparent 80%), white;
+$light-grad: linear-gradient(180deg, mistyrose 5%, transparent 80%),
+    linear-gradient(45deg, lavender 5%, transparent 80%);
+
+.bread-crumbs {
+    font-family: 'Normal';
+    padding: 1vw 1vw;
+    .bread-crumbs__link {
+        @include link;
+    }
+}
+.product {
+    padding: $small-padding;
+    @include flex-space-between;
+    .product__photos {
+        @include flex-space-between;
+        .product__additional-photos {
+            width: 12vw;
+            height: 36vw;
+            @include flex-col;
+            justify-content: space-between;
+            .product__additional-photo {
+                border: 1px solid $lightColor;
+                border-radius: 5px;
+                width: 11vw;
+                height: 11vw;
+                background-size: 11vw;
+                cursor: pointer;
+            }
+        }
+
+        .product__main-photo {
+            flex-grow: 1;
+            width: 36vw;
+            height: 36vw;
+            background-size: 36vw;
+        }
+    }
+    .product__description {
+        padding: $small-padding;
+        @include flex-col;
+        .product__description-header {
+            padding: $small-padding;
+            .product__description-naming {
+                .product__description-name {
+                    margin-top: 0;
+                    font-family: 'Bold';
+                }
+                .product__description-category {
+                    font-family: 'Normal';
+                    margin: 0;
+                    font-size: $basic-font-size;
+                }
+            }
+        }
+        .product__description-text {
+            text-align: justify;
+            font-size: 1rem;
+            font-family: 'Normal';
+            padding: $basic-padding;
+        }
+        .product__description-info {
+            font-size: $big-font-size;
+            font-family: 'Normal';
+            padding: $basic-padding;
+            @include flex-space-between;
+        }
+        .product__description-buttons {
+            @include flex-space-between;
+            padding: $small-padding;
+            .button {
+                @include button-style;
+            }
+        }
+    }
+}
+
+@media (max-width: 780px) {
+  body {
+    justify-content: center;
+    .bread-crumbs {
+      margin: 5vw 3vw;
+    }
+    .product {
+      flex-direction: column;
+      width: 90vw;
+      margin: 0 2vw;
+      .product__photos {
+         width: 90vw;
+         height: 66vw;
+        .product__additional-photos {
+          width: 23vw;
+          height: 66vw;
+          .product__additional-photo {
+          width: 22vw;
+          height: 20vw;
+          background-size: 22vw;
+          }
+        }
+        .product__main-photo {
+          width: 66vw;
+          height: 66vw;
+          background-size: 66vw;
+        }
+      }
+      .product__description {
+        margin: 10vw 0;
+      }
+    }
+  }
+}
