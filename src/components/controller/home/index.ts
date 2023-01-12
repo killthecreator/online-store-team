@@ -375,8 +375,8 @@ export class HomeController extends Controller {
         sortOptions.addEventListener('change', sortProducts);
     }
 
-    rangeChanger() {
-
+    rangeChanger(e: Event) {
+        alert(e.target);
         const stockRange1 = document.querySelector('.stock-range__input-1') as HTMLInputElement;
         const stockRange2 = document.querySelector('.stock-range__input-2') as HTMLInputElement;
 
@@ -402,23 +402,23 @@ export class HomeController extends Controller {
         return Number(stockDiv.textContent?.slice(24));
      });
 
-      priceRange1.value = Math.min(...productPrices).toString();
-      priceRange2.value = Math.max(...productPrices).toString();
+      if (e.target !== priceRange1) priceRange1.value = Math.min(...productPrices).toString();
+      if (e.target !== priceRange2)  priceRange2.value = Math.max(...productPrices).toString();
 
       priceMin.innerHTML = priceRange1.value;
       priceMax.innerHTML = priceRange2.value;
 
-      stockRange1.value = Math.min(...productStocks).toString();
-      stockRange2.value = Math.max(...productStocks).toString();
+      if (e.target !== stockRange1) stockRange1.value = Math.min(...productStocks).toString();
+      if (e.target !== stockRange2) stockRange2.value = Math.max(...productStocks).toString();
 
       stockMin.innerHTML = stockRange1.value;
       stockMax.innerHTML = stockRange2.value;
 
       const fakeE = new Event('input');
-      stockRange1.dispatchEvent(fakeE);
-      priceRange1.dispatchEvent(fakeE);
-      stockRange2.dispatchEvent(fakeE);
-      priceRange2.dispatchEvent(fakeE);
+      if (e.target !== stockRange1) stockRange1.dispatchEvent(fakeE);
+      if (e.target !== priceRange1) priceRange1.dispatchEvent(fakeE);
+      if (e.target !== stockRange2) stockRange2.dispatchEvent(fakeE);
+      if (e.target !== priceRange2) priceRange2.dispatchEvent(fakeE);
 
     }
 
@@ -433,6 +433,14 @@ export class HomeController extends Controller {
         brandCheckboxes.forEach(checkbox => {
             checkbox.addEventListener('input', this.rangeChanger.bind(homeController));
         })
+        const stockSlider1 = document.querySelector('.stock-range__input-1') as HTMLInputElement;
+        const stockSlider2 = document.querySelector('.stock-range__input-2') as HTMLInputElement;
+        const priceSlider1 = document.querySelector('.price-range__input-1') as HTMLInputElement;
+        const priceSlider2 = document.querySelector('.price-range__input-2') as HTMLInputElement;
+        stockSlider1.addEventListener('change', this.rangeChanger.bind(homeController));
+        stockSlider2.addEventListener('change', this.rangeChanger.bind(homeController));
+        priceSlider1.addEventListener('change', this.rangeChanger.bind(homeController));
+        priceSlider2.addEventListener('change', this.rangeChanger.bind(homeController));
     }
 
     public configRanges() {
